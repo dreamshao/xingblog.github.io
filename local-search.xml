@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>python 切片</title>
+    <link href="/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
+    <url>/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-切片操作详解"><a href="#Python-切片操作详解" class="headerlink" title="Python 切片操作详解"></a>Python 切片操作详解</h1><p>在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 <code>[start:stop:step]</code>，其中 <code>start</code> 是起始索引（包含），<code>stop</code> 是结束索引（不包含），<code>step</code> 是步长。  </p><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>第一个数字 start 表示切片开始位置，默认 0</p><p>第二个数字 end 表示切片截止(但不包含)位置，默认列表长度</p><p>第三个数字 step 表示切片的步骤，默认为 1</p><p>当 start 为 0 时可以省略</p><p>当 end 为列表长度时可以省略</p><p>当 step 为 1 时可以省略，并且省略步长时可以同时省略最后一个冒号</p><p>当 step 为负数时，表示反向切片，这时 start 应该比 end 的值要大才行</p><h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><pre><code class="python">a_list = [3, 4, 5, 6, 7, 9, 11, 13, 15, 17]a_list[::]      # 返回包含原列表中所有元素的新列表a_list[::-1]    # 返回包含原列表中所有元素的逆向新列表a_list[::2]     # 隔一个元素取一个，获取偶数位置的元素a_list[1::2]    # 隔一个元素取一个，获取奇数位置的元素a_list[3:6]     # 指定切片的开始和结束位置a_list[0:100]   # 切片结束位置大于列表长度是，从列表尾部截断a_list[100:]    # 切片开始位置大于列表长度时，返回空列表a_list[len(a_list):0] = [9]     # 在列表尾部增加元素a_list[:0] = [1, 2]             # 在列表头部增加元素a_list[3:3] = [100]             # 在列表中间位置插入元素a_list[:2] = [100, 200]         # 替换列表元素，等号两边长度相等a_list[3:] = [4, 5, 6]          # 替换列表元素，等号两边长度可以不相等a_list[:3] = []                 # 删除列表中前 3 个元素</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
