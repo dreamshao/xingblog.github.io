@@ -16,22 +16,28 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python 切片操作详解在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 [start:stop:step]，其中 start 是起始索引（包含），stop 是结束索引（不包含），step 是步长。   主要内容第一个数字 start 表示切片开始位置，默认 0 第二个数字 end 表示切片截止(但不包">
+    <meta name="description" content="FillderFillder是一款优秀的抓包软件，不管是在windows，linux， mac下都可以使用！关于基本的安装这边就跳过了，下面我们主要来看一下使用过程中的一些技巧 Fillder 面板信息组成  HTTP报文总体介绍HTTP协议报文的结构 HTTP报文分2个：一个是HTTP请求报文，一个是HTTP响应报文 HTTP请求报文分为3部分：第一部分叫其实行(Request line),第二">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python 切片">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:title" content="测试开发工具Fiddler">
+<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/index.html">
 <meta property="og:site_name" content="个人技术博客">
-<meta property="og:description" content="Python 切片操作详解在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 [start:stop:step]，其中 start 是起始索引（包含），stop 是结束索引（不包含），step 是步长。   主要内容第一个数字 start 表示切片开始位置，默认 0 第二个数字 end 表示切片截止(但不包">
+<meta property="og:description" content="FillderFillder是一款优秀的抓包软件，不管是在windows，linux， mac下都可以使用！关于基本的安装这边就跳过了，下面我们主要来看一下使用过程中的一些技巧 Fillder 面板信息组成  HTTP报文总体介绍HTTP协议报文的结构 HTTP报文分2个：一个是HTTP请求报文，一个是HTTP响应报文 HTTP请求报文分为3部分：第一部分叫其实行(Request line),第二">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-25T09:38:42.000Z">
-<meta property="article:modified_time" content="2024-06-25T12:06:46.920Z">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E9%9D%A2%E6%9D%BF%E7%BB%84%E6%88%90%E4%BF%A1%E6%81%AF.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E8%AF%B7%E6%B1%82%E7%95%8C%E9%9D%A2.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E5%93%8D%E5%BA%94%E7%95%8C%E9%9D%A2.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E4%BF%AE%E6%94%B9Useragent.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/%E7%88%B6%E5%AD%90%E8%AF%B7%E6%B1%82.png">
+<meta property="article:published_time" content="2024-06-26T03:06:29.000Z">
+<meta property="article:modified_time" content="2024-06-26T03:58:40.755Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E9%9D%A2%E6%9D%BF%E7%BB%84%E6%88%90%E4%BF%A1%E6%81%AF.png">
   
   
   
-  <title>python 切片 - 个人技术博客</title>
+  <title>测试开发工具Fiddler - 个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="python 切片"></span>
+            <span id="subtitle" data-typed-text="测试开发工具Fiddler"></span>
           
         </div>
 
@@ -208,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-25 17:38" pubdate>
-          2024年6月25日 下午
+        <time datetime="2024-06-26 11:06" pubdate>
+          2024年6月26日 上午
         </time>
       </span>
     
@@ -220,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          452 字
+          1.3k 字
         
       </span>
     
@@ -231,7 +237,7 @@
         
         
         
-          4 分钟
+          12 分钟
         
       </span>
     
@@ -268,49 +274,101 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">python 切片</h1>
+            <h1 id="seo-header">测试开发工具Fiddler</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python-切片操作详解"><a href="#Python-切片操作详解" class="headerlink" title="Python 切片操作详解"></a>Python 切片操作详解</h1><p>在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 <code>[start:stop:step]</code>，其中 <code>start</code> 是起始索引（包含），<code>stop</code> 是结束索引（不包含），<code>step</code> 是步长。  </p>
-<h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>第一个数字 start 表示切片开始位置，默认 0</p>
-<p>第二个数字 end 表示切片截止(但不包含)位置，默认列表长度</p>
-<p>第三个数字 step 表示切片的步骤，默认为 1</p>
-<p>当 start 为 0 时可以省略</p>
-<p>当 end 为列表长度时可以省略</p>
-<p>当 step 为 1 时可以省略，并且省略步长时可以同时省略最后一个冒号</p>
-<p>当 step 为负数时，表示反向切片，这时 start 应该比 end 的值要大才行</p>
-<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><pre><code class="python">a_list = [3, 4, 5, 6, 7, 9, 11, 13, 15, 17]
+                <h1 id="Fillder"><a href="#Fillder" class="headerlink" title="Fillder"></a>Fillder</h1><p>Fillder是一款优秀的抓包软件，不管是在windows，linux， mac下都可以使用！关于基本的安装这边就跳过了，下面我们主要来看一下使用过程中的一些技巧</p>
+<h2 id="Fillder-面板信息组成"><a href="#Fillder-面板信息组成" class="headerlink" title="Fillder 面板信息组成"></a>Fillder 面板信息组成</h2><img src="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E9%9D%A2%E6%9D%BF%E7%BB%84%E6%88%90%E4%BF%A1%E6%81%AF.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-a_list[::]      # 返回包含原列表中所有元素的新列表
+<h3 id="HTTP报文总体介绍"><a href="#HTTP报文总体介绍" class="headerlink" title="HTTP报文总体介绍"></a>HTTP报文总体介绍</h3><p>HTTP协议报文的结构</p>
+<p>HTTP报文分2个：一个是HTTP请求报文，一个是HTTP响应报文</p>
+<p>HTTP请求报文分为3部分：第一部分叫其实行(Request line),第二部分叫首部（Request Header),第三部分叫主体(Body)</p>
+<p>第一行中Method表示请求方法，比如“POST”或者“GET”现在使用的HTTP协议版本是1.1</p>
+<p>第二部分是首部（Header)</p>
+<p>第三部分是body</p>
+<p>特别要注意，Header与Body之间有一个空行</p>
+<h3 id="Fillder-请求界面"><a href="#Fillder-请求界面" class="headerlink" title="Fillder 请求界面"></a>Fillder 请求界面</h3><img src="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E8%AF%B7%E6%B1%82%E7%95%8C%E9%9D%A2.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-a_list[::-1]    # 返回包含原列表中所有元素的逆向新列表
-
-a_list[::2]     # 隔一个元素取一个，获取偶数位置的元素
-
-a_list[1::2]    # 隔一个元素取一个，获取奇数位置的元素
-
-a_list[3:6]     # 指定切片的开始和结束位置
-
-a_list[0:100]   # 切片结束位置大于列表长度是，从列表尾部截断
-
-a_list[100:]    # 切片开始位置大于列表长度时，返回空列表
+<h3 id="Fillder-响应界面"><a href="#Fillder-响应界面" class="headerlink" title="Fillder 响应界面"></a>Fillder 响应界面</h3><img src="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E5%93%8D%E5%BA%94%E7%95%8C%E9%9D%A2.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
 
+<h3 id="HTTP协议请求方法和状态码"><a href="#HTTP协议请求方法和状态码" class="headerlink" title="HTTP协议请求方法和状态码"></a>HTTP协议请求方法和状态码</h3><p>HTTP协议定义了很多与服务器交互的方法，最基本有5种，分别是GET HEAD POST PUT DELETE。对应的就是查改增删的4个操作，最常见的是POST和GET，GET一般用于获取&#x2F;查询资源信息，而POST一般用于更新资源信息。</p>
+<p>GET和POST方法的区别</p>
+<p>GET提交的数据会放在URL之后，以问号（？）分割URL和传输数据，参数之间以&amp;相连，而POST是把提交的数据放在HTTP包的Body中</p>
+<p>GET提交数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据大小没有限制</p>
+<p>GET方式需要使用Request.QueryString来取得变量的值，而POST方法通过Request.Form来获取变量的值</p>
+<p>GET方式提交数据会带来安全问题，比如登录一个页面通过GET的方式提交数据时候，用户名和密码都会显示在URL中，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码</p>
+<h3 id="HTTP-报文响应介绍"><a href="#HTTP-报文响应介绍" class="headerlink" title="HTTP 报文响应介绍"></a>HTTP 报文响应介绍</h3><p>Response消息的结构和Request消息的结构基本一样，同样也分为3部分；第一部分叫响应行（Response Line)，第二部分叫响应首部（Response Header)，第三部分是主体(Body)</p>
+<p>第一部分是起始行，有状态码和状态码消息</p>
+<p>第二部分是首部，</p>
+<p>第三部分是主体</p>
+<p>特别注意 Header首部和Body(主体)之间有一个空行</p>
+<h4 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h4><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>已定义范围</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1XX</td>
+<td>100-101</td>
+<td>信息提示：表示请求已成功接收、继续处理</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>200-206</td>
+<td>成功、表示请求已被成功接收，理解、接受</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>300-305</td>
+<td>重定向，完成请求，必须进行更进一步的处理</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>400-415</td>
+<td>客户端错误，请求有语法错误或者无法实现请求</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>500-505</td>
+<td>服务器错误，服务器未能实现合法的请求</td>
+</tr>
+</tbody></table>
+<h4 id="HTTP-协议Header介绍"><a href="#HTTP-协议Header介绍" class="headerlink" title="HTTP 协议Header介绍"></a>HTTP 协议Header介绍</h4><p>Header的语法格式是”key:value”，一行一个Header。每一个Header都有特殊的作用，在Finddler中可以查看完整的Header。</p>
+<p>Fiddler能方便的查看HTTP请求Header,选中一个HTTP请求，单击Inspectors tab–&gt;Request tab–&gt;Headers</p>
 
-a_list[len(a_list):0] = [9]     # 在列表尾部增加元素
 
-a_list[:0] = [1, 2]             # 在列表头部增加元素
+<h4 id="Cache相关的Header"><a href="#Cache相关的Header" class="headerlink" title="Cache相关的Header"></a>Cache相关的Header</h4><h5 id="COOKIE"><a href="#COOKIE" class="headerlink" title="COOKIE"></a>COOKIE</h5><p>Cookie是一种HTTP Header,是HTTP中非常重要的内容，它由key&#x3D;&#x3D;value形式组成</p>
+<p>Accept</p>
+<p>Accept表示浏览器客户端可以接受的媒体类型</p>
+<p>例如 Accept:text&#x2F;html代表浏览器可以接受服务器返回html，也就是我们通常说的html文档。</p>
+<p>通配符&#x2F;*代表任意类型，\<em>&#x2F;\</em>表示可以接受任何类型。</p>
+<h5 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a>Accept-Encoding</h5><p>Accept-Encoding跟压缩有关，浏览器发送HTTP请求给web服务器，HTTP请求中的Header有Accept-Encoding:gizp,deflate(告诉服务器，浏览器支持gizp压缩)</p>
+<h5 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a>Accept-Language</h5><p>Accept-Language的作用是声明自己接受的语言</p>
+<p>也就是编码格式 UTF-8 GB2312 ZH-CN</p>
+<h5 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h5><p>Use-Agent的作用是浏览器用来告诉服务器，客户端使用的操作系统及版本，CPU类型、浏览器及版本、浏览器渲染引擎、浏览器语言、浏览器插件</p>
+<p>修改User-Agent可以伪装不同的客户端</p>
+<img src="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/fillder%E4%BF%AE%E6%94%B9Useragent.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-a_list[3:3] = [100]             # 在列表中间位置插入元素
+<p>单击Rules-&gt;User-Agents然后可以选择我们想要切换的系统</p>
+<h5 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h5><p>HTTP协议头中的Refer主要来让服务器来判断来源页面，即用户是从哪个页面过来的网站通常用来统计用户的来源，看用户是从搜索页面来的，还是从其他网站链接过来的，或是从书签等访问过来的，以便合理的定位网站</p>
+<p>Referer有时也被用作防盗链，即下载时候判断来源地址是不是在网站域名之内，否则就不能下载或显示</p>
+<h5 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h5><p>从HTTP1.1起，系统默认开启了Connection:Keep-Alive，保持连接特性</p>
+<h5 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h5><p>主要是指定被请求的主机端口号，它通常从HTTP URL中提取出来</p>
+<p>Web网页抓包和fiddler修改包</p>
+<p>通过fiddler可以修改数据伪造数据</p>
+<p>第一个HTTP请求是获取页面布局的HTML 也叫做“父请求”</p>
+<p>随后的HTTP请求会根据之前页面的请求去再次请求，叫做“子请求”</p>
+<img src="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/%E7%88%B6%E5%AD%90%E8%AF%B7%E6%B1%82.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-a_list[:2] = [100, 200]         # 替换列表元素，等号两边长度相等
-
-a_list[3:] = [4, 5, 6]          # 替换列表元素，等号两边长度可以不相等
-
-a_list[:3] = []                 # 删除列表中前 3 个元素
-</code></pre>
+<p>选中我们的第一个父请求然后右击选择seletc–&gt;Child Request 就可以找到对应的子</p>
+<p>找父请求的话我们选中子子请求右击选择select-&gt;Parent Request就可以找到对应的父请求。</p>
+<p>查找相同的请求，右击选择select–&gt;Duplicate Requests就可以选中了相同的请求了。</p>
 
                 
               </div>
@@ -329,12 +387,12 @@ a_list[:3] = []                 # 删除列表中前 3 个元素
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/xingblog.github.io/categories/Fillder-%E9%9D%A2%E6%9D%BF%E4%BF%A1%E6%81%AF%E4%BB%8B%E7%BB%8D/" class="category-chain-item">Fillder 面板信息介绍</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/xingblog.github.io/categories/Fillder-%E9%9D%A2%E6%9D%BF%E4%BF%A1%E6%81%AF%E4%BB%8B%E7%BB%8D/Fillder%E4%BD%BF%E7%94%A8/" class="category-chain-item">Fillder使用</a>
   
   
 
@@ -363,8 +421,8 @@ a_list[:3] = []                 # 删除列表中前 3 个元素
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>python 切片</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/25/测试文章/</div>
+      <div>测试开发工具Fiddler</div>
+      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/26/测试开发工具Fiddler/</div>
     </div>
     <div class="license-meta">
       
@@ -376,7 +434,7 @@ a_list[:3] = []                 # 删除列表中前 3 个元素
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月25日</div>
+          <div>2024年6月26日</div>
         </div>
       
       
@@ -408,15 +466,21 @@ a_list[:3] = []                 # 删除列表中前 3 个元素
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/" title="测试开发工具Fiddler">
+                      <a href="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7JMETER/" title="测试开发工具JMETER">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">测试开发工具Fiddler</span>
+                        <span class="hidden-mobile">测试开发工具JMETER</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/xingblog.github.io/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" title="python 切片">
+                        <span class="hidden-mobile">python 切片</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
