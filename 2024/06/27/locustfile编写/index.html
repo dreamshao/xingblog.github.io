@@ -16,23 +16,23 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python常见函数之 Python 切片操作详解在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 [start:stop:step]，其中 start 是起始索引（包含），stop 是结束索引（不包含），step 是步长。   主要内容第一个数字 start 表示切片开始位置，默认 0 第二个数字 en">
+    <meta name="description" content="LocustFile编写编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！ LocustFile Demo来自 LousctFile 官网例子 12345678910111213141516171819import timefrom locust import HttpUser, task, betweenclass QuickstartUser">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python常见函数之 Python 切片操作详解">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:title" content="LocustFile编写">
+<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/locustfile%E7%BC%96%E5%86%99/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python常见函数之 Python 切片操作详解在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 [start:stop:step]，其中 start 是起始索引（包含），stop 是结束索引（不包含），step 是步长。   主要内容第一个数字 start 表示切片开始位置，默认 0 第二个数字 en">
+<meta property="og:description" content="LocustFile编写编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！ LocustFile Demo来自 LousctFile 官网例子 12345678910111213141516171819import timefrom locust import HttpUser, task, betweenclass QuickstartUser">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-25T09:38:42.000Z">
-<meta property="article:modified_time" content="2024-06-27T03:22:41.484Z">
+<meta property="article:published_time" content="2024-06-27T08:15:03.000Z">
+<meta property="article:modified_time" content="2024-06-27T08:57:15.130Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="Locust">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>python常见函数之 Python 切片操作详解 - 韵少的个人技术博客</title>
+  <title>LocustFile编写 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="python常见函数之 Python 切片操作详解"></span>
+            <span id="subtitle" data-typed-text="LocustFile编写"></span>
           
         </div>
 
@@ -238,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-25 17:38" pubdate>
-          2024年6月25日 下午
+        <time datetime="2024-06-27 16:15" pubdate>
+          2024年6月27日 下午
         </time>
       </span>
     
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          457 字
+          1.6k 字
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          4 分钟
+          14 分钟
         
       </span>
     
@@ -306,20 +306,81 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">python常见函数之 Python 切片操作详解</h1>
+            <h1 id="seo-header">LocustFile编写</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python常见函数之-Python-切片操作详解"><a href="#Python常见函数之-Python-切片操作详解" class="headerlink" title="Python常见函数之 Python 切片操作详解"></a>Python常见函数之 Python 切片操作详解</h1><p>在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 <code>[start:stop:step]</code>，其中 <code>start</code> 是起始索引（包含），<code>stop</code> 是结束索引（不包含），<code>step</code> 是步长。  </p>
-<h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>第一个数字 start 表示切片开始位置，默认 0</p>
-<p>第二个数字 end 表示切片截止(但不包含)位置，默认列表长度</p>
-<p>第三个数字 step 表示切片的步骤，默认为 1</p>
-<p>当 start 为 0 时可以省略</p>
-<p>当 end 为列表长度时可以省略</p>
-<p>当 step 为 1 时可以省略，并且省略步长时可以同时省略最后一个冒号</p>
-<p>当 step 为负数时，表示反向切片，这时 start 应该比 end 的值要大才行</p>
-<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">a_list = [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>, <span class="hljs-number">15</span>, <span class="hljs-number">17</span>]<br><br>a_list[::]      <span class="hljs-comment"># 返回包含原列表中所有元素的新列表</span><br><br>a_list[::-<span class="hljs-number">1</span>]    <span class="hljs-comment"># 返回包含原列表中所有元素的逆向新列表</span><br><br>a_list[::<span class="hljs-number">2</span>]     <span class="hljs-comment"># 隔一个元素取一个，获取偶数位置的元素</span><br><br>a_list[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>]    <span class="hljs-comment"># 隔一个元素取一个，获取奇数位置的元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">6</span>]     <span class="hljs-comment"># 指定切片的开始和结束位置</span><br><br>a_list[<span class="hljs-number">0</span>:<span class="hljs-number">100</span>]   <span class="hljs-comment"># 切片结束位置大于列表长度是，从列表尾部截断</span><br><br>a_list[<span class="hljs-number">100</span>:]    <span class="hljs-comment"># 切片开始位置大于列表长度时，返回空列表</span><br><br><br><br>a_list[<span class="hljs-built_in">len</span>(a_list):<span class="hljs-number">0</span>] = [<span class="hljs-number">9</span>]     <span class="hljs-comment"># 在列表尾部增加元素</span><br><br>a_list[:<span class="hljs-number">0</span>] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]             <span class="hljs-comment"># 在列表头部增加元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">3</span>] = [<span class="hljs-number">100</span>]             <span class="hljs-comment"># 在列表中间位置插入元素</span><br><br>a_list[:<span class="hljs-number">2</span>] = [<span class="hljs-number">100</span>, <span class="hljs-number">200</span>]         <span class="hljs-comment"># 替换列表元素，等号两边长度相等</span><br><br>a_list[<span class="hljs-number">3</span>:] = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]          <span class="hljs-comment"># 替换列表元素，等号两边长度可以不相等</span><br><br>a_list[:<span class="hljs-number">3</span>] = []                 <span class="hljs-comment"># 删除列表中前 3 个元素</span><br><br></code></pre></td></tr></table></figure>
+                <h1 id="LocustFile编写"><a href="#LocustFile编写" class="headerlink" title="LocustFile编写"></a>LocustFile编写</h1><p>编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！</p>
+<h2 id="LocustFile-Demo"><a href="#LocustFile-Demo" class="headerlink" title="LocustFile Demo"></a>LocustFile Demo</h2><p>来自 LousctFile 官网例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> locust <span class="hljs-keyword">import</span> HttpUser, task, between<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">QuickstartUser</span>(<span class="hljs-title class_ inherited__">HttpUser</span>):<br>    wait_time = between(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>)<br><br><span class="hljs-meta">    @task</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hello_world</span>(<span class="hljs-params">self</span>):<br>        self.client.get(<span class="hljs-string">&quot;/hello&quot;</span>)<br>        self.client.get(<span class="hljs-string">&quot;/world&quot;</span>)<br><br><span class="hljs-meta">    @task(<span class="hljs-params"><span class="hljs-number">3</span></span>)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">view_items</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">for</span> item_id <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>            self.client.get(<span class="hljs-string">f&quot;/item?id=<span class="hljs-subst">&#123;item_id&#125;</span>&quot;</span>, name=<span class="hljs-string">&quot;/item&quot;</span>)<br>            time.sleep(<span class="hljs-number">1</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">on_start</span>(<span class="hljs-params">self</span>):<br>        self.client.post(<span class="hljs-string">&quot;/login&quot;</span>, json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;bar&quot;</span>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>这里我想还是采用官网的例子介绍，为了防止我讲的不够清晰 大家也可以访问下面的链接去官网查看</p>
+<p><a target="_blank" rel="noopener" href="https://docs.locust.io/en/stable/writing-a-locustfile.html">https://docs.locust.io/en/stable/writing-a-locustfile.html</a></p>
+<h2 id="解释（我的理解）"><a href="#解释（我的理解）" class="headerlink" title="解释（我的理解）"></a>解释（我的理解）</h2><p>其实从中可以看到这个案例和我们平常写的类好像没什么区别，除了继承了<font color=green >HttpUser</font>,以及用例<font color=green >@task</font> 装饰器</p>
+<p>那么首先来看一下具体实现了什么功能呢？</p>
+<h3 id="on-start"><a href="#on-start" class="headerlink" title="on_start()"></a>on_start()</h3><p>这个类实现了一个性能测试脚本，在每个模拟用户启动时，都会调用此名称的方法 会先运行 <font color=green >on_start</font>这个函数,然后进行了请求这里的host 可以在shell中指定也可以在web ui的那个界面中输入，可以看到进行了一个post请求，路径是 &#x2F;login, 请求体是一个json对象</p>
+<p>然后会在继续执行 这里的<font color=green >@task</font> 着重讲一下</p>
+<h3 id="task-装饰器"><a href="#task-装饰器" class="headerlink" title="task 装饰器"></a>task 装饰器</h3><p>@task 装饰器 表明当前方法是一个任务</p>
+<p>@task 是locust文件的核心。对于每个正在运行的用户，Locust 都会创建一个greenlet（协程或“微线程”），然后进行请求，要注意此时不是并发请求，是在&#x2F;hello 响应返回后才会继续请求&#x2F;world</p>
+<p>@task(3) 其中3是指权重，虽然程序运行是随机选择任务单是你给予了更大的权重的话运行的次数会更加多</p>
+<h3 id="wait-time"><a href="#wait-time" class="headerlink" title="wait_time"></a>wait_time</h3><p>wait_time 方法在每次任务执行后引入延迟。如果没有指定wait_time，则下一个任务将在上一个任务完成后立即执行。</p>
+<p>有四个函数 分别是：constant、 bettwen、 constant_throughput、constant_pacing</p>
+<p>constant: 在固定的时间内</p>
+<p>让每个用户每次执行固定的时间 1秒：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant(<span class="hljs-number">0.5</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
+
+
+<p>bettwen: 在最小值和最大值之间的随机时间</p>
+<p>让每个用户在每次执行任务之间等待 1 到 4 :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = between(<span class="hljs-number">0.5</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
+
+<p>constant_throughput：返回一个跟踪任务运行时间的函数，每次调用时，它将返回一个等待时间，该等待时间将尝试使每秒执行的任务运行次数等于 task_runs_per_second 参数指定的时间</p>
+<p>也就是说：以恒定的速率执行任务。它允许用户设置每秒或每分钟需要执行的任务数，以确保性能测试的稳定性。</p>
+<p>应用场景：</p>
+<pre><code class="hljs">在性能测试中，可能需要模拟不同的用户行为，如登录、搜索、购买等。constant_throughput 可以确保这些任务以恒定的速率执行，从而更准确地评估系统的性能和稳定性。
+
+在生产环境中，有时需要根据客户的需求设置应用的吞吐量。constant_throughput 可以帮助确保应用能够满足用户的需求，同时保持系统的稳定性。
+</code></pre>
+<p>也是 constant_pacing 的倒数</p>
+<p>无论任务执行时间如何，任务将始终每 10 秒执行一次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant_throughput(<span class="hljs-number">0.1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>constant_pacing：返回一个跟踪任务运行时间的函数，每次调用时它将返回一个等待时间，该等待时间将尝试使任务执行之间的总时间等于 wait_time 参数指定的时间。</p>
+<p>应用场景：</p>
+<p>   模拟真实用户行为：</p>
+<pre><code class="hljs">当进行性能测试时，有时需要模拟真实用户的操作行为。这些用户行为可能不是均匀分布的，但某些特定行为（如定期查询、定时任务等）需要按照
+
+固定的时间间隔来执行。使用 constant_pacing 可以确保这些任务按照预定的时间间隔执行，从而更准确地模拟真实用户的行为。
+</code></pre>
+<p>  系统稳定性测试：</p>
+<pre><code class="hljs">在测试系统的稳定性时，可能需要长时间运行任务，并观察系统在不同负载下的表现。使用 constant_pacing 可以确保任务以恒定的间隔执行，从
+
+而持续向系统施加稳定的负载，帮助发现潜在的稳定性和性能问题。
+</code></pre>
+<p>  资源分配和限制：</p>
+<pre><code class="hljs">在某些场景下，可能需要限制系统资源的使用，以确保不会超出特定的限制。例如，在测试一个API接口时，可能需要限制每分钟的请求数以避免对
+
+后端服务造成过大的压力。虽然 constant_throughput 可以用来控制每秒的请求数，但 constant_pacing 可以提供更细粒度的控制，确保请求
+
+按照特定的时间间隔发送，从而更有效地管理资源使用。
+</code></pre>
+<p>  定时任务的性能测试：</p>
+<pre><code class="hljs">许多系统都包含定时任务，这些任务需要按照预定的时间间隔执行。在进行这些定时任务的性能测试时，可以使用 constant_pacing 来模拟定时任
+
+务的执行间隔，并评估系统在不同负载下的性能表现。
+</code></pre>
+<p>  实时数据收集和处理：</p>
+<p>   对于需要实时收集和处理数据的系统（如监控系统、日志分析系统等），可能需要按照固定的时间间隔来执行数据收集和处理任务。使用 </p>
+<p>   constant_pacing 可以确保这些任务按照预定的时间间隔执行，从而确保数据的准确性和实时性。</p>
+<p>总的来说，constant_pacing 适用于那些需要精确控制任务执行间隔的场景，无论是在性能测试、资源分配还是实时数据处理中都可以发挥其独特的作用。</p>
+<p>可以理解为：就像一个定时器一样 他不关心你具体返回了没有 到了点就要执行</p>
+<p>无论任务执行时间如何，任务将始终每 10 秒执行一次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant_pacing(<span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="HttpUser"><a href="#HttpUser" class="headerlink" title="HttpUser"></a>HttpUser</h3><p> HttpUser每个用户提供一个client属性，即 的一个实例HttpSession，可用于向我们想要加载测试的目标系统发出 HTTP 请求。</p>
+<p> HttpUser里面也是封装了一系列的请求方式，例如 POST, GET , DELETE, PUT 等。</p>
+
                 
               </div>
             
@@ -337,17 +398,17 @@
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Locust/" class="category-chain-item">Locust</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E5%B8%B8%E8%A7%81%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C/" class="category-chain-item">Python 常见切片操作</a>
+  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Locust/Locust-File%E7%BC%96%E5%86%99/" class="category-chain-item">Locust File编写</a>
   
   
 
@@ -368,7 +429,7 @@
       
         <a href="/xingblog.github.io/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/xingblog.github.io/tags/python/" class="print-no-link">#python</a>
+        <a href="/xingblog.github.io/tags/Locust/" class="print-no-link">#Locust</a>
       
     </div>
   
@@ -380,8 +441,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>python常见函数之 Python 切片操作详解</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/25/测试文章/</div>
+      <div>LocustFile编写</div>
+      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/locustfile编写/</div>
     </div>
     <div class="license-meta">
       
@@ -393,7 +454,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月25日</div>
+          <div>2024年6月27日</div>
         </div>
       
       
@@ -425,15 +486,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Fiddler/" title="Fiddler之面板信息介绍">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Fiddler之面板信息介绍</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/xingblog.github.io/2024/06/27/locust%E5%AD%A6%E4%B9%A0/" title="Locust 入门安装及界面介绍">
+                        <span class="hidden-mobile">Locust 入门安装及界面介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
