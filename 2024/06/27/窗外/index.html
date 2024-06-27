@@ -16,23 +16,26 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LocustFile编写编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！ LocustFile Demo来自 LousctFile 官网例子 12345678910111213141516171819import timefrom locust import HttpUser, task, betweenclass QuickstartUser">
+    <meta name="description" content="窗外因为我的工位挨着窗口 累了就会转头看一下窗外的景色 有形形色色的行人走来走去 心里想大家都一样吧 嗯！大家都一样！ 转过头 不还得过这操蛋的日子！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LocustFile编写">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/locustfile%E7%BC%96%E5%86%99/index.html">
+<meta property="og:title" content="窗外">
+<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="LocustFile编写编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！ LocustFile Demo来自 LousctFile 官网例子 12345678910111213141516171819import timefrom locust import HttpUser, task, betweenclass QuickstartUser">
+<meta property="og:description" content="窗外因为我的工位挨着窗口 累了就会转头看一下窗外的景色 有形形色色的行人走来走去 心里想大家都一样吧 嗯！大家都一样！ 转过头 不还得过这操蛋的日子！">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-27T08:15:03.000Z">
-<meta property="article:modified_time" content="2024-06-27T08:57:15.130Z">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/%E6%93%8D%E8%9B%8B.jpeg">
+<meta property="article:published_time" content="2024-06-27T11:46:23.000Z">
+<meta property="article:modified_time" content="2024-06-27T11:55:48.621Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="Locust">
+<meta property="article:tag" content="随笔">
+<meta property="article:tag" content="生活">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/%E6%93%8D%E8%9B%8B.jpeg">
   
   
   
-  <title>LocustFile编写 - 韵少的个人技术博客</title>
+  <title>窗外 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LocustFile编写"></span>
+            <span id="subtitle" data-typed-text="窗外"></span>
           
         </div>
 
@@ -238,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-27 16:15" pubdate>
-          2024年6月27日 下午
+        <time datetime="2024-06-27 19:46" pubdate>
+          2024年6月27日 晚上
         </time>
       </span>
     
@@ -250,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          66 字
         
       </span>
     
@@ -261,7 +264,7 @@
         
         
         
-          14 分钟
+          1 分钟
         
       </span>
     
@@ -306,81 +309,19 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LocustFile编写</h1>
+            <h1 id="seo-header">窗外</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="LocustFile编写"><a href="#LocustFile编写" class="headerlink" title="LocustFile编写"></a>LocustFile编写</h1><p>编写LocustFile 可以使得我们的性能测试功能更加强大实现我们自定义的测试路径及判断错误等方法！</p>
-<h2 id="LocustFile-Demo"><a href="#LocustFile-Demo" class="headerlink" title="LocustFile Demo"></a>LocustFile Demo</h2><p>来自 LousctFile 官网例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> locust <span class="hljs-keyword">import</span> HttpUser, task, between<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">QuickstartUser</span>(<span class="hljs-title class_ inherited__">HttpUser</span>):<br>    wait_time = between(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>)<br><br><span class="hljs-meta">    @task</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hello_world</span>(<span class="hljs-params">self</span>):<br>        self.client.get(<span class="hljs-string">&quot;/hello&quot;</span>)<br>        self.client.get(<span class="hljs-string">&quot;/world&quot;</span>)<br><br><span class="hljs-meta">    @task(<span class="hljs-params"><span class="hljs-number">3</span></span>)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">view_items</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">for</span> item_id <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>            self.client.get(<span class="hljs-string">f&quot;/item?id=<span class="hljs-subst">&#123;item_id&#125;</span>&quot;</span>, name=<span class="hljs-string">&quot;/item&quot;</span>)<br>            time.sleep(<span class="hljs-number">1</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">on_start</span>(<span class="hljs-params">self</span>):<br>        self.client.post(<span class="hljs-string">&quot;/login&quot;</span>, json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;foo&quot;</span>, <span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;bar&quot;</span>&#125;)<br></code></pre></td></tr></table></figure>
-
-<p>这里我想还是采用官网的例子介绍，为了防止我讲的不够清晰 大家也可以访问下面的链接去官网查看</p>
-<p><a target="_blank" rel="noopener" href="https://docs.locust.io/en/stable/writing-a-locustfile.html">https://docs.locust.io/en/stable/writing-a-locustfile.html</a></p>
-<h2 id="解释（我的理解）"><a href="#解释（我的理解）" class="headerlink" title="解释（我的理解）"></a>解释（我的理解）</h2><p>其实从中可以看到这个案例和我们平常写的类好像没什么区别，除了继承了<font color=green >HttpUser</font>,以及用例<font color=green >@task</font> 装饰器</p>
-<p>那么首先来看一下具体实现了什么功能呢？</p>
-<h3 id="on-start"><a href="#on-start" class="headerlink" title="on_start()"></a>on_start()</h3><p>这个类实现了一个性能测试脚本，在每个模拟用户启动时，都会调用此名称的方法 会先运行 <font color=green >on_start</font>这个函数,然后进行了请求这里的host 可以在shell中指定也可以在web ui的那个界面中输入，可以看到进行了一个post请求，路径是 &#x2F;login, 请求体是一个json对象</p>
-<p>然后会在继续执行 这里的<font color=green >@task</font> 着重讲一下</p>
-<h3 id="task-装饰器"><a href="#task-装饰器" class="headerlink" title="task 装饰器"></a>task 装饰器</h3><p>@task 装饰器 表明当前方法是一个任务</p>
-<p>@task 是locust文件的核心。对于每个正在运行的用户，Locust 都会创建一个greenlet（协程或“微线程”），然后进行请求，要注意此时不是并发请求，是在&#x2F;hello 响应返回后才会继续请求&#x2F;world</p>
-<p>@task(3) 其中3是指权重，虽然程序运行是随机选择任务单是你给予了更大的权重的话运行的次数会更加多</p>
-<h3 id="wait-time"><a href="#wait-time" class="headerlink" title="wait_time"></a>wait_time</h3><p>wait_time 方法在每次任务执行后引入延迟。如果没有指定wait_time，则下一个任务将在上一个任务完成后立即执行。</p>
-<p>有四个函数 分别是：constant、 bettwen、 constant_throughput、constant_pacing</p>
-<p>constant: 在固定的时间内</p>
-<p>让每个用户每次执行固定的时间 1秒：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant(<span class="hljs-number">0.5</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
-
-
-<p>bettwen: 在最小值和最大值之间的随机时间</p>
-<p>让每个用户在每次执行任务之间等待 1 到 4 :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = between(<span class="hljs-number">0.5</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
-
-<p>constant_throughput：返回一个跟踪任务运行时间的函数，每次调用时，它将返回一个等待时间，该等待时间将尝试使每秒执行的任务运行次数等于 task_runs_per_second 参数指定的时间</p>
-<p>也就是说：以恒定的速率执行任务。它允许用户设置每秒或每分钟需要执行的任务数，以确保性能测试的稳定性。</p>
-<p>应用场景：</p>
-<pre><code class="hljs">在性能测试中，可能需要模拟不同的用户行为，如登录、搜索、购买等。constant_throughput 可以确保这些任务以恒定的速率执行，从而更准确地评估系统的性能和稳定性。
-
-在生产环境中，有时需要根据客户的需求设置应用的吞吐量。constant_throughput 可以帮助确保应用能够满足用户的需求，同时保持系统的稳定性。
-</code></pre>
-<p>也是 constant_pacing 的倒数</p>
-<p>无论任务执行时间如何，任务将始终每 10 秒执行一次：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant_throughput(<span class="hljs-number">0.1</span>)<br></code></pre></td></tr></table></figure>
-
-<p>constant_pacing：返回一个跟踪任务运行时间的函数，每次调用时它将返回一个等待时间，该等待时间将尝试使任务执行之间的总时间等于 wait_time 参数指定的时间。</p>
-<p>应用场景：</p>
-<p>   模拟真实用户行为：</p>
-<pre><code class="hljs">当进行性能测试时，有时需要模拟真实用户的操作行为。这些用户行为可能不是均匀分布的，但某些特定行为（如定期查询、定时任务等）需要按照
-
-固定的时间间隔来执行。使用 constant_pacing 可以确保这些任务按照预定的时间间隔执行，从而更准确地模拟真实用户的行为。
-</code></pre>
-<p>  系统稳定性测试：</p>
-<pre><code class="hljs">在测试系统的稳定性时，可能需要长时间运行任务，并观察系统在不同负载下的表现。使用 constant_pacing 可以确保任务以恒定的间隔执行，从
-
-而持续向系统施加稳定的负载，帮助发现潜在的稳定性和性能问题。
-</code></pre>
-<p>  资源分配和限制：</p>
-<pre><code class="hljs">在某些场景下，可能需要限制系统资源的使用，以确保不会超出特定的限制。例如，在测试一个API接口时，可能需要限制每分钟的请求数以避免对
-
-后端服务造成过大的压力。虽然 constant_throughput 可以用来控制每秒的请求数，但 constant_pacing 可以提供更细粒度的控制，确保请求
-
-按照特定的时间间隔发送，从而更有效地管理资源使用。
-</code></pre>
-<p>  定时任务的性能测试：</p>
-<pre><code class="hljs">许多系统都包含定时任务，这些任务需要按照预定的时间间隔执行。在进行这些定时任务的性能测试时，可以使用 constant_pacing 来模拟定时任
-
-务的执行间隔，并评估系统在不同负载下的性能表现。
-</code></pre>
-<p>  实时数据收集和处理：</p>
-<p>   对于需要实时收集和处理数据的系统（如监控系统、日志分析系统等），可能需要按照固定的时间间隔来执行数据收集和处理任务。使用 </p>
-<p>   constant_pacing 可以确保这些任务按照预定的时间间隔执行，从而确保数据的准确性和实时性。</p>
-<p>总的来说，constant_pacing 适用于那些需要精确控制任务执行间隔的场景，无论是在性能测试、资源分配还是实时数据处理中都可以发挥其独特的作用。</p>
-<p>可以理解为：就像一个定时器一样 他不关心你具体返回了没有 到了点就要执行</p>
-<p>无论任务执行时间如何，任务将始终每 10 秒执行一次：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wait_time = constant_pacing(<span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
-
-<h3 id="HttpUser"><a href="#HttpUser" class="headerlink" title="HttpUser"></a>HttpUser</h3><p> HttpUser每个用户提供一个client属性，即 的一个实例HttpSession，可用于向我们想要加载测试的目标系统发出 HTTP 请求。</p>
-<p> HttpUser里面也是封装了一系列的请求方式，例如 POST, GET , DELETE, PUT 等。</p>
-
+                <h1 id="窗外"><a href="#窗外" class="headerlink" title="窗外"></a>窗外</h1><p>因为我的工位挨着窗口</p>
+<p>累了就会转头看一下窗外的景色</p>
+<p>有形形色色的行人走来走去</p>
+<p>心里想大家都一样吧</p>
+<p>嗯！大家都一样！</p>
+<p>转过头</p>
+<p>不还得过这操蛋的日子！</p>
+<img src="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/%E6%93%8D%E8%9B%8B.jpeg" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
                 
               </div>
             
@@ -398,20 +339,13 @@
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
+  <a href="/xingblog.github.io/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Locust/" class="category-chain-item">Locust</a>
+  <a href="/xingblog.github.io/categories/%E9%9A%8F%E7%AC%94/2024%E5%B9%B4%E9%9A%8F%E7%AC%94/" class="category-chain-item">2024年随笔</a>
   
-  
-    <span>></span>
-    
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Locust/Locust-File%E7%BC%96%E5%86%99/" class="category-chain-item">Locust File编写</a>
-  
-  
-
   
 
   
@@ -429,7 +363,9 @@
       
         <a href="/xingblog.github.io/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/xingblog.github.io/tags/Locust/" class="print-no-link">#Locust</a>
+        <a href="/xingblog.github.io/tags/%E9%9A%8F%E7%AC%94/" class="print-no-link">#随笔</a>
+      
+        <a href="/xingblog.github.io/tags/%E7%94%9F%E6%B4%BB/" class="print-no-link">#生活</a>
       
     </div>
   
@@ -441,8 +377,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LocustFile编写</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/locustfile编写/</div>
+      <div>窗外</div>
+      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/窗外/</div>
     </div>
     <div class="license-meta">
       
@@ -486,18 +422,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/python%E5%87%BD%E6%95%B0%E5%9B%BA%E5%AE%9A%E5%BD%A2%E5%8F%82/" title="Python常见函数之函数固定形参">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python常见函数之函数固定形参</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/locust%E5%AD%A6%E4%B9%A0/" title="Locust 入门安装及界面介绍">
-                        <span class="hidden-mobile">Locust 入门安装及界面介绍</span>
+                      <a href="/xingblog.github.io/2024/06/27/reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" title="Python常见函数之reduce函数用法">
+                        <span class="hidden-mobile">Python常见函数之reduce函数用法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

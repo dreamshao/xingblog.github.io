@@ -4,6 +4,99 @@
   
   
   <entry>
+    <title>窗外</title>
+    <link href="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/"/>
+    <url>/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="窗外"><a href="#窗外" class="headerlink" title="窗外"></a>窗外</h1><p>因为我的工位挨着窗口</p><p>累了就会转头看一下窗外的景色</p><p>有形形色色的行人走来走去</p><p>心里想大家都一样吧</p><p>嗯！大家都一样！</p><p>转过头</p><p>不还得过这操蛋的日子！</p><img src="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/%E6%93%8D%E8%9B%8B.jpeg" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>随笔</category>
+      
+      <category>2024年随笔</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>随笔</tag>
+      
+      <tag>生活</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之reduce函数用法</title>
+    <link href="/xingblog.github.io/2024/06/27/reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/"/>
+    <url>/xingblog.github.io/2024/06/27/reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之reduce函数用法"><a href="#Python常见函数之reduce函数用法" class="headerlink" title="Python常见函数之reduce函数用法"></a>Python常见函数之reduce函数用法</h1><p>可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br></code></pre></td></tr></table></figure><p>我想让你利用上面的函数给我返回一个 12345</p><p>有人说可以啊 弄个列表每次传递一个对应的key获取value 然后append到列表里面。确实可以但是有点过于麻烦了，那么今天介绍的这个reduce函数绝效率嘎嘎的！</p><h2 id="reduce函数"><a href="#reduce函数" class="headerlink" title="reduce函数"></a>reduce函数</h2><p>reduce把一个函数作用在一个序列[x1, x2, x3, …]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，其效果就是：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)<br></code></pre></td></tr></table></figure><p>这么看可能不明白，下面让我来举个例子！</p><p>对一个序列求和，就可以用reduce实现：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a + b<br><br><span class="hljs-built_in">print</span>(reduce(add, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment"># 15</span><br></code></pre></td></tr></table></figure><p>这就实现了将 1,2,3,4,5 利用add 函数求和</p><p>亦或者 我们可以实现 将输入的内容按照整数输出</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a * <span class="hljs-number">10</span> + b<br><br><span class="hljs-built_in">print</span>(reduce(fn, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]))  <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure><p>这下应能看明白里面的奥妙了吧！</p><p>应用到最开始的那个问题那么我们就可以这么来做</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number_reduce</span>(<span class="hljs-params">order</span>):<br>    <span class="hljs-keyword">return</span> reduce(<span class="hljs-keyword">lambda</span> x, y: x * <span class="hljs-number">10</span> + y, <span class="hljs-built_in">map</span>(str_to_number, order))<br><br><span class="hljs-built_in">print</span>(str_to_number_reduce([<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>,<span class="hljs-string">&#x27;5&#x27;</span>])) <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python reduce函数用法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之函数固定形参</title>
+    <link href="/xingblog.github.io/2024/06/27/python%E5%87%BD%E6%95%B0%E5%9B%BA%E5%AE%9A%E5%BD%A2%E5%8F%82/"/>
+    <url>/xingblog.github.io/2024/06/27/python%E5%87%BD%E6%95%B0%E5%9B%BA%E5%AE%9A%E5%BD%A2%E5%8F%82/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之固定形参"><a href="#Python常见函数之固定形参" class="headerlink" title="Python常见函数之固定形参"></a>Python常见函数之固定形参</h1><p>如果有这样一个函数 add(a, b), 此时你进行调用的时候肯定知道需要传递两个形参 比如 add(1,2)， 但是如果我只想实现1的加法怎么办，有人说可以啊 每次都传递add(1,x) 就行但是这样可能还是会让别人误解！</p><p>那么， 如果我这样只需要传递add(2)或add(5) 就可以实现刚刚的算法，那么这样就算是将我们其中一个参数固定了，那么一起来看看怎么实现吧！</p><h2 id="functools-partial"><a href="#functools-partial" class="headerlink" title="functools.partial"></a>functools.partial</h2><p>partial用于部分应用一个函数，它基于一个函数创建一个可调用对象，把原函数的某些参数固定，调用时只需要传递未固定的参数即可。</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> functools<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-built_in">print</span>(a + b)<br><br><br>add = functools.partial(add, <span class="hljs-number">1</span>)<br>add(<span class="hljs-number">2</span>)  <span class="hljs-comment"># 输出：3</span><br></code></pre></td></tr></table></figure><p>add函数原本接收两个参数a和b，经过partial包装之后，a参数的值被固定为了1，新的add对象（注意此处add已经是一个可调用对象，而非函数，下文分析源码会看到）只需要接收一个参数即可。</p><p>通俗点说：就是把原函数的部分参数固定了初始值，新的调用只需要传递其它参数。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python 函数固定形参</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LocustFile编写</title>
     <link href="/xingblog.github.io/2024/06/27/locustfile%E7%BC%96%E5%86%99/"/>
     <url>/xingblog.github.io/2024/06/27/locustfile%E7%BC%96%E5%86%99/</url>
@@ -342,7 +435,7 @@
   
   
   <entry>
-    <title>生活随笔</title>
+    <title>2024年第二次在北京参加油车摇号</title>
     <link href="/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/"/>
     <url>/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/</url>
     
