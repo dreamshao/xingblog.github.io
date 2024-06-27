@@ -4,6 +4,367 @@
   
   
   <entry>
+    <title>面试题目之SQL面试题目之可以举一反三的SQL问题</title>
+    <link href="/xingblog.github.io/2024/06/27/SQL%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/"/>
+    <url>/xingblog.github.io/2024/06/27/SQL%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/</url>
+    
+    <content type="html"><![CDATA[<h1 id="面试题目之SQL面试题目可以举一反三的SQL问题"><a href="#面试题目之SQL面试题目可以举一反三的SQL问题" class="headerlink" title="面试题目之SQL面试题目可以举一反三的SQL问题"></a>面试题目之SQL面试题目可以举一反三的SQL问题</h1><h1 id="经典的sql题目可以举一反三"><a href="#经典的sql题目可以举一反三" class="headerlink" title="经典的sql题目可以举一反三"></a>经典的sql题目可以举一反三</h1><p>表结构：</p><ul><li>学生表student(id,name)</li><li>课程表course(id,name)</li><li>学生成绩表student_course(sid,cid,score)</li></ul><h2 id="编写创建表的sql"><a href="#编写创建表的sql" class="headerlink" title="编写创建表的sql"></a>编写创建表的sql</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> student( id <span class="hljs-type">int</span> unsigned <span class="hljs-keyword">primary</span> key auto_increment, <br>name <span class="hljs-type">char</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> ); <br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student(name) <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;张三&#x27;</span>),(<span class="hljs-string">&#x27;李四&#x27;</span>); <br> <br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> course( id <span class="hljs-type">int</span> unsigned <span class="hljs-keyword">primary</span> key auto_increment, name <span class="hljs-type">char</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> ); <br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> course(name) <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;语文&#x27;</span>),(<span class="hljs-string">&#x27;数学&#x27;</span>);  <br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> student_course( sid <span class="hljs-type">int</span> unsigned, cid <span class="hljs-type">int</span> unsigned, score <span class="hljs-type">int</span> unsigned <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>, <br><span class="hljs-keyword">foreign</span> key (sid) <span class="hljs-keyword">references</span> student(id), <span class="hljs-keyword">foreign</span> key (cid) <span class="hljs-keyword">references</span> course(id), <span class="hljs-keyword">primary</span> key(sid, cid) ); <br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student_course <span class="hljs-keyword">values</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">80</span>),(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">90</span>),(<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">90</span>),(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">70</span>);<br></code></pre></td></tr></table></figure><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="查询student表中重名的学生，结果包含id和name，按name-id升序"><a href="#查询student表中重名的学生，结果包含id和name，按name-id升序" class="headerlink" title="查询student表中重名的学生，结果包含id和name，按name,id升序"></a>查询student表中重名的学生，结果包含id和name，按name,id升序</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id,name<br><span class="hljs-keyword">from</span> student<br><span class="hljs-keyword">where</span> name <span class="hljs-keyword">in</span> (<br><span class="hljs-keyword">select</span> name <span class="hljs-keyword">from</span> student <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> name <span class="hljs-keyword">having</span>(<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">1</span>)<br>) <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> name;<br></code></pre></td></tr></table></figure><p>我们经常需要查询某一列重复的行，一般通过group by(有重复的列)然后取count&gt;1的值。 关系型数据库有他的局限性， 有些看似简单的查询写出来的sql很复杂，而且效率也会很低。</p><h3 id="在student-course表中查询平均分不及格的学生，列出学生id和平均分"><a href="#在student-course表中查询平均分不及格的学生，列出学生id和平均分" class="headerlink" title="在student_course表中查询平均分不及格的学生，列出学生id和平均分"></a>在student_course表中查询平均分不及格的学生，列出学生id和平均分</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> sid,<span class="hljs-built_in">avg</span>(score) <span class="hljs-keyword">as</span> avg_score<br><span class="hljs-keyword">from</span> student_course<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid <span class="hljs-keyword">having</span>(avg_score<span class="hljs-operator">&lt;</span><span class="hljs-number">60</span>);<br></code></pre></td></tr></table></figure><p>group by和having是最常考的 where子句中不能用聚集函数作为条件表达式，但是having短语可以，where和having的区别在于对用对象不同，where作用于记录，having作用于组。</p><h3 id="在student-course表中查询每门课成绩都不低于80的学生id"><a href="#在student-course表中查询每门课成绩都不低于80的学生id" class="headerlink" title="在student_course表中查询每门课成绩都不低于80的学生id"></a>在student_course表中查询每门课成绩都不低于80的学生id</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">distinct</span> sid<br><span class="hljs-keyword">from</span> student_course<br><span class="hljs-keyword">where</span> sid <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<br><span class="hljs-keyword">select</span> sid <span class="hljs-keyword">from</span> student_course<br><span class="hljs-keyword">where</span> score <span class="hljs-operator">&lt;</span> <span class="hljs-number">80</span>);<br></code></pre></td></tr></table></figure><p>用到反向思想，其实就是数理逻辑中的∀x:P和¬∃x:¬P是等价的。</p><h3 id="查询每个学生的总成绩，结果列出学生姓名和总成绩-如果使用下面的sql会过滤掉没有成绩的人"><a href="#查询每个学生的总成绩，结果列出学生姓名和总成绩-如果使用下面的sql会过滤掉没有成绩的人" class="headerlink" title="查询每个学生的总成绩，结果列出学生姓名和总成绩 如果使用下面的sql会过滤掉没有成绩的人"></a>查询每个学生的总成绩，结果列出学生姓名和总成绩 如果使用下面的sql会过滤掉没有成绩的人</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> name,<span class="hljs-built_in">sum</span>(score) total<br><span class="hljs-keyword">from</span> student,student_course<br><span class="hljs-keyword">where</span> student.id<span class="hljs-operator">=</span>student_course.sid<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid;<br></code></pre></td></tr></table></figure><p>更保险的做法应该是使用 左外连接</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> name,<span class="hljs-built_in">sum</span>(score)<br><span class="hljs-keyword">from</span> student <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> student_course<br><span class="hljs-keyword">on</span> student.id<span class="hljs-operator">=</span>student_course.sid<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid;<br></code></pre></td></tr></table></figure><h3 id="总成绩最高的学生，结果列出学生id和总成绩-下面的sql效率很低，因为要重复计算所有的总成绩。"><a href="#总成绩最高的学生，结果列出学生id和总成绩-下面的sql效率很低，因为要重复计算所有的总成绩。" class="headerlink" title="总成绩最高的学生，结果列出学生id和总成绩 下面的sql效率很低，因为要重复计算所有的总成绩。"></a>总成绩最高的学生，结果列出学生id和总成绩 下面的sql效率很低，因为要重复计算所有的总成绩。</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> sid,<span class="hljs-built_in">sum</span>(score) <span class="hljs-keyword">as</span> sum_score<br><span class="hljs-keyword">from</span> student_course <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid <span class="hljs-keyword">having</span> sum_score<span class="hljs-operator">&gt;=</span><span class="hljs-keyword">all</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-built_in">sum</span>(score) <span class="hljs-keyword">from</span> student_course <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid);<br></code></pre></td></tr></table></figure><p>因为order by中可以使用聚集函数，最简单的方法是：</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> sid,<span class="hljs-built_in">sum</span>(score) <span class="hljs-keyword">as</span> sum_score<br><span class="hljs-keyword">from</span> student_course <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> sid<br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sum_score <span class="hljs-keyword">desc</span> limit <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure><p>同理可以查总成绩的前三名。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>面试题目搜集</category>
+      
+      <category>SQL面试题目</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>算法</tag>
+      
+      <tag>Appium</tag>
+      
+      <tag>Selenium</tag>
+      
+      <tag>pytest</tag>
+      
+      <tag>SQL</tag>
+      
+      <tag>Redis</tag>
+      
+      <tag>Nginx</tag>
+      
+      <tag>用例设计</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>面试题目搜集之Python 算法题目动态规划问题</title>
+    <link href="/xingblog.github.io/2024/06/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%90%9C%E9%9B%86/"/>
+    <url>/xingblog.github.io/2024/06/27/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%90%9C%E9%9B%86/</url>
+    
+    <content type="html"><![CDATA[<h1 id="面试题目搜集之Python-算法题目动态规划问题"><a href="#面试题目搜集之Python-算法题目动态规划问题" class="headerlink" title="面试题目搜集之Python 算法题目动态规划问题"></a>面试题目搜集之Python 算法题目动态规划问题</h1><h2 id="来自某大厂"><a href="#来自某大厂" class="headerlink" title="来自某大厂"></a>来自某大厂</h2><p>一个机器人人位于一个 m x n 网格的左上角（起始点在下图中标记为“Start”），机器人每次只能向下或者向右移动一步，机器人试图达到网格的右下角(在下图中标记为“Finish”),问总共有多少条不同的路径？</p><h2 id="逻辑分析"><a href="#逻辑分析" class="headerlink" title="逻辑分析"></a>逻辑分析</h2><p>这是一个经典的动态规划问题。我们可以定义一个二维数组dp，其中dp[i][j]表示从左上角到达(i, j)这个格子的不同路径数量。</p><p>由于机器人只能向右或向下移动，因此到达(i, j)的路径数量等于到达其上方格子(i-1, j)的路径数量加上到达其左方格子(i, j-1)的路径数量。</p><p>（i &#x3D; 0）和第一列（j &#x3D; 0）的格子，由于它们只能从一个方向（分别是左方和上方）到达，因此路径数量都是1。</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">uniquePaths</span>(<span class="hljs-params">self, m: <span class="hljs-built_in">int</span>, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        result = [[<span class="hljs-number">1</span>] * m <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br>        <span class="hljs-keyword">for</span> index1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,n):<br>            <span class="hljs-keyword">for</span> index2 <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,m):<br>                result[index1][index2] = result[index1 - <span class="hljs-number">1</span>][index2] + result[index1][index2 - <span class="hljs-number">1</span>]<br>        output = result[-<span class="hljs-number">1</span>][-<span class="hljs-number">1</span>]<br>        <span class="hljs-keyword">return</span> output<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    re = Solution()<br>    m=<span class="hljs-number">2</span><br>    n=<span class="hljs-number">3</span><br>    result=re.uniquePaths(m,n)<br>    <span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>面试题目搜集</category>
+      
+      <category>Python 算法题目</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+      <tag>算法</tag>
+      
+      <tag>Appium</tag>
+      
+      <tag>Selenium</tag>
+      
+      <tag>pytest</tag>
+      
+      <tag>SQL</tag>
+      
+      <tag>Redis</tag>
+      
+      <tag>Nginx</tag>
+      
+      <tag>用例设计</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之RSA算法加密</title>
+    <link href="/xingblog.github.io/2024/06/27/RSA%E5%8A%A0%E5%AF%86/"/>
+    <url>/xingblog.github.io/2024/06/27/RSA%E5%8A%A0%E5%AF%86/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之RSA加密"><a href="#Python常见函数之RSA加密" class="headerlink" title="Python常见函数之RSA加密"></a>Python常见函数之RSA加密</h1><p>来自维基百科：RSA加密算法是一种非对称加密算法，在公开密钥加密和电子商业中被广泛使用。RSA是由罗纳德·李维斯特、阿迪·萨莫尔和伦纳德·阿德曼在1977年一起提出的。当时他们三人都在麻省理工学院工作。RSA 就是他们三人姓氏开头字母拼在一起组成的。</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_v1_5 <span class="hljs-keyword">as</span> Cipher_pkcs1_v1_5<br><span class="hljs-keyword">from</span> Crypto.Signature <span class="hljs-keyword">import</span> PKCS1_v1_5<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> Crypto.Hash <span class="hljs-keyword">import</span> SHA<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> Crypto<br><span class="hljs-keyword">import</span> secrets<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rsa_long_encrypt</span>(<span class="hljs-params">pub_key_str, msg</span>):<br>    msg = msg.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    length = <span class="hljs-built_in">len</span>(msg)<br>    default_length = <span class="hljs-number">117</span><br>    <span class="hljs-comment">#公钥加密</span><br>    pubobj = Cipher_pkcs1_v1_5.new(RSA.importKey(pub_key_str))<br>    <span class="hljs-comment">#长度不用分段</span><br>    <span class="hljs-keyword">if</span> length &lt; default_length:<br>        <span class="hljs-keyword">return</span> base64.b64encode(pubobj.encrypt(msg))<br>    <span class="hljs-comment">#需要分段</span><br>    offset = <span class="hljs-number">0</span><br>    res = []<br>    <span class="hljs-keyword">while</span> length - offset &gt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">if</span> length - offset &gt; default_length:<br>            res.append(pubobj.encrypt(msg[offset:offset+default_length]))<br>        <span class="hljs-keyword">else</span>:<br>            res.append(pubobj.encrypt(msg[offset:]))<br>        offset += default_length<br>    byte_data = <span class="hljs-string">b&#x27;&#x27;</span>.join(res)<br>    <span class="hljs-built_in">print</span>(base64.b64encode(byte_data))<br>    <span class="hljs-keyword">return</span> base64.b64encode(byte_data)<br><br>publickey = <span class="hljs-string">&#x27;your publick key&#x27;</span><br>public_key = <span class="hljs-string">&#x27;-----BEGIN PUBLIC KEY-----\n&#x27;</span>+ publickey +<span class="hljs-string">&#x27;\n-----END PUBLIC KEY-----&#x27;</span><br><br>data = &#123;<br>    <span class="hljs-string">&quot;payAmount&quot;</span>: <span class="hljs-number">1000000</span>,<br>    <span class="hljs-string">&quot;payChId&quot;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&quot;bankAssetId&quot;</span>: <span class="hljs-number">1001</span><br>&#125;<br><br>first = secrets.token_bytes(<span class="hljs-number">16</span>)<br>result = base64.b64encode(first).decode()<br><span class="hljs-built_in">print</span>(result)<br><span class="hljs-comment">#password = &#x27;password=&#x27;+result</span><br>password=<span class="hljs-string">&#x27;password=WBAPfpP5ph2MrWSOkznJGA==&#x27;</span><br><span class="hljs-built_in">print</span>(password)<br>infor = json.dumps(data)<br><span class="hljs-built_in">print</span>(infor)<br>infor=rsa_long_encrypt(public_key,password)<br><span class="hljs-built_in">print</span>(infor)<br><span class="hljs-built_in">print</span>(infor.decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python RSA算法加密</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+      <tag>RSA算法加密</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fillder过滤功能</title>
+    <link href="/xingblog.github.io/2024/06/27/fillder%E8%BF%87%E6%BB%A4%E5%8A%9F%E8%83%BD/"/>
+    <url>/xingblog.github.io/2024/06/27/fillder%E8%BF%87%E6%BB%A4%E5%8A%9F%E8%83%BD/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fillder过滤功能"><a href="#Fillder过滤功能" class="headerlink" title="Fillder过滤功能"></a>Fillder过滤功能</h1><p>Fillder 支持过滤HTTP请求，也可以通过标记不同的sessions 赋予不同的颜色进行区分。</p><h2 id="过滤sessions"><a href="#过滤sessions" class="headerlink" title="过滤sessions"></a>过滤sessions</h2><p>我们可以通过Find Sessions去发现我们想要的sessions会以黄色高亮显示，然后可以进行保存Fiddler中保存包，<br>选择你想保存的会话，然后单击File-&gt;Save-&gt;Selected Sessions，保存后的文件后缀是.saz。</p><p>文件中会保存完整的HTTP请求和HTTP响应，双击.saz文件，或者单击Fiddler菜单栏中的File-&gt;Load Archive,就能打开.saz文件。</p><h2 id="Fiddler中编辑会话"><a href="#Fiddler中编辑会话" class="headerlink" title="Fiddler中编辑会话"></a>Fiddler中编辑会话</h2><p>默认的情况下，Fiddler中的session是不可以修改的，选择一个session,用鼠标右键选择“Unlock For Editing”（快捷键是[F12]),这样就可以在Inspectors的Raw模式下编辑HTTP请求响应</p><h2 id="过滤会话"><a href="#过滤会话" class="headerlink" title="过滤会话"></a>过滤会话</h2><p>每次启动Fiddler，打开一个网页，都能看到十几个会话，看得人眼花缭乱，我们可以使用fiddler功能来过滤。<br>在Fiddler中找到Filters选项卡，选中”Use Filters”，就可以启动过滤功能。</p><img src="/xingblog.github.io/2024/06/27/fillder%E8%BF%87%E6%BB%A4%E5%8A%9F%E8%83%BD/%E8%BF%87%E6%BB%A4.png" class=""><p>Filters的Actions中，我们可以保存当前的过滤设置，也可以加载已经保存好的过滤设置。</p><img src="/xingblog.github.io/2024/06/27/fillder%E8%BF%87%E6%BB%A4%E5%8A%9F%E8%83%BD/%E4%BF%9D%E5%AD%98%E8%BF%87%E6%BB%A4.png" class=""><h1 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h1><p>快速帮助我们选择session的快捷键</p><table><thead><tr><th>快捷键</th><th>用途</th></tr></thead><tbody><tr><td>CTRL+X</td><td>删除所有的Session</td></tr><tr><td>CTRL+A</td><td>选择所有的Session</td></tr><tr><td>ESC</td><td>不选择任何的Session</td></tr><tr><td>CTRL+I</td><td>反选Session</td></tr><tr><td>Delete</td><td>删除选择的Session</td></tr><tr><td>Shift+Delete</td><td>删除未选择的Session</td></tr><tr><td>R</td><td>重放选择的Session（可以重放多个Session）</td></tr><tr><td>SHIFT+R</td><td>多次重放选择的Session(随后会提示你输入，重放几次)</td></tr><tr><td>U</td><td>无条件地重放选择的Session（不会发送IF-Modified-Since和IF-None-Match Headers)</td></tr><tr><td>SHIFT+U</td><td>无条件的重放选择的Session（随后会提示你输入，重放几次)</td></tr><tr><td>P</td><td>选择“当前Seesion”的”父Session”（这个功能取决于Referer Header)</td></tr><tr><td>C</td><td>选择“当前Session”的”子Session”</td></tr><tr><td>D</td><td>选择“重复的Session”(有相同的URL和相同的method）</td></tr><tr><td>BackSpace或鼠标上的”Back”</td><td>选择“上次选择的Session”</td></tr><tr><td>Insert</td><td></td></tr><tr><td>CTRL+1CTRL+2CTRL+3CTRL+4CTRL+5CTRL+6</td><td>用粗体和颜色标记选择的Session</td></tr><tr><td>M</td><td>给选择的Session添加注释</td></tr></tbody></table><h2 id="QuickExec命令行的使用"><a href="#QuickExec命令行的使用" class="headerlink" title="QuickExec命令行的使用"></a>QuickExec命令行的使用</h2><p>Fiddler的左下角有一个命令行工具叫做QuickExec,允许你直接输入命令</p><img src="/xingblog.github.io/2024/06/27/fillder%E8%BF%87%E6%BB%A4%E5%8A%9F%E8%83%BD/quickseck.png" class=""><p>常见命令如下：</p><p>help: 大力官方的使用页面的介绍，所有的命令都会列出来</p><p>Cls: 清屏（CTRL+X）快捷键也可以清屏)</p><p>Select:选择会话的命令</p><p>?.png:用来选择.png后缀的图片</p><p>Bpu:捕获request</p><p>Urlreplace:替换掉host</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试工具Fillder使用</category>
+      
+      <category>Fillder 过滤功能</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fillder的Decode/Encode小工具</title>
+    <link href="/xingblog.github.io/2024/06/27/fillder%E8%A7%A3%E7%A0%81%E5%B7%A5%E5%85%B7/"/>
+    <url>/xingblog.github.io/2024/06/27/fillder%E8%A7%A3%E7%A0%81%E5%B7%A5%E5%85%B7/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fillder的Decode-Encode小工具"><a href="#Fillder的Decode-Encode小工具" class="headerlink" title="Fillder的Decode&#x2F;Encode小工具"></a>Fillder的Decode&#x2F;Encode小工具</h1><p>可以通过单击工具栏中的”TextWizard”，就可以启动TextWizard小工具，可以支持很多不同的算法</p><img src="/xingblog.github.io/2024/06/27/fillder%E8%A7%A3%E7%A0%81%E5%B7%A5%E5%85%B7/%E8%A7%A3%E7%A0%81.png" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>测试工具Fillder使用</category>
+      
+      <category>Fillder 的Decode/Encode小工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fillder断点修改HTTP报文</title>
+    <link href="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/"/>
+    <url>/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fillder-断点修改HTTP报文"><a href="#Fillder-断点修改HTTP报文" class="headerlink" title="Fillder 断点修改HTTP报文"></a>Fillder 断点修改HTTP报文</h1><p>Fiddler可以修改任何HTTP请求的信息。</p><h2 id="全局断点"><a href="#全局断点" class="headerlink" title="全局断点"></a>全局断点</h2><p>启动Fiddler，单击菜单栏种的Rules-&gt;Automatics Breakpoint-&gt;Before Requests，或者使用快捷键【F11】,这种方法会拦截所有的对话。</p><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%85%A8%E5%B1%80%E6%96%AD%E7%82%B9.png" class=""><p>想要取消全局断点，可以单击Rules-&gt;Automatic Breakpoint -&gt; Disabled，或者快捷键【shift+F11】。</p><h2 id="单个断点"><a href="#单个断点" class="headerlink" title="单个断点"></a>单个断点</h2><p>已知某个请求URL地址，这个时候只需要针对一个请求打断点调试，其他的请求不拦截。</p><p>在fiddler 左下角的QuickExec命令中输入命令” bpu  拦截的网址“就可以实现拦截效果,取修改拦截的信息。</p><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%8D%95%E4%B8%AA%E6%96%AD%E7%82%B9.png" class=""><h2 id="Fiddler修改HTTP请求"><a href="#Fiddler修改HTTP请求" class="headerlink" title="Fiddler修改HTTP请求"></a>Fiddler修改HTTP请求</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87.png" class=""><p>如果想继续拦截可以点击黄色按钮”Break on Response”这个按钮，会继续拦截这个HTTP请求的响应。</p><p>Fiddler中设置断点修改HTTP响应 用法同上述全局断点， 单个断点<br> <br>第一种是全局断点，启动fiddler，单击Rulers-&gt;Automatic Breakpoint-&gt;After Response这种方法会中断所有的会话。<br>想要取消断点 ，可以单击Rules-&gt;Automatic Breakpoint-&gt;Disabled。<br>第二种是单个断点，在命令行“bpafter <a href="http://www.baidu.com”/">www.baidu.com”</a> 这种方法只会中断<a href="http://www.baidu.com./">www.baidu.com。</a><br>想要消除单个断点，可以在命令行中输入命令”bpafter”。</p><h2 id="伪造Referer"><a href="#伪造Referer" class="headerlink" title="伪造Referer"></a>伪造Referer</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9refer.png" class=""><p>拦截后我们可以在Raw中写入Refere：ww.dddddr.cn就可以 </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试工具Fillder使用</category>
+      
+      <category>Fillder 断点修改HTTP报文</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fillder简单的性能测试</title>
+    <link href="/xingblog.github.io/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    <url>/xingblog.github.io/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fillder-简单的性能测试"><a href="#Fillder-简单的性能测试" class="headerlink" title="Fillder 简单的性能测试"></a>Fillder 简单的性能测试</h1><h2 id="通过查看statistics面板查看"><a href="#通过查看statistics面板查看" class="headerlink" title="通过查看statistics面板查看"></a>通过查看statistics面板查看</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.png" class=""><p>我们打开一个网页的请求，通过查看Statistics面板可以清楚的看到每个HTTP请求的响应时间。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试工具Fillder使用</category>
+      
+      <category>Fillder 简单的性能测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之 python时间戳</title>
+    <link href="/xingblog.github.io/2024/06/27/python%E6%97%B6%E9%97%B4%E6%88%B3/"/>
+    <url>/xingblog.github.io/2024/06/27/python%E6%97%B6%E9%97%B4%E6%88%B3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之-Python-时间戳"><a href="#Python常见函数之-Python-时间戳" class="headerlink" title="Python常见函数之 Python 时间戳"></a>Python常见函数之 Python 时间戳</h1><p>来自百度百科： 时间戳，是指用户应用数字签名技术时，产生的涵盖原始文件信息、签名时间、签名参数等信息。 其主要目的是在于，能够通过一定的技术手段认证数据产生的时间，从而得知这段数据在产生之后，是否有被篡改。</p><p>个人目前接触到使用领域：在做全球化产品的时候依赖于时间戳在不同时区进行展示</p><h2 id="time-时间戳等相关转换"><a href="#time-时间戳等相关转换" class="headerlink" title="time 时间戳等相关转换"></a>time 时间戳等相关转换</h2><h3 id="datetime与时间戳格式相互转换"><a href="#datetime与时间戳格式相互转换" class="headerlink" title="datetime与时间戳格式相互转换"></a>datetime与时间戳格式相互转换</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-comment"># 将datetime转换为unix时间戳</span><br>dtime = datetime.date.today()<br>unix_time = time.mktime(dtime.timetuple())<br><span class="hljs-built_in">print</span>(dtime, unix_time)   <span class="hljs-comment"># 2019-09-02 1567353600.0</span><br><br><span class="hljs-comment"># 将unix时间戳转换成datetime</span><br>dtime2 = datetime.datetime.fromtimestamp(unix_time)<br><span class="hljs-built_in">print</span>(dtime2)<br><span class="hljs-number">1234567891011</span><br></code></pre></td></tr></table></figure><h3 id="根据时间差获得时间"><a href="#根据时间差获得时间" class="headerlink" title="根据时间差获得时间"></a>根据时间差获得时间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">yestoday = datetime.date.today() + datetime.timedelta(days=-<span class="hljs-number">1</span>)  <span class="hljs-comment"># days=-1，代表昨天，-2代表前天，1代表明天...</span><br></code></pre></td></tr></table></figure><h3 id="datetime-格式与字符串格式的相互转换"><a href="#datetime-格式与字符串格式的相互转换" class="headerlink" title="datetime 格式与字符串格式的相互转换"></a>datetime 格式与字符串格式的相互转换</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># datetime 格式与字符串格式的相互转换</span><br>today_str =datetime.date.today().strftime(<span class="hljs-string">&quot;%Y-%m-%d&quot;</span>)  <span class="hljs-comment"># 转换为字符串</span><br>today_datetime = datetime.datetime.strptime(<span class="hljs-string">&quot;2019-09-01 00:00:00&quot;</span>, <span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)  <span class="hljs-comment"># 转换为datetime</span><br><span class="hljs-built_in">print</span>(today_str,<span class="hljs-built_in">type</span>(today_str)) <br><span class="hljs-built_in">print</span>(today_datetime,<span class="hljs-built_in">type</span>(today_datetime))<br><span class="hljs-number">12345</span><br></code></pre></td></tr></table></figure><h3 id="定时时间表"><a href="#定时时间表" class="headerlink" title="定时时间表"></a>定时时间表</h3><p>比如获得24个小时的列表（以下是每隔半个小时）</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_time_list</span>(<span class="hljs-params">self</span>):<br>     start_time = datetime.datetime.strptime(<span class="hljs-string">&quot;2019-08-28 14:00:00&quot;</span>, <span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>     unix_start_time = time.mktime(start_time.timetuple())  <span class="hljs-comment"># 转换成时间戳</span><br>     un_timelist = [(unix_start_time+i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">86400</span>+<span class="hljs-number">1</span>, <span class="hljs-number">1800</span>)]  <br>     timelist = [datetime.datetime.fromtimestamp(un_time) <span class="hljs-keyword">for</span> un_time <span class="hljs-keyword">in</span> un_timelist]  <span class="hljs-comment"># 再转换成datetime格式</span><br>     <span class="hljs-keyword">return</span> timelist<br></code></pre></td></tr></table></figure><h3 id="各个级别的时间戳获取"><a href="#各个级别的时间戳获取" class="headerlink" title="各个级别的时间戳获取"></a>各个级别的时间戳获取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> datetime<br><br>original=time.time()   <span class="hljs-comment"># 原始时间戳</span><br>Secondlevel =<span class="hljs-built_in">int</span>(original)       <span class="hljs-comment"># 秒级别时间戳</span><br>millisecondlevel=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(original*<span class="hljs-number">1000</span>)   <span class="hljs-comment"># 毫秒级别时间戳</span><br>microsecondlevel=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(original*<span class="hljs-number">1000000</span>)  <span class="hljs-comment"># 微秒级别时间戳</span><br></code></pre></td></tr></table></figure><h3 id="毫秒级别时间戳转换时间"><a href="#毫秒级别时间戳转换时间" class="headerlink" title="毫秒级别时间戳转换时间"></a>毫秒级别时间戳转换时间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">timeStamp</span>(<span class="hljs-params">timeNum</span>):<br>    timeStamp = <span class="hljs-built_in">float</span>(timeNum / <span class="hljs-number">1000</span>)<br>    timeArray = time.localtime(timeStamp)<br>    otherStyleTime = time.strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, timeArray)<br>    <span class="hljs-built_in">print</span>(otherStyleTime)<br><br><br>timeStamp(<span class="hljs-number">1622674800000</span>)  <span class="hljs-comment"># 2021-06-02 23:00:00</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python 时间戳函数</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>生活随笔</title>
+    <link href="/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/"/>
+    <url>/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/</url>
+    
+    <content type="html"><![CDATA[<h1 id="2024年第二次在北京参加油车摇号"><a href="#2024年第二次在北京参加油车摇号" class="headerlink" title="2024年第二次在北京参加油车摇号"></a>2024年第二次在北京参加油车摇号</h1><p>我是从2023年才满足了参加北京摇号的资格，两次结果可能不用想也知道没中，看着北京摇号贴吧哪些人在疯狂吐槽这些摇号政策，我心里只想哎，这破京牌有啥用！</p><p>然后转头就许愿 2024下半年让我中！😂😂😂</p><img src="/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/%E4%B8%AD%E7%AD%BE.jpeg" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>随笔</category>
+      
+      <category>2024年随笔</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>随笔</tag>
+      
+      <tag>生活</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之 is和==的区别</title>
+    <link href="/xingblog.github.io/2024/06/27/is%E5%92%8C==%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <url>/xingblog.github.io/2024/06/27/is%E5%92%8C==%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="python-常见函数之-is-与-的区别"><a href="#python-常见函数之-is-与-的区别" class="headerlink" title="python 常见函数之 is 与 &#x3D;&#x3D; 的区别"></a>python 常见函数之 is 与 &#x3D;&#x3D; 的区别</h1><h2 id="is"><a href="#is" class="headerlink" title="is"></a>is</h2><p>is 比较 id()</p><h2 id=""><a href="#" class="headerlink" title="&#x3D;&#x3D;"></a>&#x3D;&#x3D;</h2><p>&#x3D;&#x3D; 比较 变量值</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># is, 本质 id(a) 与 id(b) 比较</span><br><span class="hljs-comment"># = 右边为对象时，表示生成新对象 </span><br><br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] <br>b = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] <br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)   <span class="hljs-comment"># False, 说明 id 不同</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a), <span class="hljs-built_in">id</span>(b))<br><span class="hljs-built_in">print</span>(a == b)   <span class="hljs-comment"># True, 值相同，内部 __eq__ 魔法函数</span><br><br><span class="hljs-comment"># 小整数、小字符串 全局唯一 intern机制</span><br><br>a1 = <span class="hljs-number">1</span> a2 = <span class="hljs-number">1</span> <br><span class="hljs-built_in">print</span>(a1 <span class="hljs-keyword">is</span> a2)     <span class="hljs-comment"># True  </span><br>s1 = <span class="hljs-string">&#x27;abc&#x27;</span> <br>s2 = <span class="hljs-string">&#x27;abc&#x27;</span> <br><span class="hljs-built_in">print</span>(s1 <span class="hljs-keyword">is</span> s2)     <span class="hljs-comment"># True</span><br><br><span class="hljs-comment"># 类</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">People</span>:    <br>    <span class="hljs-keyword">pass</span>   <br><br><span class="hljs-comment"># People 全局唯一 </span><br>person = People() <br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(person) <span class="hljs-keyword">is</span> People)   <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python is和==的区别</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>python常见函数之 isinstance和type的区别</title>
+    <link href="/xingblog.github.io/2024/06/27/isinstance%E5%92%8Ctype%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <url>/xingblog.github.io/2024/06/27/isinstance%E5%92%8Ctype%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="python常见函数之-isinstance和type的区别"><a href="#python常见函数之-isinstance和type的区别" class="headerlink" title="python常见函数之 isinstance和type的区别"></a>python常见函数之 isinstance和type的区别</h1><h2 id="isinstance"><a href="#isinstance" class="headerlink" title="isinstance"></a>isinstance</h2><p>isinstance 会去查找继承链</p><h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><p>type 只判断变量的内存地址</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>:<br>    <span class="hljs-keyword">pass</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span>(<span class="hljs-title class_ inherited__">A</span>):<br>    <span class="hljs-keyword">pass</span><br><br>b = B()<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(b, B)) <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(b, A)) <span class="hljs-comment"># True</span><br><br><span class="hljs-comment"># is 判断 id 的意思</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(b) <span class="hljs-keyword">is</span> B) <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(b) <span class="hljs-keyword">is</span> A)     <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python isinstance和type的区别</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>测试开发工具JMETER</title>
     <link href="/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7JMETER/"/>
     <url>/xingblog.github.io/2024/06/26/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7JMETER/</url>
@@ -15,7 +376,7 @@
       
       <category>测试开发工具JMETER</category>
       
-      <category>测试开发工具JMETER 使用</category>
+      <category>JMETER 切换语言</category>
       
     </categories>
     
@@ -62,11 +423,11 @@
   
   
   <entry>
-    <title>python 常见函数</title>
+    <title>python常见函数之 Python 切片操作详解</title>
     <link href="/xingblog.github.io/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
     <url>/xingblog.github.io/2024/06/25/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
     
-    <content type="html"><![CDATA[<h1 id="Python常见函数之-Python-切片操作详解"><a href="#Python常见函数之-Python-切片操作详解" class="headerlink" title="Python常见函数之 Python 切片操作详解"></a>Python常见函数之 Python 切片操作详解</h1><p>在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 <code>[start:stop:step]</code>，其中 <code>start</code> 是起始索引（包含），<code>stop</code> 是结束索引（不包含），<code>step</code> 是步长。  </p><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>第一个数字 start 表示切片开始位置，默认 0</p><p>第二个数字 end 表示切片截止(但不包含)位置，默认列表长度</p><p>第三个数字 step 表示切片的步骤，默认为 1</p><p>当 start 为 0 时可以省略</p><p>当 end 为列表长度时可以省略</p><p>当 step 为 1 时可以省略，并且省略步长时可以同时省略最后一个冒号</p><p>当 step 为负数时，表示反向切片，这时 start 应该比 end 的值要大才行</p><h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">a_list = [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>, <span class="hljs-number">15</span>, <span class="hljs-number">17</span>]<br><br>a_list[::]      <span class="hljs-comment"># 返回包含原列表中所有元素的新列表</span><br><br>a_list[::-<span class="hljs-number">1</span>]    <span class="hljs-comment"># 返回包含原列表中所有元素的逆向新列表</span><br><br>a_list[::<span class="hljs-number">2</span>]     <span class="hljs-comment"># 隔一个元素取一个，获取偶数位置的元素</span><br><br>a_list[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>]    <span class="hljs-comment"># 隔一个元素取一个，获取奇数位置的元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">6</span>]     <span class="hljs-comment"># 指定切片的开始和结束位置</span><br><br>a_list[<span class="hljs-number">0</span>:<span class="hljs-number">100</span>]   <span class="hljs-comment"># 切片结束位置大于列表长度是，从列表尾部截断</span><br><br>a_list[<span class="hljs-number">100</span>:]    <span class="hljs-comment"># 切片开始位置大于列表长度时，返回空列表</span><br><br><br><br>a_list[<span class="hljs-built_in">len</span>(a_list):<span class="hljs-number">0</span>] = [<span class="hljs-number">9</span>]     <span class="hljs-comment"># 在列表尾部增加元素</span><br><br>a_list[:<span class="hljs-number">0</span>] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]             <span class="hljs-comment"># 在列表头部增加元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">3</span>] = [<span class="hljs-number">100</span>]             <span class="hljs-comment"># 在列表中间位置插入元素</span><br><br>a_list[:<span class="hljs-number">2</span>] = [<span class="hljs-number">100</span>, <span class="hljs-number">200</span>]         <span class="hljs-comment"># 替换列表元素，等号两边长度相等</span><br><br>a_list[<span class="hljs-number">3</span>:] = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]          <span class="hljs-comment"># 替换列表元素，等号两边长度可以不相等</span><br><br>a_list[:<span class="hljs-number">3</span>] = []                 <span class="hljs-comment"># 删除列表中前 3 个元素</span><br><br></code></pre></td></tr></table></figure><h1 id="python-常见函数之-is-与-的区别"><a href="#python-常见函数之-is-与-的区别" class="headerlink" title="python 常见函数之 is 与 &#x3D;&#x3D; 的区别"></a>python 常见函数之 is 与 &#x3D;&#x3D; 的区别</h1><h2 id="is"><a href="#is" class="headerlink" title="is"></a>is</h2><p>is 比较 id()</p><h2 id=""><a href="#" class="headerlink" title="&#x3D;&#x3D;"></a>&#x3D;&#x3D;</h2><p>&#x3D;&#x3D; 比较 变量值</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># is, 本质 id(a) 与 id(b) 比较</span><br><span class="hljs-comment"># = 右边为对象时，表示生成新对象 </span><br><br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] <br>b = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>] <br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)   <span class="hljs-comment"># False, 说明 id 不同</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a), <span class="hljs-built_in">id</span>(b))<br><span class="hljs-built_in">print</span>(a == b)   <span class="hljs-comment"># True, 值相同，内部 __eq__ 魔法函数</span><br><br><span class="hljs-comment"># 小整数、小字符串 全局唯一 intern机制</span><br><br>a1 = <span class="hljs-number">1</span> a2 = <span class="hljs-number">1</span> <br><span class="hljs-built_in">print</span>(a1 <span class="hljs-keyword">is</span> a2)     <span class="hljs-comment"># True  </span><br>s1 = <span class="hljs-string">&#x27;abc&#x27;</span> s2 = <span class="hljs-string">&#x27;abc&#x27;</span> <br><span class="hljs-built_in">print</span>(s1 <span class="hljs-keyword">is</span> s2)     <span class="hljs-comment"># True</span><br><br><span class="hljs-comment"># 类</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">People</span>:    <br>          <span class="hljs-keyword">pass</span>   <br><br><span class="hljs-comment"># People 全局唯一 </span><br>person = People() <span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(person) <span class="hljs-keyword">is</span> People)   <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="Python常见函数之-Python-切片操作详解"><a href="#Python常见函数之-Python-切片操作详解" class="headerlink" title="Python常见函数之 Python 切片操作详解"></a>Python常见函数之 Python 切片操作详解</h1><p>在 Python 中，切片（slicing）是一种强大的工具，它允许我们访问序列类型（如列表、元组、字符串等）中的一部分元素。切片的基本语法是 <code>[start:stop:step]</code>，其中 <code>start</code> 是起始索引（包含），<code>stop</code> 是结束索引（不包含），<code>step</code> 是步长。  </p><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>第一个数字 start 表示切片开始位置，默认 0</p><p>第二个数字 end 表示切片截止(但不包含)位置，默认列表长度</p><p>第三个数字 step 表示切片的步骤，默认为 1</p><p>当 start 为 0 时可以省略</p><p>当 end 为列表长度时可以省略</p><p>当 step 为 1 时可以省略，并且省略步长时可以同时省略最后一个冒号</p><p>当 step 为负数时，表示反向切片，这时 start 应该比 end 的值要大才行</p><h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">a_list = [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>, <span class="hljs-number">15</span>, <span class="hljs-number">17</span>]<br><br>a_list[::]      <span class="hljs-comment"># 返回包含原列表中所有元素的新列表</span><br><br>a_list[::-<span class="hljs-number">1</span>]    <span class="hljs-comment"># 返回包含原列表中所有元素的逆向新列表</span><br><br>a_list[::<span class="hljs-number">2</span>]     <span class="hljs-comment"># 隔一个元素取一个，获取偶数位置的元素</span><br><br>a_list[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>]    <span class="hljs-comment"># 隔一个元素取一个，获取奇数位置的元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">6</span>]     <span class="hljs-comment"># 指定切片的开始和结束位置</span><br><br>a_list[<span class="hljs-number">0</span>:<span class="hljs-number">100</span>]   <span class="hljs-comment"># 切片结束位置大于列表长度是，从列表尾部截断</span><br><br>a_list[<span class="hljs-number">100</span>:]    <span class="hljs-comment"># 切片开始位置大于列表长度时，返回空列表</span><br><br><br><br>a_list[<span class="hljs-built_in">len</span>(a_list):<span class="hljs-number">0</span>] = [<span class="hljs-number">9</span>]     <span class="hljs-comment"># 在列表尾部增加元素</span><br><br>a_list[:<span class="hljs-number">0</span>] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]             <span class="hljs-comment"># 在列表头部增加元素</span><br><br>a_list[<span class="hljs-number">3</span>:<span class="hljs-number">3</span>] = [<span class="hljs-number">100</span>]             <span class="hljs-comment"># 在列表中间位置插入元素</span><br><br>a_list[:<span class="hljs-number">2</span>] = [<span class="hljs-number">100</span>, <span class="hljs-number">200</span>]         <span class="hljs-comment"># 替换列表元素，等号两边长度相等</span><br><br>a_list[<span class="hljs-number">3</span>:] = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]          <span class="hljs-comment"># 替换列表元素，等号两边长度可以不相等</span><br><br>a_list[:<span class="hljs-number">3</span>] = []                 <span class="hljs-comment"># 删除列表中前 3 个元素</span><br><br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
@@ -74,6 +435,8 @@
       <category>Python</category>
       
       <category>Python 常见函数</category>
+      
+      <category>Python 常见切片操作</category>
       
     </categories>
     
