@@ -16,23 +16,24 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python常见函数之reduce函数用法可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现 123def str_to_number(order):    digits &#x3D; &#123;&#x27;0&#x27;: 0, &#x27;1&#x27;: 1, &#x27;2&#x27;: 2, &#x27;3&#x27;: 3, &#x27;4&#x27;: 4, &amp;#">
+    <meta name="description" content="Python常见函数之yield函数yield 在 Python 中是一个用于定义生成器的关键字，它允许函数在迭代过程中产生值，而不需要一次性计算所有值。以下是关于 yield 的更详细介绍： 基本概念 定义生成器函数：当一个函数中包含了 yield 语句时，这个函数就被称为生成器函数。调用生成器函数时，它不会立即执行函数体中的全部代码，而是返回一个生成器对象。  生成器的工作原理：生成器是一种特">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python常见函数之reduce函数用法">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="Python常见函数之yield函数">
+<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/yield%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python常见函数之reduce函数用法可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现 123def str_to_number(order):    digits &#x3D; &#123;&#x27;0&#x27;: 0, &#x27;1&#x27;: 1, &#x27;2&#x27;: 2, &#x27;3&#x27;: 3, &#x27;4&#x27;: 4, &amp;#">
+<meta property="og:description" content="Python常见函数之yield函数yield 在 Python 中是一个用于定义生成器的关键字，它允许函数在迭代过程中产生值，而不需要一次性计算所有值。以下是关于 yield 的更详细介绍： 基本概念 定义生成器函数：当一个函数中包含了 yield 语句时，这个函数就被称为生成器函数。调用生成器函数时，它不会立即执行函数体中的全部代码，而是返回一个生成器对象。  生成器的工作原理：生成器是一种特">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-27T11:19:35.000Z">
-<meta property="article:modified_time" content="2024-06-28T11:14:54.082Z">
+<meta property="article:published_time" content="2024-06-28T09:53:28.000Z">
+<meta property="article:modified_time" content="2024-06-28T10:00:33.725Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="python">
+<meta property="article:tag" content="yield">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Python常见函数之reduce函数用法 - 韵少的个人技术博客</title>
+  <title>Python常见函数之yield函数 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python常见函数之reduce函数用法"></span>
+            <span id="subtitle" data-typed-text="Python常见函数之yield函数"></span>
           
         </div>
 
@@ -238,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-27 19:19" pubdate>
-          2024年6月27日 晚上
+        <time datetime="2024-06-28 17:53" pubdate>
+          2024年6月28日 下午
         </time>
       </span>
     
@@ -250,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          440 字
+          1k 字
         
       </span>
     
@@ -261,7 +262,7 @@
         
         
         
-          4 分钟
+          9 分钟
         
       </span>
     
@@ -306,31 +307,49 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python常见函数之reduce函数用法</h1>
+            <h1 id="seo-header">Python常见函数之yield函数</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python常见函数之reduce函数用法"><a href="#Python常见函数之reduce函数用法" class="headerlink" title="Python常见函数之reduce函数用法"></a>Python常见函数之reduce函数用法</h1><p>可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br></code></pre></td></tr></table></figure>
-
-<p>我想让你利用上面的函数给我返回一个 12345</p>
-<p>有人说可以啊 弄个列表每次传递一个对应的key获取value 然后append到列表里面。确实可以但是有点过于麻烦了，那么今天介绍的这个reduce函数绝效率嘎嘎的！</p>
-<h2 id="reduce函数"><a href="#reduce函数" class="headerlink" title="reduce函数"></a>reduce函数</h2><p>reduce把一个函数作用在一个序列[x1, x2, x3, …]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，其效果就是：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)<br></code></pre></td></tr></table></figure>
-
-<p>这么看可能不明白，下面让我来举个例子！</p>
-<p>对一个序列求和，就可以用reduce实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a + b<br><br><span class="hljs-built_in">print</span>(reduce(add, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment"># 15</span><br></code></pre></td></tr></table></figure>
-
-<p>这就实现了将 1,2,3,4,5 利用add 函数求和</p>
-<p>亦或者 我们可以实现 将输入的内容按照整数输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a * <span class="hljs-number">10</span> + b<br><br><span class="hljs-built_in">print</span>(reduce(fn, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]))  <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure>
-
-<p>这下应能看明白里面的奥妙了吧！</p>
-<p>应用到最开始的那个问题那么我们就可以这么来做</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number_reduce</span>(<span class="hljs-params">order</span>):<br>    <span class="hljs-keyword">return</span> reduce(<span class="hljs-keyword">lambda</span> x, y: x * <span class="hljs-number">10</span> + y, <span class="hljs-built_in">map</span>(str_to_number, order))<br><br><span class="hljs-built_in">print</span>(str_to_number_reduce([<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>,<span class="hljs-string">&#x27;5&#x27;</span>])) <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure>
-
+                <h1 id="Python常见函数之yield函数"><a href="#Python常见函数之yield函数" class="headerlink" title="Python常见函数之yield函数"></a>Python常见函数之yield函数</h1><p><code>yield</code> 在 Python 中是一个用于定义生成器的关键字，它允许函数在迭代过程中产生值，而不需要一次性计算所有值。以下是关于 <code>yield</code> 的更详细介绍：</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p><strong>定义生成器函数</strong>：当一个函数中包含了 <code>yield</code> 语句时，这个函数就被称为生成器函数。调用生成器函数时，它不会立即执行函数体中的全部代码，而是返回一个生成器对象。</p>
+</li>
+<li><p><strong>生成器的工作原理</strong>：生成器是一种特殊类型的迭代器，由生成器函数创建。当生成器函数执行到 <code>yield</code> 语句时，它会生成一个值，并保存其当前状态，然后等待下一次调用来继续执行。</p>
+</li>
+</ol>
+<h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ol>
+<li><p><strong>暂停和恢复</strong>：<code>yield</code> 允许函数在迭代过程中暂停和恢复，从而逐个生成值，而不是一次性计算所有值。</p>
+</li>
+<li><p><strong>内存效率</strong>：使用 <code>yield</code> 可以避免创建大型的列表来保存数据，从而节约内存。特别是当处理大量数据时，这种优势尤为明显。</p>
+</li>
+<li><p><strong>状态保持</strong>：生成器能够记住上一次返回时的状态，包括局部变量和堆栈信息等。这使得生成器能够在下次迭代时从上次离开的位置继续执行。</p>
+</li>
+</ol>
+<h3 id="yield-的应用场景"><a href="#yield-的应用场景" class="headerlink" title="yield 的应用场景"></a>yield 的应用场景</h3><ol>
+<li><p><strong>节省内存</strong>：生成器在生成值时会“暂停”函数，而不是像列表推导式那样一次性生成所有值。这对于处理大量数据或无限序列时非常有用，因为它允许你按需生成值，从而节省内存。</p>
+</li>
+<li><p><strong>简化代码</strong>：生成器可以用于简化复杂的迭代逻辑。例如，你可以使用生成器来模拟一个无限序列（如斐波那契数列），而无需在内存中存储整个序列。</p>
+</li>
+<li><p><strong>协同程序</strong>：虽然这不是 Python 的标准用法，但 <code>yield</code> 也可以用于实现协同程序（coroutines），这是一种可以暂停和恢复执行的函数。在 Python 3.5 及更高版本中，<code>async</code> 和 <code>await</code> 关键字被引入以更直接地支持异步编程，但 <code>yield</code> 仍然在某些场景中用于此目的。</p>
+</li>
+<li><p><strong>数据流水线</strong>：在数据分析和机器学习等领域中，生成器常用于创建数据流水线。你可以使用生成器函数从数据源中读取数据，对数据进行预处理，然后将处理后的数据传递给下一个阶段。由于生成器按需生成数据，因此这种流水线可以非常高效地处理大量数据。</p>
+</li>
+<li><p><strong>惰性求值</strong>：生成器允许你实现惰性求值（lazy evaluation），即只有在需要时才计算值。这在处理复杂计算或大型数据集时非常有用，因为它可以避免不必要的计算并节省资源。</p>
+</li>
+<li><p><strong>与迭代器的交互</strong>：生成器也是迭代器的一种，因此它们可以与任何接受迭代器的 Python 结构（如 <code>for</code> 循环、列表推导式、<code>map()</code>、<code>filter()</code> 等）一起使用。这使得生成器在 Python 中非常灵活和强大。</p>
+</li>
+</ol>
+<h3 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">simple_generator</span>():<br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">2</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span><br><br><span class="hljs-comment"># 创建生成器对象</span><br>generator = simple_generator()<br><br><span class="hljs-comment"># 通过 for 循环迭代生成器</span><br><span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> generator:<br>    <span class="hljs-built_in">print</span>(value)  <span class="hljs-comment"># 输出: 1, 2, 3</span><br><br><span class="hljs-comment"># 也可以使用 next() 函数迭代生成器</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">next</span>(generator))  <span class="hljs-comment"># 输出: StopIteration（因为生成器已经迭代完毕）</span><br></code></pre></td></tr></table></figure>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p>当生成器函数执行到 <code>yield</code> 语句时，它会生成一个值并暂停执行。此时，生成器的状态会被保存下来，包括局部变量和堆栈信息等。</p>
+</li>
+<li><p>调用生成器对象的 <code>__next__()</code> 方法（或者在 for 循环中迭代）会使生成器恢复执行，直到遇到下一个 <code>yield</code> 语句或函数结束。</p>
+</li>
+<li><p>如果生成器函数中没有更多的 <code>yield</code> 语句或已经执行完毕，再次调用 <code>__next__()</code> 方法会引发 <code>StopIteration</code> 异常。</p>
+</li>
+</ul>
 
                 
               </div>
@@ -359,7 +378,7 @@
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" class="category-chain-item">Python reduce函数用法</a>
+  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-yield%E5%87%BD%E6%95%B0/" class="category-chain-item">Python yield函数</a>
   
   
 
@@ -382,6 +401,8 @@
       
         <a href="/xingblog.github.io/tags/python/" class="print-no-link">#python</a>
       
+        <a href="/xingblog.github.io/tags/yield/" class="print-no-link">#yield</a>
+      
     </div>
   
 </div>
@@ -392,8 +413,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python常见函数之reduce函数用法</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/reduce函数用法/</div>
+      <div>Python常见函数之yield函数</div>
+      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/28/yield函数/</div>
     </div>
     <div class="license-meta">
       
@@ -405,7 +426,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月27日</div>
+          <div>2024年6月28日</div>
         </div>
       
       
@@ -437,9 +458,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/" title="窗外">
+                      <a href="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" title="Windows 下实现IOS自动化测试">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">窗外</span>
+                        <span class="hidden-mobile">Windows 下实现IOS自动化测试</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -447,8 +468,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/python%E5%87%BD%E6%95%B0%E5%9B%BA%E5%AE%9A%E5%BD%A2%E5%8F%82/" title="Python常见函数之函数固定形参">
-                        <span class="hidden-mobile">Python常见函数之函数固定形参</span>
+                      <a href="/xingblog.github.io/2024/06/28/python%E7%94%9F%E6%88%90%E5%BC%8F/" title="Python常见函数之生成式">
+                        <span class="hidden-mobile">Python常见函数之生成式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

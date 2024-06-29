@@ -16,23 +16,30 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python常见函数之reduce函数用法可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现 123def str_to_number(order):    digits &#x3D; &#123;&#x27;0&#x27;: 0, &#x27;1&#x27;: 1, &#x27;2&#x27;: 2, &#x27;3&#x27;: 3, &#x27;4&#x27;: 4, &amp;#">
+    <meta name="description" content="Windows 下实现IOS自动化测试最近公司要实现Ios的自动化测试，但是局限是测试这边并没给配备MAC电脑，公司或者个人有MAC的东西可以潇洒的划走了😂😂😂 前期准备WebDriverAgent 介绍及安装WebDriverAgent 是 facebook 推出的一款 ios 自动化测试的通信工具，目前facebook 的项目已经停止维护，现在使用的是 appium 官方维护的版本，下载">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python常见函数之reduce函数用法">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="Windows 下实现IOS自动化测试">
+<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python常见函数之reduce函数用法可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现 123def str_to_number(order):    digits &#x3D; &#123;&#x27;0&#x27;: 0, &#x27;1&#x27;: 1, &#x27;2&#x27;: 2, &#x27;3&#x27;: 3, &#x27;4&#x27;: 4, &amp;#">
+<meta property="og:description" content="Windows 下实现IOS自动化测试最近公司要实现Ios的自动化测试，但是局限是测试这边并没给配备MAC电脑，公司或者个人有MAC的东西可以潇洒的划走了😂😂😂 前期准备WebDriverAgent 介绍及安装WebDriverAgent 是 facebook 推出的一款 ios 自动化测试的通信工具，目前facebook 的项目已经停止维护，现在使用的是 appium 官方维护的版本，下载">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-27T11:19:35.000Z">
-<meta property="article:modified_time" content="2024-06-28T11:14:54.082Z">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png">
+<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png">
+<meta property="article:published_time" content="2024-06-28T11:17:58.000Z">
+<meta property="article:modified_time" content="2024-06-29T06:47:04.619Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="Appium">
+<meta property="article:tag" content="windows 下实现ios自动化测试">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
   
   
   
-  <title>Python常见函数之reduce函数用法 - 韵少的个人技术博客</title>
+  <title>Windows 下实现IOS自动化测试 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +234,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python常见函数之reduce函数用法"></span>
+            <span id="subtitle" data-typed-text="Windows 下实现IOS自动化测试"></span>
           
         </div>
 
@@ -238,8 +245,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-27 19:19" pubdate>
-          2024年6月27日 晚上
+        <time datetime="2024-06-28 19:17" pubdate>
+          2024年6月28日 晚上
         </time>
       </span>
     
@@ -250,7 +257,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          440 字
+          774 字
         
       </span>
     
@@ -261,7 +268,7 @@
         
         
         
-          4 分钟
+          7 分钟
         
       </span>
     
@@ -306,31 +313,68 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python常见函数之reduce函数用法</h1>
+            <h1 id="seo-header">Windows 下实现IOS自动化测试</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python常见函数之reduce函数用法"><a href="#Python常见函数之reduce函数用法" class="headerlink" title="Python常见函数之reduce函数用法"></a>Python常见函数之reduce函数用法</h1><p>可能突然提到reduce函数你觉得不认识，但是给你这么一个场景，假如我要你实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br></code></pre></td></tr></table></figure>
+                <h1 id="Windows-下实现IOS自动化测试"><a href="#Windows-下实现IOS自动化测试" class="headerlink" title="Windows 下实现IOS自动化测试"></a>Windows 下实现IOS自动化测试</h1><p>最近公司要实现Ios的自动化测试，但是局限是测试这边并没给配备MAC电脑，公司或者个人有MAC的东西可以潇洒的划走了😂😂😂</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="WebDriverAgent-介绍及安装"><a href="#WebDriverAgent-介绍及安装" class="headerlink" title="WebDriverAgent 介绍及安装"></a>WebDriverAgent 介绍及安装</h3><p>WebDriverAgent 是 facebook 推出的一款 ios 自动化测试的通信工具，目前facebook 的项目已经停止维护，现在使用的是 appium 官方维护的版本，下载地址：<a target="_blank" rel="noopener" href="https://github.com/appium/WebDriverAgent%E3%80%82">https://github.com/appium/WebDriverAgent。</a></p>
+<p>但是由于 WebDriverAgent 安装需要使用到 Mac 电脑，此处也是唯一需要 mac电脑的，使用 xcode 进行编译安装到手机端，具体操作可以自行百度！</p>
+<p>目前我找 ios 开发同学帮我编译安装。</p>
+<h3 id="Tidevice-介绍及安装"><a href="#Tidevice-介绍及安装" class="headerlink" title="Tidevice 介绍及安装"></a>Tidevice 介绍及安装</h3><p>一直以来，iOS 自动化的实现&amp;执行都依赖 Mac 系统，其主要原因是因为需要通过 Xcodebuild 编译&amp;安装 WDA (WebDriverAgent) 到 iOS 设备中，</p>
+<p>通过 WDA 实现对被测应用进行操作。而 Windows 系统无法运行 Xcode 工具，所以无法运行 iOS 自动化测试。</p>
+<p>针对这种情况，阿里团队开源了一个内部使用的iOS自动化工具 tidevice（<a target="_blank" rel="noopener" href="https://github.com/alibaba/taobao-iphone-device%EF%BC%89">https://github.com/alibaba/taobao-iphone-device）</a></p>
+<p>让我们可以更方便、简单的脱离 Mac 的限制，该工具能够用于与 iOS 设备进行通信, 提供以下功能 </p>
+<ol>
+<li><p>截图</p>
+</li>
+<li><p>   获取手机信息</p>
+</li>
+<li><p>   ipa 包的安装和卸载</p>
+</li>
+<li><p>   根据 bundleID 启动和停止应用 </p>
+</li>
+<li><p>列出安装应用信息</p>
+</li>
+<li><p>   模拟 Xcode 运行XCTest，常用的如启动 WebDriverAgent 测试(此方法不依赖xcodebuild)</p>
+</li>
+<li><p>   获取指定应用性能(CPU,MEM,FPS)</p>
+</li>
+<li><p>   支持运行在Mac，Linux，Windows 上 Tidevice 安装</p>
+</li>
+</ol>
+<h4 id="版本要求"><a href="#版本要求" class="headerlink" title="版本要求"></a>版本要求</h4><p>Python 3.6+命令 pip install tidevice</p>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>查看版本号 tidevice version列出设备 tidevice list</p>
+<p>查看安装包 tidevice applist更多功能请自己查询官方文档</p>
+<h2 id="Tidevice操作步骤"><a href="#Tidevice操作步骤" class="headerlink" title="Tidevice操作步骤"></a>Tidevice操作步骤</h2><p>cmd 执行tidevice list 查看版本号,可以看到下面的信息</p>
+<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-<p>我想让你利用上面的函数给我返回一个 12345</p>
-<p>有人说可以啊 弄个列表每次传递一个对应的key获取value 然后append到列表里面。确实可以但是有点过于麻烦了，那么今天介绍的这个reduce函数绝效率嘎嘎的！</p>
-<h2 id="reduce函数"><a href="#reduce函数" class="headerlink" title="reduce函数"></a>reduce函数</h2><p>reduce把一个函数作用在一个序列[x1, x2, x3, …]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，其效果就是：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)<br></code></pre></td></tr></table></figure>
+<p>Udid：手机唯一 id	后面需要用到</p>
+<p>然后执行 tidevice applist 查看我们的 webdriveragent 具体信息</p>
+<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
-<p>这么看可能不明白，下面让我来举个例子！</p>
-<p>对一个序列求和，就可以用reduce实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a + b<br><br><span class="hljs-built_in">print</span>(reduce(add, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment"># 15</span><br></code></pre></td></tr></table></figure>
+<p>这个签名是自己写的，需要找对应安装同学确认一下！</p>
+<p>再然后我们执行： tidevice -u 你的设备 id -B 你的webdriveraget –port 8100看到启动成功的字眼就可以了！</p>
 
-<p>这就实现了将 1,2,3,4,5 利用add 函数求和</p>
-<p>亦或者 我们可以实现 将输入的内容按照整数输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fn</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-keyword">return</span> a * <span class="hljs-number">10</span> + b<br><br><span class="hljs-built_in">print</span>(reduce(fn, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]))  <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure>
 
-<p>这下应能看明白里面的奥妙了吧！</p>
-<p>应用到最开始的那个问题那么我们就可以这么来做</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number</span>(<span class="hljs-params">order</span>):<br>    digits = &#123;<span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-number">7</span>, <span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-number">9</span>&#125;<br>    <span class="hljs-keyword">return</span> digits[order]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">str_to_number_reduce</span>(<span class="hljs-params">order</span>):<br>    <span class="hljs-keyword">return</span> reduce(<span class="hljs-keyword">lambda</span> x, y: x * <span class="hljs-number">10</span> + y, <span class="hljs-built_in">map</span>(str_to_number, order))<br><br><span class="hljs-built_in">print</span>(str_to_number_reduce([<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>,<span class="hljs-string">&#x27;5&#x27;</span>])) <span class="hljs-comment"># 12345</span><br></code></pre></td></tr></table></figure>
+<p>然后浏览器访问 127.0.0.1:8100&#x2F;status 查看到如下信息即可</p>
+<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
 
+<p>表示当前服务正常，此时不可关闭当前 cmd 弹窗，需要一直保持！</p>
+<h2 id="Appium-使用"><a href="#Appium-使用" class="headerlink" title="Appium 使用"></a>Appium 使用</h2><p>打开 appium 版本选择 1.20 以上的，我这里只是描述</p>
+<p>然后点击start server V1.15.1</p>
+<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+
+<p>然后点击 如上图圈住的</p>
+<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+
+<p>在 JSON Representation 输入</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Json"><span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;deviceName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;iPhone XS Max&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ios&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;udid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;00008020-001604901A01002E&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;bundleId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你的包名&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformVersion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;14.6&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;webDriverAgentUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:8100&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;noReset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;usePrebuiltWDA&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;useXctestrunFile&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;skipLogCapture&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;appium:automationName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;XCUITest&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面需要替换的信息包含 deviceName udid platformVersion bundleId 对应的写自己的信息即可！</p>
+<p>然后点击 start session 就可以查看元素了</p>
+<h2 id="代码操作"><a href="#代码操作" class="headerlink" title="代码操作"></a>代码操作</h2><p>这里的代码定位啊什么的和android一样，这里就不写这些基本命令了。</p>
 
                 
               </div>
@@ -349,17 +393,17 @@
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/xingblog.github.io/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" class="category-chain-item">自动化测试</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/xingblog.github.io/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/Ios/" class="category-chain-item">Ios</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-reduce%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" class="category-chain-item">Python reduce函数用法</a>
+  <a href="/xingblog.github.io/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/Ios/Windows-%E4%B8%8B%E5%AE%9E%E7%8E%B0IOS%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" class="category-chain-item">Windows 下实现IOS自动化测试</a>
   
   
 
@@ -380,7 +424,9 @@
       
         <a href="/xingblog.github.io/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/xingblog.github.io/tags/python/" class="print-no-link">#python</a>
+        <a href="/xingblog.github.io/tags/Appium/" class="print-no-link">#Appium</a>
+      
+        <a href="/xingblog.github.io/tags/windows-%E4%B8%8B%E5%AE%9E%E7%8E%B0ios%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" class="print-no-link">#windows 下实现ios自动化测试</a>
       
     </div>
   
@@ -392,8 +438,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python常见函数之reduce函数用法</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/reduce函数用法/</div>
+      <div>Windows 下实现IOS自动化测试</div>
+      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/28/自动化测试/</div>
     </div>
     <div class="license-meta">
       
@@ -405,7 +451,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月27日</div>
+          <div>2024年6月28日</div>
         </div>
       
       
@@ -437,18 +483,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/" title="窗外">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">窗外</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/python%E5%87%BD%E6%95%B0%E5%9B%BA%E5%AE%9A%E5%BD%A2%E5%8F%82/" title="Python常见函数之函数固定形参">
-                        <span class="hidden-mobile">Python常见函数之函数固定形参</span>
+                      <a href="/xingblog.github.io/2024/06/28/yield%E5%87%BD%E6%95%B0/" title="Python常见函数之yield函数">
+                        <span class="hidden-mobile">Python常见函数之yield函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

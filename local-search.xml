@@ -4,6 +4,103 @@
   
   
   <entry>
+    <title>Windows 下实现IOS自动化测试</title>
+    <link href="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    <url>/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Windows-下实现IOS自动化测试"><a href="#Windows-下实现IOS自动化测试" class="headerlink" title="Windows 下实现IOS自动化测试"></a>Windows 下实现IOS自动化测试</h1><p>最近公司要实现Ios的自动化测试，但是局限是测试这边并没给配备MAC电脑，公司或者个人有MAC的东西可以潇洒的划走了😂😂😂</p><h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="WebDriverAgent-介绍及安装"><a href="#WebDriverAgent-介绍及安装" class="headerlink" title="WebDriverAgent 介绍及安装"></a>WebDriverAgent 介绍及安装</h3><p>WebDriverAgent 是 facebook 推出的一款 ios 自动化测试的通信工具，目前facebook 的项目已经停止维护，现在使用的是 appium 官方维护的版本，下载地址：<a href="https://github.com/appium/WebDriverAgent%E3%80%82">https://github.com/appium/WebDriverAgent。</a></p><p>但是由于 WebDriverAgent 安装需要使用到 Mac 电脑，此处也是唯一需要 mac电脑的，使用 xcode 进行编译安装到手机端，具体操作可以自行百度！</p><p>目前我找 ios 开发同学帮我编译安装。</p><h3 id="Tidevice-介绍及安装"><a href="#Tidevice-介绍及安装" class="headerlink" title="Tidevice 介绍及安装"></a>Tidevice 介绍及安装</h3><p>一直以来，iOS 自动化的实现&amp;执行都依赖 Mac 系统，其主要原因是因为需要通过 Xcodebuild 编译&amp;安装 WDA (WebDriverAgent) 到 iOS 设备中，</p><p>通过 WDA 实现对被测应用进行操作。而 Windows 系统无法运行 Xcode 工具，所以无法运行 iOS 自动化测试。</p><p>针对这种情况，阿里团队开源了一个内部使用的iOS自动化工具 tidevice（<a href="https://github.com/alibaba/taobao-iphone-device%EF%BC%89">https://github.com/alibaba/taobao-iphone-device）</a></p><p>让我们可以更方便、简单的脱离 Mac 的限制，该工具能够用于与 iOS 设备进行通信, 提供以下功能 </p><ol><li><p>截图</p></li><li><p>   获取手机信息</p></li><li><p>   ipa 包的安装和卸载</p></li><li><p>   根据 bundleID 启动和停止应用 </p></li><li><p>列出安装应用信息</p></li><li><p>   模拟 Xcode 运行XCTest，常用的如启动 WebDriverAgent 测试(此方法不依赖xcodebuild)</p></li><li><p>   获取指定应用性能(CPU,MEM,FPS)</p></li><li><p>   支持运行在Mac，Linux，Windows 上 Tidevice 安装</p></li></ol><h4 id="版本要求"><a href="#版本要求" class="headerlink" title="版本要求"></a>版本要求</h4><p>Python 3.6+命令 pip install tidevice</p><h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>查看版本号 tidevice version列出设备 tidevice list</p><p>查看安装包 tidevice applist更多功能请自己查询官方文档</p><h2 id="Tidevice操作步骤"><a href="#Tidevice操作步骤" class="headerlink" title="Tidevice操作步骤"></a>Tidevice操作步骤</h2><p>cmd 执行tidevice list 查看版本号,可以看到下面的信息</p><img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png" class=""><p>Udid：手机唯一 id后面需要用到</p><p>然后执行 tidevice applist 查看我们的 webdriveragent 具体信息</p><img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png" class=""><p>这个签名是自己写的，需要找对应安装同学确认一下！</p><p>再然后我们执行： tidevice -u 你的设备 id -B 你的webdriveraget –port 8100看到启动成功的字眼就可以了！</p><p>然后浏览器访问 127.0.0.1:8100&#x2F;status 查看到如下信息即可</p><img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png" class=""><p>表示当前服务正常，此时不可关闭当前 cmd 弹窗，需要一直保持！</p><h2 id="Appium-使用"><a href="#Appium-使用" class="headerlink" title="Appium 使用"></a>Appium 使用</h2><p>打开 appium 版本选择 1.20 以上的，我这里只是描述</p><p>然后点击start server V1.15.1</p><img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png" class=""><p>然后点击 如上图圈住的</p><img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png" class=""><p>在 JSON Representation 输入</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Json"><span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;deviceName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;iPhone XS Max&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ios&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;udid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;00008020-001604901A01002E&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;bundleId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你的包名&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformVersion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;14.6&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;webDriverAgentUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:8100&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;noReset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;usePrebuiltWDA&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;useXctestrunFile&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;skipLogCapture&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;appium:automationName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;XCUITest&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>上面需要替换的信息包含 deviceName udid platformVersion bundleId 对应的写自己的信息即可！</p><p>然后点击 start session 就可以查看元素了</p><h2 id="代码操作"><a href="#代码操作" class="headerlink" title="代码操作"></a>代码操作</h2><p>这里的代码定位啊什么的和android一样，这里就不写这些基本命令了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>自动化测试</category>
+      
+      <category>Ios</category>
+      
+      <category>Windows 下实现IOS自动化测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Appium</tag>
+      
+      <tag>windows 下实现ios自动化测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之yield函数</title>
+    <link href="/xingblog.github.io/2024/06/28/yield%E5%87%BD%E6%95%B0/"/>
+    <url>/xingblog.github.io/2024/06/28/yield%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之yield函数"><a href="#Python常见函数之yield函数" class="headerlink" title="Python常见函数之yield函数"></a>Python常见函数之yield函数</h1><p><code>yield</code> 在 Python 中是一个用于定义生成器的关键字，它允许函数在迭代过程中产生值，而不需要一次性计算所有值。以下是关于 <code>yield</code> 的更详细介绍：</p><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol><li><p><strong>定义生成器函数</strong>：当一个函数中包含了 <code>yield</code> 语句时，这个函数就被称为生成器函数。调用生成器函数时，它不会立即执行函数体中的全部代码，而是返回一个生成器对象。</p></li><li><p><strong>生成器的工作原理</strong>：生成器是一种特殊类型的迭代器，由生成器函数创建。当生成器函数执行到 <code>yield</code> 语句时，它会生成一个值，并保存其当前状态，然后等待下一次调用来继续执行。</p></li></ol><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ol><li><p><strong>暂停和恢复</strong>：<code>yield</code> 允许函数在迭代过程中暂停和恢复，从而逐个生成值，而不是一次性计算所有值。</p></li><li><p><strong>内存效率</strong>：使用 <code>yield</code> 可以避免创建大型的列表来保存数据，从而节约内存。特别是当处理大量数据时，这种优势尤为明显。</p></li><li><p><strong>状态保持</strong>：生成器能够记住上一次返回时的状态，包括局部变量和堆栈信息等。这使得生成器能够在下次迭代时从上次离开的位置继续执行。</p></li></ol><h3 id="yield-的应用场景"><a href="#yield-的应用场景" class="headerlink" title="yield 的应用场景"></a>yield 的应用场景</h3><ol><li><p><strong>节省内存</strong>：生成器在生成值时会“暂停”函数，而不是像列表推导式那样一次性生成所有值。这对于处理大量数据或无限序列时非常有用，因为它允许你按需生成值，从而节省内存。</p></li><li><p><strong>简化代码</strong>：生成器可以用于简化复杂的迭代逻辑。例如，你可以使用生成器来模拟一个无限序列（如斐波那契数列），而无需在内存中存储整个序列。</p></li><li><p><strong>协同程序</strong>：虽然这不是 Python 的标准用法，但 <code>yield</code> 也可以用于实现协同程序（coroutines），这是一种可以暂停和恢复执行的函数。在 Python 3.5 及更高版本中，<code>async</code> 和 <code>await</code> 关键字被引入以更直接地支持异步编程，但 <code>yield</code> 仍然在某些场景中用于此目的。</p></li><li><p><strong>数据流水线</strong>：在数据分析和机器学习等领域中，生成器常用于创建数据流水线。你可以使用生成器函数从数据源中读取数据，对数据进行预处理，然后将处理后的数据传递给下一个阶段。由于生成器按需生成数据，因此这种流水线可以非常高效地处理大量数据。</p></li><li><p><strong>惰性求值</strong>：生成器允许你实现惰性求值（lazy evaluation），即只有在需要时才计算值。这在处理复杂计算或大型数据集时非常有用，因为它可以避免不必要的计算并节省资源。</p></li><li><p><strong>与迭代器的交互</strong>：生成器也是迭代器的一种，因此它们可以与任何接受迭代器的 Python 结构（如 <code>for</code> 循环、列表推导式、<code>map()</code>、<code>filter()</code> 等）一起使用。这使得生成器在 Python 中非常灵活和强大。</p></li></ol><h3 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">simple_generator</span>():<br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">2</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span><br><br><span class="hljs-comment"># 创建生成器对象</span><br>generator = simple_generator()<br><br><span class="hljs-comment"># 通过 for 循环迭代生成器</span><br><span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> generator:<br>    <span class="hljs-built_in">print</span>(value)  <span class="hljs-comment"># 输出: 1, 2, 3</span><br><br><span class="hljs-comment"># 也可以使用 next() 函数迭代生成器</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">next</span>(generator))  <span class="hljs-comment"># 输出: StopIteration（因为生成器已经迭代完毕）</span><br></code></pre></td></tr></table></figure><h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul><li><p>当生成器函数执行到 <code>yield</code> 语句时，它会生成一个值并暂停执行。此时，生成器的状态会被保存下来，包括局部变量和堆栈信息等。</p></li><li><p>调用生成器对象的 <code>__next__()</code> 方法（或者在 for 循环中迭代）会使生成器恢复执行，直到遇到下一个 <code>yield</code> 语句或函数结束。</p></li><li><p>如果生成器函数中没有更多的 <code>yield</code> 语句或已经执行完毕，再次调用 <code>__next__()</code> 方法会引发 <code>StopIteration</code> 异常。</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python yield函数</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+      <tag>yield</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python常见函数之生成式</title>
+    <link href="/xingblog.github.io/2024/06/28/python%E7%94%9F%E6%88%90%E5%BC%8F/"/>
+    <url>/xingblog.github.io/2024/06/28/python%E7%94%9F%E6%88%90%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python常见函数之生成式"><a href="#Python常见函数之生成式" class="headerlink" title="Python常见函数之生成式"></a>Python常见函数之生成式</h1><p>在Python中，生成式（Generator Expressions）是一种简洁的创建迭代器的方式，它们类似于列表推导式（List Comprehensions），但是生成式返回的是一个迭代器，而不是一个列表。这意味着生成式只会在迭代时生成值，而不是一次性生成所有值，从而节省了内存。</p><p>生成式的基本语法是使用圆括号 <code>()</code> 而不是方括号 <code>[]</code> 或花括号 <code>&#123;&#125;</code>（对于集合或字典推导式）。</p><p>下面是一些生成式的示例：</p><ol><li>创建一个生成偶数（从0到18）的生成式：</li></ol><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">even_numbers = (i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">19</span>) <span class="hljs-keyword">if</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)<br><span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> even_numbers:<br>    <span class="hljs-built_in">print</span>(num)<br></code></pre></td></tr></table></figure><ol start="2"><li>创建一个从字符串中提取大写字母的生成式：</li></ol><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">text = <span class="hljs-string">&quot;Hello, World!&quot;</span><br>uppercase_letters = (char <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> text <span class="hljs-keyword">if</span> char.isupper())<br><span class="hljs-keyword">for</span> letter <span class="hljs-keyword">in</span> uppercase_letters:<br>    <span class="hljs-built_in">print</span>(letter)<br></code></pre></td></tr></table></figure><ol start="3"><li>创建一个生成斐波那契数列的生成式（注意：这只是一个简单的示例，因为生成式本身并不适合生成无限序列，但我们可以限制其长度）：</li></ol><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>):<br>    a, b = <span class="hljs-number">0</span>, <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>        <span class="hljs-keyword">yield</span> a<br>        a, b = b, a + b<br><br>fib_sequence = fibonacci(<span class="hljs-number">10</span>)  <span class="hljs-comment"># 创建一个生成前10个斐波那契数的生成器</span><br><span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> fib_sequence:<br>    <span class="hljs-built_in">print</span>(num)<br></code></pre></td></tr></table></figure><p>在这个斐波那契数列的例子中，我们实际上使用了一个生成器函数（通过<code>yield</code>关键字定义），但你也可以将其视为一个更复杂的生成式。在大多数情况下，如果你需要生成一个复杂的、可能是无限的序列，那么使用生成器函数会更为合适。</p><p>总的来说，生成式是Python中一种非常强大且内存高效的工具，用于在迭代时动态生成值。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python 生成式</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>窗外</title>
     <link href="/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/"/>
     <url>/xingblog.github.io/2024/06/27/%E7%AA%97%E5%A4%96/</url>
@@ -427,6 +524,8 @@
       <tag>原创</tag>
       
       <tag>python</tag>
+      
+      <tag>python 时间戳</tag>
       
     </tags>
     
