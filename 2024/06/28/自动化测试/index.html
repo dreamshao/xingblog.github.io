@@ -23,11 +23,11 @@
 <meta property="og:site_name" content="韵少的个人技术博客">
 <meta property="og:description" content="Windows 下实现IOS自动化测试最近公司要实现Ios的自动化测试，但是局限是测试这边并没给配备MAC电脑，公司或者个人有MAC的东西可以潇洒的划走了😂😂😂 前期准备WebDriverAgent 介绍及安装WebDriverAgent 是 facebook 推出的一款 ios 自动化测试的通信工具，目前facebook 的项目已经停止维护，现在使用的是 appium 官方维护的版本，下载">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
-<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png">
-<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png">
-<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png">
-<meta property="og:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png">
 <meta property="article:published_time" content="2024-06-28T11:17:58.000Z">
 <meta property="article:modified_time" content="2024-06-29T06:47:04.619Z">
 <meta property="article:author" content="Yun Shao">
@@ -35,7 +35,7 @@
 <meta property="article:tag" content="Appium">
 <meta property="article:tag" content="windows 下实现ios自动化测试">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://dreamshao.github.io/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
+<meta name="twitter:image" content="https://dreamshao.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png">
   
   
   
@@ -348,26 +348,26 @@
 <h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>查看版本号 tidevice version列出设备 tidevice list</p>
 <p>查看安装包 tidevice applist更多功能请自己查询官方文档</p>
 <h2 id="Tidevice操作步骤"><a href="#Tidevice操作步骤" class="headerlink" title="Tidevice操作步骤"></a>Tidevice操作步骤</h2><p>cmd 执行tidevice list 查看版本号,可以看到下面的信息</p>
-<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/cmd.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>Udid：手机唯一 id	后面需要用到</p>
 <p>然后执行 tidevice applist 查看我们的 webdriveragent 具体信息</p>
-<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/id.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>这个签名是自己写的，需要找对应安装同学确认一下！</p>
 <p>再然后我们执行： tidevice -u 你的设备 id -B 你的webdriveraget –port 8100看到启动成功的字眼就可以了！</p>
 
 
 <p>然后浏览器访问 127.0.0.1:8100&#x2F;status 查看到如下信息即可</p>
-<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/infor.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>表示当前服务正常，此时不可关闭当前 cmd 弹窗，需要一直保持！</p>
 <h2 id="Appium-使用"><a href="#Appium-使用" class="headerlink" title="Appium 使用"></a>Appium 使用</h2><p>打开 appium 版本选择 1.20 以上的，我这里只是描述</p>
 <p>然后点击start server V1.15.1</p>
-<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>然后点击 如上图圈住的</p>
-<img src="/xingblog.github.io/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/appium1.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>在 JSON Representation 输入</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Json"><span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;deviceName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;iPhone XS Max&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ios&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;udid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;00008020-001604901A01002E&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;bundleId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你的包名&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;platformVersion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;14.6&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;webDriverAgentUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:8100&quot;</span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;noReset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;usePrebuiltWDA&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;useXctestrunFile&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;skipLogCapture&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span> <br><span class="hljs-attr">&quot;appium:automationName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;XCUITest&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
