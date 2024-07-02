@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>完美解决自定义域名访问gitpages出现了部分请求404的问题！</title>
+    <link href="/2024/07/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/"/>
+    <url>/2024/07/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    
+    <content type="html"><![CDATA[<h1 id="gitpages出现了部分请求404的问题"><a href="#gitpages出现了部分请求404的问题" class="headerlink" title="gitpages出现了部分请求404的问题"></a>gitpages出现了部分请求404的问题</h1><p>最近把我的博客通过自定义域名代理了gitpages， 理由如下：</p><pre><code class="hljs">一方面是因为 github 确实在国内的访问速度太感人了😂😂😂! 另一方面也是手里有闲置的域名。</code></pre><p>所以就准备搞一下，采用的模式就是 域名 + cloudfare 的模式进行解析，但是在成功后发现部分请求出现了404的情况，如下图：</p><img src="/2024/07/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/404%E6%83%85%E5%86%B5.png" class=""><h2 id="为了解决这个问题花费了太多时间"><a href="#为了解决这个问题花费了太多时间" class="headerlink" title="为了解决这个问题花费了太多时间"></a>为了解决这个问题花费了太多时间</h2><p>之前我访问我的gitpages 域名：<a href="https://dreamshao.github.io/xingblog.github.io/">https://dreamshao.github.io/xingblog.github.io/</a>  一直是可以的所有的请求都是正常的，</p><p>可是这次我部署到个人域名后我就发现这怎么部分请求可以拿到，部分请求就是404呢？</p><p>然后，我就开始纠结是不是我在设置自定义域名的时候出现了问题，从开始的域名解析设置 在阿里云上我改了很多次(此时把DNS解析改回了阿里的)，</p><p>发现还是不行，我就想是不是我这个没有备案呢？ 我就开始改回了 cloudfare 的DNS解析，开始在cloudfare 上开始鼓捣，可是鼓捣了很久还是不行</p><p>后来，我就开始在网上查资料，查了好久也没查到为什么部分请求是404，这就花费了我将近1天的时间在上面！</p><h2 id="突然的灵感来临"><a href="#突然的灵感来临" class="headerlink" title="突然的灵感来临"></a>突然的灵感来临</h2><p>第二天早上，我还是打开了我的网站看404的请求，突然想是不是因为我的域名后面不能包含我的子仓库地址呢？ </p><p>之前我的访问路径是: <a href="https://8888666.top/xingblog.github.io/css/main.css">https://8888666.top/xingblog.github.io/css/main.css</a></p><p>然后复制到浏览器 改成了: <a href="https://8888666.top/css/main.css">https://8888666.top/css/main.css</a></p><p>哎，您猜怎么着， 访问到了！ 可以，瞬间我明白了！🤪🤪🤪， 这不能带我的子仓库地址啊！</p><h2 id="修改hexo-的配置"><a href="#修改hexo-的配置" class="headerlink" title="修改hexo 的配置"></a>修改hexo 的配置</h2><p>马上找我的配置文件发现了问题，之前在 _config.yml 中 我配置的是我的路径：</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment">#URL</span><br><span class="hljs-comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span><br><span class="hljs-attr">url:</span> <span class="hljs-string">https://dreamshao.github.io/xingblog.github.io/</span><br><span class="hljs-attr">permalink:</span> <span class="hljs-string">:year/:month/:day/:title/</span><br><span class="hljs-attr">permalink_defaults:</span><br><span class="hljs-attr">pretty_urls:</span><br>  <span class="hljs-attr">trailing_index:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span><br>  <span class="hljs-attr">trailing_html:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span><br></code></pre></td></tr></table></figure><p>然后修改为：</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment">#URL</span><br><span class="hljs-comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span><br><span class="hljs-attr">url:</span> <span class="hljs-string">https://dreamshao.github.io/</span><br><span class="hljs-attr">permalink:</span> <span class="hljs-string">:year/:month/:day/:title/</span><br><span class="hljs-attr">permalink_defaults:</span><br><span class="hljs-attr">pretty_urls:</span><br>  <span class="hljs-attr">trailing_index:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span><br>  <span class="hljs-attr">trailing_html:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span><br></code></pre></td></tr></table></figure><p>然后清空已经生成的信息，也就是在public 文件夹下，清空完毕后执行命令：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo clean<br>hexo g -d<br></code></pre></td></tr></table></figure><p>结果在域名上访问就发现可以了，原来就是这点问题导致了，还是自己的配置问题！</p><h2 id="得到了什么？"><a href="#得到了什么？" class="headerlink" title="得到了什么？"></a>得到了什么？</h2><p>通过这次自己把博客通过自定义域名访问，确实收获了很多部署方面的知识， 比如什么是 CNAME，什么是 A 模式 等等。</p><p>还有更加了解DNS解析的模式，之前只是简单的了解，通过这次操作确实更加明白了！</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果你在部署博客到私人域名下有什么问题，可以留言哦，一定知无不言，言无不尽！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>gitpages 自定义域名</category>
+      
+      <category>部分请求404</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>hexo 博客</tag>
+      
+      <tag>自定义域名访问gitpages</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Windows 下实现IOS自动化测试</title>
     <link href="/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
     <url>/2024/06/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/</url>
