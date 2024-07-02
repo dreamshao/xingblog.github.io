@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/xingblog.github.io/img/title.png">
-  <link rel="icon" href="/xingblog.github.io/img/title.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="Fillder 断点修改HTTP报文Fiddler可以修改任何HTTP请求的信息。 全局断点启动Fiddler，单击菜单栏种的Rules-&gt;Automatics Breakpoint-&gt;Before Requests，或者使用快捷键【F11】,这种方法会拦截所有的对话。   想要取消全局断点，可以单击Rules-&gt;Automatic Breakpoint -&gt; Disabl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fillder断点修改HTTP报文">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/index.html">
+<meta property="og:url" content="https://dreamshao.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
 <meta property="og:description" content="Fillder 断点修改HTTP报文Fiddler可以修改任何HTTP请求的信息。 全局断点启动Fiddler，单击菜单栏种的Rules-&gt;Automatics Breakpoint-&gt;Before Requests，或者使用快捷键【F11】,这种方法会拦截所有的对话。   想要取消全局断点，可以单击Rules-&gt;Automatic Breakpoint -&gt; Disabl">
 <meta property="og:locale" content="zh_CN">
@@ -61,12 +61,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/xingblog.github.io/css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/xingblog.github.io/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/xingblog.github.io/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -75,15 +75,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"dreamshao.github.io","root":"/xingblog.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/xingblog.github.io/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/xingblog.github.io/js/utils.js" ></script>
-  <script  src="/xingblog.github.io/js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
   
@@ -129,7 +129,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/xingblog.github.io/">
+    <a class="navbar-brand" href="/">
       <strong>韵少的技术博客</strong>
     </a>
 
@@ -148,7 +148,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -160,7 +160,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -172,7 +172,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -184,7 +184,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -196,7 +196,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -226,7 +226,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/xingblog.github.io/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -318,18 +318,18 @@
                 
                 <h1 id="Fillder-断点修改HTTP报文"><a href="#Fillder-断点修改HTTP报文" class="headerlink" title="Fillder 断点修改HTTP报文"></a>Fillder 断点修改HTTP报文</h1><p>Fiddler可以修改任何HTTP请求的信息。</p>
 <h2 id="全局断点"><a href="#全局断点" class="headerlink" title="全局断点"></a>全局断点</h2><p>启动Fiddler，单击菜单栏种的Rules-&gt;Automatics Breakpoint-&gt;Before Requests，或者使用快捷键【F11】,这种方法会拦截所有的对话。</p>
-<img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%85%A8%E5%B1%80%E6%96%AD%E7%82%B9.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+<img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%85%A8%E5%B1%80%E6%96%AD%E7%82%B9.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>想要取消全局断点，可以单击Rules-&gt;Automatic Breakpoint -&gt; Disabled，或者快捷键【shift+F11】。</p>
 <h2 id="单个断点"><a href="#单个断点" class="headerlink" title="单个断点"></a>单个断点</h2><p>已知某个请求URL地址，这个时候只需要针对一个请求打断点调试，其他的请求不拦截。</p>
 <p>在fiddler 左下角的QuickExec命令中输入命令” bpu  拦截的网址“就可以实现拦截效果,取修改拦截的信息。</p>
-<img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%8D%95%E4%B8%AA%E6%96%AD%E7%82%B9.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+<img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E5%8D%95%E4%B8%AA%E6%96%AD%E7%82%B9.png" srcset="/img/loading.gif" lazyload class="">
 
-<h2 id="Fiddler修改HTTP请求"><a href="#Fiddler修改HTTP请求" class="headerlink" title="Fiddler修改HTTP请求"></a>Fiddler修改HTTP请求</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+<h2 id="Fiddler修改HTTP请求"><a href="#Fiddler修改HTTP请求" class="headerlink" title="Fiddler修改HTTP请求"></a>Fiddler修改HTTP请求</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>如果想继续拦截可以点击黄色按钮”Break on Response”这个按钮，会继续拦截这个HTTP请求的响应。</p>
 <p>Fiddler中设置断点修改HTTP响应 用法同上述全局断点， 单个断点<br> <br>第一种是全局断点，启动fiddler，单击Rulers-&gt;Automatic Breakpoint-&gt;After Response这种方法会中断所有的会话。<br>想要取消断点 ，可以单击Rules-&gt;Automatic Breakpoint-&gt;Disabled。<br>第二种是单个断点，在命令行“bpafter <a target="_blank" rel="noopener" href="http://www.baidu.com”/">www.baidu.com”</a> 这种方法只会中断<a target="_blank" rel="noopener" href="http://www.baidu.com./">www.baidu.com。</a><br>想要消除单个断点，可以在命令行中输入命令”bpafter”。</p>
-<h2 id="伪造Referer"><a href="#伪造Referer" class="headerlink" title="伪造Referer"></a>伪造Referer</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9refer.png" srcset="/xingblog.github.io/img/loading.gif" lazyload class="">
+<h2 id="伪造Referer"><a href="#伪造Referer" class="headerlink" title="伪造Referer"></a>伪造Referer</h2><img src="/xingblog.github.io/2024/06/27/fillder%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/%E4%BF%AE%E6%94%B9refer.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>拦截后我们可以在Raw中写入Refere：ww.dddddr.cn就可以
  </p>
@@ -351,17 +351,17 @@
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Fillder/" class="category-chain-item">Fillder</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Fillder/" class="category-chain-item">Fillder</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Fillder/Fillder-%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/" class="category-chain-item">Fillder 断点修改HTTP报文</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Fillder/Fillder-%E6%96%AD%E7%82%B9%E4%BF%AE%E6%94%B9HTTP%E6%8A%A5%E6%96%87/" class="category-chain-item">Fillder 断点修改HTTP报文</a>
   
   
 
@@ -380,9 +380,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/xingblog.github.io/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/xingblog.github.io/tags/Fillder/" class="print-no-link">#Fillder</a>
+        <a href="/tags/Fillder/" class="print-no-link">#Fillder</a>
       
     </div>
   
@@ -395,7 +395,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Fillder断点修改HTTP报文</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/fillder断点修改HTTP报文/</div>
+      <div>https://dreamshao.github.io/2024/06/27/fillder断点修改HTTP报文/</div>
     </div>
     <div class="license-meta">
       
@@ -439,7 +439,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/fillder%E8%A7%A3%E7%A0%81%E5%B7%A5%E5%85%B7/" title="Fillder的Decode/Encode小工具">
+                      <a href="/2024/06/27/fillder%E8%A7%A3%E7%A0%81%E5%B7%A5%E5%85%B7/" title="Fillder的Decode/Encode小工具">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Fillder的Decode/Encode小工具</span>
                         <span class="visible-mobile">上一篇</span>
@@ -449,7 +449,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" title="Fillder简单的性能测试">
+                      <a href="/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" title="Fillder简单的性能测试">
                         <span class="hidden-mobile">Fillder简单的性能测试</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -635,8 +635,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/xingblog.github.io/js/events.js" ></script>
-<script  src="/xingblog.github.io/js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -658,7 +658,7 @@
 
 
   
-    <script  src="/xingblog.github.io/js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -757,9 +757,9 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script defer src="/xingblog.github.io/js/leancloud.js" ></script>
+  <script defer src="/js/leancloud.js" ></script>
 
-  <script  src="/xingblog.github.io/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -767,7 +767,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/xingblog.github.io/js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   

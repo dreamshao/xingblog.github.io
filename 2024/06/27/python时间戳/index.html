@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/xingblog.github.io/img/title.png">
-  <link rel="icon" href="/xingblog.github.io/img/title.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="Python常见函数之 Python 时间戳来自百度百科： 时间戳，是指用户应用数字签名技术时，产生的涵盖原始文件信息、签名时间、签名参数等信息。 其主要目的是在于，能够通过一定的技术手段认证数据产生的时间，从而得知这段数据在产生之后，是否有被篡改。 个人目前接触到使用领域：在做全球化产品的时候依赖于时间戳在不同时区进行展示 time 时间戳等相关转换datetime与时间戳格式相互转换12345">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python常见函数之 python时间戳">
-<meta property="og:url" content="https://dreamshao.github.io/xingblog.github.io/2024/06/27/python%E6%97%B6%E9%97%B4%E6%88%B3/index.html">
+<meta property="og:url" content="https://dreamshao.github.io/2024/06/27/python%E6%97%B6%E9%97%B4%E6%88%B3/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
 <meta property="og:description" content="Python常见函数之 Python 时间戳来自百度百科： 时间戳，是指用户应用数字签名技术时，产生的涵盖原始文件信息、签名时间、签名参数等信息。 其主要目的是在于，能够通过一定的技术手段认证数据产生的时间，从而得知这段数据在产生之后，是否有被篡改。 个人目前接触到使用领域：在做全球化产品的时候依赖于时间戳在不同时区进行展示 time 时间戳等相关转换datetime与时间戳格式相互转换12345">
 <meta property="og:locale" content="zh_CN">
@@ -57,12 +57,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/xingblog.github.io/css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/xingblog.github.io/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/xingblog.github.io/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -71,15 +71,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"dreamshao.github.io","root":"/xingblog.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/xingblog.github.io/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/xingblog.github.io/js/utils.js" ></script>
-  <script  src="/xingblog.github.io/js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
   
@@ -125,7 +125,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/xingblog.github.io/">
+    <a class="navbar-brand" href="/">
       <strong>韵少的技术博客</strong>
     </a>
 
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -192,7 +192,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/xingblog.github.io/about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -222,7 +222,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/xingblog.github.io/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -344,17 +344,17 @@
     
       <span class="category-chain">
         
-  <a href="/xingblog.github.io/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
   
   
     <span>></span>
     
-  <a href="/xingblog.github.io/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E6%97%B6%E9%97%B4%E6%88%B3%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 时间戳函数</a>
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E6%97%B6%E9%97%B4%E6%88%B3%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 时间戳函数</a>
   
   
 
@@ -373,11 +373,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/xingblog.github.io/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/xingblog.github.io/tags/python/" class="print-no-link">#python</a>
+        <a href="/tags/python/" class="print-no-link">#python</a>
       
-        <a href="/xingblog.github.io/tags/python-%E6%97%B6%E9%97%B4%E6%88%B3/" class="print-no-link">#python 时间戳</a>
+        <a href="/tags/python-%E6%97%B6%E9%97%B4%E6%88%B3/" class="print-no-link">#python 时间戳</a>
       
     </div>
   
@@ -390,7 +390,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Python常见函数之 python时间戳</div>
-      <div>https://dreamshao.github.io/xingblog.github.io/2024/06/27/python时间戳/</div>
+      <div>https://dreamshao.github.io/2024/06/27/python时间戳/</div>
     </div>
     <div class="license-meta">
       
@@ -434,7 +434,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" title="Fillder简单的性能测试">
+                      <a href="/2024/06/27/fillder%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" title="Fillder简单的性能测试">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Fillder简单的性能测试</span>
                         <span class="visible-mobile">上一篇</span>
@@ -444,7 +444,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/xingblog.github.io/2024/06/27/%E9%9A%8F%E7%AC%94/" title="2024年第二次在北京参加油车摇号">
+                      <a href="/2024/06/27/%E9%9A%8F%E7%AC%94/" title="2024年第二次在北京参加油车摇号">
                         <span class="hidden-mobile">2024年第二次在北京参加油车摇号</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -630,8 +630,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/xingblog.github.io/js/events.js" ></script>
-<script  src="/xingblog.github.io/js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -653,7 +653,7 @@
 
 
   
-    <script  src="/xingblog.github.io/js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -752,9 +752,9 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script defer src="/xingblog.github.io/js/leancloud.js" ></script>
+  <script defer src="/js/leancloud.js" ></script>
 
-  <script  src="/xingblog.github.io/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -762,7 +762,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/xingblog.github.io/js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   
