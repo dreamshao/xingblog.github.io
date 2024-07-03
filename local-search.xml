@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>无聊</title>
+    <link href="/2024/07/03/%E6%97%A0%E8%81%8A/"/>
+    <url>/2024/07/03/%E6%97%A0%E8%81%8A/</url>
+    
+    <content type="html"><![CDATA[<h1 id="无聊"><a href="#无聊" class="headerlink" title="无聊"></a>无聊</h1><p>有时候会突然觉得无聊</p><p>就是那种感觉什么都没意思</p><p>看看窗外的云，人</p><p>也会思考人的意义</p><p>久而久之</p><p>就形成了规律</p><p>然而</p><p>无聊了这么久</p><p>也未想出抛弃众人都有的之外的意义</p><p>生活依旧如寂静的如死的水面</p><p>偶尔的涟漪</p><p>也未能散出绝美的轮廓</p><img src="/2024/07/03/%E6%97%A0%E8%81%8A/%E6%B6%9F%E6%BC%AA.jpg" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>随笔</category>
+      
+      <category>2024年随笔</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>随笔</tag>
+      
+      <tag>生活</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Jmetrer添加验证点</title>
     <link href="/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/"/>
     <url>/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/</url>
@@ -66,11 +97,11 @@
   
   
   <entry>
-    <title>Jmerer线程组</title>
+    <title>Jmeter线程组</title>
     <link href="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/"/>
     <url>/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/</url>
     
-    <content type="html"><![CDATA[<h1 id="Jmerer线程组"><a href="#Jmerer线程组" class="headerlink" title="Jmerer线程组"></a>Jmerer线程组</h1><p>在JMeter中，任何类型的测试都需要先创建线程组，一个线程组可以看做一个测试任务</p><h2 id="添加线程组"><a href="#添加线程组" class="headerlink" title="添加线程组"></a>添加线程组</h2><p>鼠标右键单击“测试计划”在快捷键菜单中单击添加-&gt;Threads(Users)-&gt;线程组</p><p>注意：在JMeter中，任何内容都应该放在线程中！</p><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/jmeter%E7%BA%BF%E7%A8%8B%E7%BB%84.png" class=""><h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>1.线程数：一个线程代表一个虚拟用户</p><p>2.Ramp-Up Period(in seconds)：设置线程的启动时长，单位为S，如果线程数是100，启动时长为5s，那么需要5s启动100个线程，平均每秒启动20个线程</p><p>3.循环次数：每个线程发送的请求次数。如果这个线程中有5个HTTP请求，循环次数为3的话，那么一个线程会发送5*3&#x3D;15个HTTP请求。</p><p>4.如果选择了“永远”复选框，那么所有的线程会无限发送请求，直到手动单击工具栏上的停止按钮。</p><p>如果用来做功能测试&#x2F;接口测试，那么应保持默认设置，线程数设置为1，Ramp-up Period(in seconds)设置为1，循环次数也设置为1</p><h2 id="线程组添加HTTP请求"><a href="#线程组添加HTTP请求" class="headerlink" title="线程组添加HTTP请求"></a>线程组添加HTTP请求</h2><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%82.png" class=""><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%821.png" class="">]]></content>
+    <content type="html"><![CDATA[<h1 id="Jmeter线程组"><a href="#Jmeter线程组" class="headerlink" title="Jmeter线程组"></a>Jmeter线程组</h1><p>在JMeter中，任何类型的测试都需要先创建线程组，一个线程组可以看做一个测试任务</p><h2 id="添加线程组"><a href="#添加线程组" class="headerlink" title="添加线程组"></a>添加线程组</h2><p>鼠标右键单击“测试计划”在快捷键菜单中单击添加-&gt;Threads(Users)-&gt;线程组</p><p>注意：在JMeter中，任何内容都应该放在线程中！</p><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/jmeter%E7%BA%BF%E7%A8%8B%E7%BB%84.png" class=""><h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>1.线程数：一个线程代表一个虚拟用户</p><p>2.Ramp-Up Period(in seconds)：设置线程的启动时长，单位为S，如果线程数是100，启动时长为5s，那么需要5s启动100个线程，平均每秒启动20个线程</p><p>3.循环次数：每个线程发送的请求次数。如果这个线程中有5个HTTP请求，循环次数为3的话，那么一个线程会发送5*3&#x3D;15个HTTP请求。</p><p>4.如果选择了“永远”复选框，那么所有的线程会无限发送请求，直到手动单击工具栏上的停止按钮。</p><p>如果用来做功能测试&#x2F;接口测试，那么应保持默认设置，线程数设置为1，Ramp-up Period(in seconds)设置为1，循环次数也设置为1</p><h2 id="线程组添加HTTP请求"><a href="#线程组添加HTTP请求" class="headerlink" title="线程组添加HTTP请求"></a>线程组添加HTTP请求</h2><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%82.png" class=""><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%821.png" class="">]]></content>
     
     
     <categories>
