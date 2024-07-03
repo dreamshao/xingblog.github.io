@@ -4,6 +4,161 @@
   
   
   <entry>
+    <title>Jmetrer添加验证点</title>
+    <link href="/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/"/>
+    <url>/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Jmetrer添加验证点"><a href="#Jmetrer添加验证点" class="headerlink" title="Jmetrer添加验证点"></a>Jmetrer添加验证点</h1><p>在测试中我们通常都需要有个校验的地方，那么在jmeter中我们可以这样添加验证点</p><h2 id="添加验证点"><a href="#添加验证点" class="headerlink" title="添加验证点"></a>添加验证点</h2><p>选择HTTP请求然后右键选择添加-&gt;断言-&gt;响应断言</p><img src="/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/%E9%AA%8C%E8%AF%81%E7%82%B9.png" class=""><p>然后添加断言结果，选择线程组右键-&gt;监听器-&gt;断言结果</p><p>运行后，如果HTTP响应没有包含期待的字符串，那么断言就会失败</p><img src="/2024/07/03/jmerer%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%82%B9/%E9%AA%8C%E8%AF%81%E7%82%B91.png" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Jmeter</category>
+      
+      <category>Jmeter 添加验证点</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Jmeter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Jmeter响应编码异常</title>
+    <link href="/2024/07/03/jmerer%E5%93%8D%E5%BA%94%E7%BC%96%E7%A0%81%E5%BC%82%E5%B8%B8/"/>
+    <url>/2024/07/03/jmerer%E5%93%8D%E5%BA%94%E7%BC%96%E7%A0%81%E5%BC%82%E5%B8%B8/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Jmeter响应编码异常"><a href="#Jmeter响应编码异常" class="headerlink" title="Jmeter响应编码异常"></a>Jmeter响应编码异常</h1><p>当响应数据或响应页面没有设置编码时候，JMeter会按照jmeter.properties文件中的sampleresult.default.encoding设置的格式解析。</p><p>默认为ISO-8859-1,所以解析中文时候肯定会出错，那么我们需要你把编码改为UTF-8.</p><img src="/2024/07/03/jmerer%E5%93%8D%E5%BA%94%E7%BC%96%E7%A0%81%E5%BC%82%E5%B8%B8/%E7%BC%96%E7%A0%81.png" class=""><p>修改完毕后我们需要将”#”去掉，然后重启JMeter</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Jmeter</category>
+      
+      <category>Jmeter 响应编码异常</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Jmeter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Jmerer线程组</title>
+    <link href="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/"/>
+    <url>/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Jmerer线程组"><a href="#Jmerer线程组" class="headerlink" title="Jmerer线程组"></a>Jmerer线程组</h1><p>在JMeter中，任何类型的测试都需要先创建线程组，一个线程组可以看做一个测试任务</p><h2 id="添加线程组"><a href="#添加线程组" class="headerlink" title="添加线程组"></a>添加线程组</h2><p>鼠标右键单击“测试计划”在快捷键菜单中单击添加-&gt;Threads(Users)-&gt;线程组</p><p>注意：在JMeter中，任何内容都应该放在线程中！</p><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/jmeter%E7%BA%BF%E7%A8%8B%E7%BB%84.png" class=""><h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>1.线程数：一个线程代表一个虚拟用户</p><p>2.Ramp-Up Period(in seconds)：设置线程的启动时长，单位为S，如果线程数是100，启动时长为5s，那么需要5s启动100个线程，平均每秒启动20个线程</p><p>3.循环次数：每个线程发送的请求次数。如果这个线程中有5个HTTP请求，循环次数为3的话，那么一个线程会发送5*3&#x3D;15个HTTP请求。</p><p>4.如果选择了“永远”复选框，那么所有的线程会无限发送请求，直到手动单击工具栏上的停止按钮。</p><p>如果用来做功能测试&#x2F;接口测试，那么应保持默认设置，线程数设置为1，Ramp-up Period(in seconds)设置为1，循环次数也设置为1</p><h2 id="线程组添加HTTP请求"><a href="#线程组添加HTTP请求" class="headerlink" title="线程组添加HTTP请求"></a>线程组添加HTTP请求</h2><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%82.png" class=""><img src="/2024/07/03/jmerer%E7%BA%BF%E7%A8%8B%E7%BB%84/http%E8%AF%B7%E6%B1%821.png" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Jmeter</category>
+      
+      <category>Jmeter 线程组</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Jmeter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fiddler弱网测试</title>
+    <link href="/2024/07/03/fiddler%E5%BC%B1%E7%BD%91%E6%B5%8B%E8%AF%95/"/>
+    <url>/2024/07/03/fiddler%E5%BC%B1%E7%BD%91%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fiddler弱网测试"><a href="#Fiddler弱网测试" class="headerlink" title="Fiddler弱网测试"></a>Fiddler弱网测试</h1><p>在我们平常测试中有一种测试叫做弱网测试，也就是要模拟信号较差情况下我们网站的加载情况，那么我们可以利用fillder来轻松实现这个模拟！</p><h2 id="弱网场景"><a href="#弱网场景" class="headerlink" title="弱网场景"></a>弱网场景</h2><p>1.网络慢或延迟，导致加载时间长</p><p>2.网络中断，web服务器返回500等状态码</p><p>3.网络延迟，HTTP请求发出后，很久没有响应</p><h2 id="Fillder-实现弱网"><a href="#Fillder-实现弱网" class="headerlink" title="Fillder 实现弱网"></a>Fillder 实现弱网</h2><p>1.启动Fiddler,选择Rules-&gt;Performances-&gt;Simulate Modem Speeds</p><p>2.打开浏览器，访问网站，你会发现打开网页的速度很慢</p><img src="/2024/07/03/fiddler%E5%BC%B1%E7%BD%91%E6%B5%8B%E8%AF%95/%E5%BC%B1%E7%BD%911.png" class=""><h2 id="Fillder-精确控制网速"><a href="#Fillder-精确控制网速" class="headerlink" title="Fillder 精确控制网速"></a>Fillder 精确控制网速</h2><p>有时候我们需要精确控制我们的网速具体的速率就可以使用以下方式：</p><p>1.启动Fiddler,选择Rules-&gt;Performances-&gt;Simulate Modem Speeds</p><p>2.在FiddlerScript中找到如下一段代码</p><img src="/2024/07/03/fiddler%E5%BC%B1%E7%BD%91%E6%B5%8B%E8%AF%95/%E8%84%9A%E6%9C%AC.png" class=""><p>我们可以通过修改对应的数值来控制网速</p><p>3.修改完毕后，原本已经勾选的Simulate Modem Speeds会被取消勾选，再次选中Rules-&gt;Performances-&gt;Simulate Modem Speeds</p><p>4.访问浏览器会更加慢<br> <br>网络取值算法就是 1000&#x2F;下载速速&#x3D;需要延迟的时间(ms)，比如50kbit&#x2F;s需要延迟200ms来接收数据</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Fillder</category>
+      
+      <category>Fillder 弱网测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fiddler前端调试</title>
+    <link href="/2024/07/03/fiddler%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95/"/>
+    <url>/2024/07/03/fiddler%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Fiddler前端调试"><a href="#Fiddler前端调试" class="headerlink" title="Fiddler前端调试"></a>Fiddler前端调试</h1><p>有时候我们可能需要在服务器上面调试javaScript文件，但是又比较麻烦，此时为了方便可以使用fillder来实现！</p><h2 id="Fiddler-AutoResponder的工作原理"><a href="#Fiddler-AutoResponder的工作原理" class="headerlink" title="Fiddler AutoResponder的工作原理"></a>Fiddler AutoResponder的工作原理</h2><p>使用Fiddler可以替换自动返回的一个伪造的HTTP响应，者跟之前介绍的下断点修改HTTP响应差不多，只不过AutoResponder是自动的，操作更加方便！</p><h3 id="Fiddler在线调试JavaScript文件"><a href="#Fiddler在线调试JavaScript文件" class="headerlink" title="Fiddler在线调试JavaScript文件"></a>Fiddler在线调试JavaScript文件</h3><p>1.首先我们将JS文件保存到本地</p><p>2.然后编辑本地的JavaScript文件，更改需要编辑的代码</p><p>3.启动Fiddler，在浏览器中打开网址，然后使用Fiddler抓住这个JavaScript的HTTP请求</p><p>4.然后将Fiddler中，的这个JS拖拽到AutoResponser中</p><p>5.在RuleEditor中单击“Find a file…”，选择本地JavaScript文件的路径。</p><p>6.选中”Enable rules”，激活规则，选中”Unmatched requests passthrough”放行不匹配的HTTP请求。</p><p>7.单击“Save”按钮</p><p>8.你只需要修改本地机器上的文件，然后刷新浏览器，就可以看到效果了！</p><p>若是不显示CSS&#x2F;JS等文件信息，可以在Filters—Request Headers勾选Show only if URL contains选项</p><p>填写文件类型：</p><p>REGX:(?insx)&#x2F;[^?&#x2F;]<em>.(css|js|json|ico|jpg|png|gif|bmp|wav)(?.</em>)?$</p><p>然后选择Actions-&gt;Run Filterset Now</p><img src="/2024/07/03/fiddler%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95/fillder%E8%B0%83%E8%AF%95.png" class=""><p>替换照片</p><img src="/2024/07/03/fiddler%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95/%E6%9B%BF%E6%8D%A2%E7%85%A7%E7%89%87.png" class=""><p>效果</p><img src="/2024/07/03/fiddler%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95/%E6%95%88%E6%9E%9C.png" class="">]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Fillder</category>
+      
+      <category>Fillder 前端调试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Fillder</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>完美解决自定义域名访问gitpages出现了部分请求404的问题！</title>
     <link href="/2024/07/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/"/>
     <url>/2024/07/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
