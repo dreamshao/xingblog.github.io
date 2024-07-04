@@ -4,6 +4,72 @@
   
   
   <entry>
+    <title>Android 测试点总结（长期更新）</title>
+    <link href="/2024/07/04/android%E6%B5%8B%E8%AF%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <url>/2024/07/04/android%E6%B5%8B%E8%AF%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Android-测试点总结"><a href="#Android-测试点总结" class="headerlink" title="Android 测试点总结"></a>Android 测试点总结</h1><p>我们在日常测试Android的时候需要我们注意很多测试点，那么这些也是我慢慢总结的，当然肯定会有落下的，也希望大家可以补充说明，这个帖子是长期更新的帖子不会在新开帖子介绍，欢迎经常来看！</p><h2 id="WebView-的测试"><a href="#WebView-的测试" class="headerlink" title="WebView 的测试"></a>WebView 的测试</h2><p>为什么首先说这个呢？是因为我们现在很多的APP都会有活动的展示，当然WebView不仅仅是活动哈，像一些临时页，改动很频繁的页面等。在测试WebView 我们首先要关注那些点呢？</p><p>1.WebView 在不同机型上的适配情况</p><p>   WebView 在不同的机型上适配情况是我们要关注的，尤其是支持到了小屏手机或者大屏打开的时候，要关注我们主流的要适配的机型，观察页面布局</p><p>   是否正常展示，信息是否遗漏， 按钮是否可以正常点击等！</p><p>2.WebView 呼起Android 内部页面</p><p>  WebView 会含有跳转等，我们要注意若是跳转到APP内部的短链中，需要着重测试一下。</p><p>3.WebView 渲染速度及占用内存</p><p>  WebView 不应该过于复杂，渲染速度应该较快且占用内存小！</p><h2 id="ANR-测试"><a href="#ANR-测试" class="headerlink" title="ANR 测试"></a>ANR 测试</h2><p>  这里可以看我写的ANR 文章里面有很详细的介绍</p><p>  <a href="http://8888666.top/2024/07/04/adroid%E6%B5%8B%E8%AF%95/">http://8888666.top/2024/07/04/adroid%E6%B5%8B%E8%AF%95/</a></p><h2 id="新老版本的测试"><a href="#新老版本的测试" class="headerlink" title="新老版本的测试"></a>新老版本的测试</h2><p>  在测试Andoid的时候尤其要注意新老版本的测试，如果后台发布了新的功能但是只支持新版本，那么就要做版本控制，或者新版本支持老版使用就要看看是否老版能正常使用！</p><h2 id="兼容性测试"><a href="#兼容性测试" class="headerlink" title="兼容性测试"></a>兼容性测试</h2><p>  这个老生常谈的话题，覆盖你主流机型测试</p><h2 id="专项测试"><a href="#专项测试" class="headerlink" title="专项测试"></a>专项测试</h2><p>  耗电，耗流， 性能， 打开速度， 发烧 等等标准且这个和公司有关系，不是强制！</p><h2 id="SDK测试"><a href="#SDK测试" class="headerlink" title="SDK测试"></a>SDK测试</h2><p>  如果app使用了三方的sdk 那么我们也是要关注的，不能因为三方的问题导致我们出现了问题</p><h2 id="弱网测试"><a href="#弱网测试" class="headerlink" title="弱网测试"></a>弱网测试</h2><p>  测试APP在弱网情况下的表现，各个公司有不同的标准！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试常见问题</category>
+      
+      <category>Android</category>
+      
+      <category>Android 测试点总结</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>测试知识</tag>
+      
+      <tag>Android 测试知识</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Android ANR是什么？</title>
+    <link href="/2024/07/03/adroid%E6%B5%8B%E8%AF%95/"/>
+    <url>/2024/07/03/adroid%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Android-ANR-是什么呢？"><a href="#Android-ANR-是什么呢？" class="headerlink" title="Android ANR 是什么呢？"></a>Android ANR 是什么呢？</h1><p>在日常测试Android我们会经常听到开发讲述一个专业术语ANR，那么ANR是什么呢？又是什么导致的呢？一起来看看吧！</p><h2 id="什么是ANR？"><a href="#什么是ANR？" class="headerlink" title="什么是ANR？"></a>什么是ANR？</h2><p>ANR,(Application Not Responding) 即应用程序无响应，在android应用中，当我们的UI线程被阻塞，就会弹出如下对话框，用户可以选择继续等待或者关闭这个应用程序,这种现象我们称之为ANR.</p><h2 id="ANR的类型"><a href="#ANR的类型" class="headerlink" title="ANR的类型"></a>ANR的类型</h2><p>一共可以分为三种类型：</p><p>1.主线程对输入事件在5秒内没有处理完毕</p><p>   产生这种ANR的前提是要有输入事件，如果用户没有触发任何输入事件，即便是主线程阻塞了，也不会产生ANR，因为InputDispatcher没有分发事件给应用程序，当然也不会检测处理超时和报告ANR了。</p><p>2.主线程在执行BroadcastReceiver的onReceive函数时10秒内没有执行完毕，后台进程是60秒</p><p>   这种情况的ANR系统不会显示对话框提示，仅是输出log而已。</p><p>3.主线程在执行Service的各个生命周期函数时20秒内没有执行完毕,后台进程为200秒</p><p>   同样对这种情况的ANR系统也不会显示对话框提示，仅是输出log。</p><p>总体来说：</p><table><thead><tr><th>Type</th><th>Method call</th><th>Logsample</th><th>time out</th></tr></thead><tbody><tr><td>Input dispatch</td><td>onClick(),onTouch(),onKeydown(),onKeyup()</td><td>Input dispatching timed out</td><td>5</td></tr><tr><td>Broadcast</td><td>onReceive()</td><td>Timeout of broadcast</td><td>FG: 10, BG 60</td></tr><tr><td>Service</td><td>onBind(),onCreate(),onStartCommand(),onUnbind(),onDestroy()</td><td>Timeout executing service</td><td>FG: 20, BG 200</td></tr></tbody></table><h2 id="ANR产生的原因"><a href="#ANR产生的原因" class="headerlink" title="ANR产生的原因"></a>ANR产生的原因</h2><p>1.应用自身进程引起的问题，比如, 在oncreate ，onstart等生命周期中执行耗时操作，ui线程阻塞，挂起，死循环等</p><p>2.其他进程引起的，比如：io操作导致cpu使用过高，导致当前应用进程无法抢占到cpu时间片</p><h3 id="细分的话可以分为以下一些情况："><a href="#细分的话可以分为以下一些情况：" class="headerlink" title="细分的话可以分为以下一些情况："></a>细分的话可以分为以下一些情况：</h3><p>耗时的网络访问</p><p>大量的数据读写</p><p>数据库操作</p><p>硬件操作（比如camera）</p><p>调用thread的join()方法、sleep()方法、wait()方法或者等待线程锁的时候</p><p>service binder的数量达到上限</p><p>system server中发生WatchDog ANR</p><p>service忙导致超时无响应</p><p>其他线程持有锁，导致主线程等待超时</p><p>其它线程终止或崩溃导致主线程一直等待…</p><h2 id="如何避免ANR"><a href="#如何避免ANR" class="headerlink" title="如何避免ANR"></a>如何避免ANR</h2><p>耗时的工作()比如数据库操作，I&#x2F;O，网络操作，采用单独的工作线程处理</p><p>用Handler来处理UIthread和工作thread的交互</p><p>合理使用 Handler 来处理其他线程请求</p><p>合理使用并遵循 Android 生命周期, 避免在 onCreate() and onResume() 做过多的事情</p><p>使用一些架构形成规范来避免内存等问题,例如：MVP、RxJava</p><p>经常使用工具来检查内存问题,例如:MAT、TraceView、AS 自带等工具</p><p>避免加载大图片引起内存不足导致 ANR</p><p>避免内存泄露引起的 ANR</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试常见问题</category>
+      
+      <category>Android</category>
+      
+      <category>Android ANR是什么？</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>测试知识</tag>
+      
+      <tag>Android 测试知识</tag>
+      
+      <tag>原创、转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python url编码</title>
     <link href="/2024/07/03/url%E5%8A%A0%E5%AF%86/"/>
     <url>/2024/07/03/url%E5%8A%A0%E5%AF%86/</url>

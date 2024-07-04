@@ -16,24 +16,24 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python 实现url 编码在平常的测试中，我们会遇见在测试某些url 要求传递的是url编码后的信息，那么你可以从本文中学会如何使用url编码。 代码实现12345678910111213import urllib.parseclass UrlEncode_infor:    def urlencode_infor(self,data):        s&#x3D;data        s_re&#x3D;">
+    <meta name="description" content="Android ANR 是什么呢？在日常测试Android我们会经常听到开发讲述一个专业术语ANR，那么ANR是什么呢？又是什么导致的呢？一起来看看吧！ 什么是ANR？ANR,(Application Not Responding) 即应用程序无响应，在android应用中，当我们的UI线程被阻塞，就会弹出如下对话框，用户可以选择继续等待或者关闭这个应用程序,这种现象我们称之为ANR. ANR的类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python url编码">
-<meta property="og:url" content="https://dreamshao.github.io/2024/07/03/url%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:title" content="Android ANR是什么？">
+<meta property="og:url" content="https://dreamshao.github.io/2024/07/03/adroid%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python 实现url 编码在平常的测试中，我们会遇见在测试某些url 要求传递的是url编码后的信息，那么你可以从本文中学会如何使用url编码。 代码实现12345678910111213import urllib.parseclass UrlEncode_infor:    def urlencode_infor(self,data):        s&#x3D;data        s_re&#x3D;">
+<meta property="og:description" content="Android ANR 是什么呢？在日常测试Android我们会经常听到开发讲述一个专业术语ANR，那么ANR是什么呢？又是什么导致的呢？一起来看看吧！ 什么是ANR？ANR,(Application Not Responding) 即应用程序无响应，在android应用中，当我们的UI线程被阻塞，就会弹出如下对话框，用户可以选择继续等待或者关闭这个应用程序,这种现象我们称之为ANR. ANR的类">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-07-03T08:47:17.000Z">
-<meta property="article:modified_time" content="2024-07-03T08:49:58.188Z">
+<meta property="article:published_time" content="2024-07-03T12:31:32.000Z">
+<meta property="article:modified_time" content="2024-07-04T03:29:45.284Z">
 <meta property="article:author" content="Yun Shao">
-<meta property="article:tag" content="原创">
-<meta property="article:tag" content="python">
-<meta property="article:tag" content="yield">
+<meta property="article:tag" content="测试知识">
+<meta property="article:tag" content="Android 测试知识">
+<meta property="article:tag" content="原创、转载">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Python url编码 - 韵少的个人技术博客</title>
+  <title>Android ANR是什么？ - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python url编码"></span>
+            <span id="subtitle" data-typed-text="Android ANR是什么？"></span>
           
         </div>
 
@@ -239,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-03 16:47" pubdate>
-          2024年7月3日 下午
+        <time datetime="2024-07-03 20:31" pubdate>
+          2024年7月3日 晚上
         </time>
       </span>
     
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          84 字
+          695 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          1 分钟
+          6 分钟
         
       </span>
     
@@ -307,13 +307,70 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python url编码</h1>
+            <h1 id="seo-header">Android ANR是什么？</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python-实现url-编码"><a href="#Python-实现url-编码" class="headerlink" title="Python 实现url 编码"></a>Python 实现url 编码</h1><p>在平常的测试中，我们会遇见在测试某些url 要求传递的是url编码后的信息，那么你可以从本文中学会如何使用url编码。</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> urllib.parse<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">UrlEncode_infor</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">urlencode_infor</span>(<span class="hljs-params">self,data</span>):<br>        s=data<br>        s_re= urllib.parse.quote(s)<br>        <span class="hljs-keyword">return</span> s_re<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    url_encode=UrlEncode_infor()<br>    s=<span class="hljs-string">&#x27;patron:id:generaltoken:1b9554037ee04463beaeabd81573785e&#x27;</span><br>    url_encode.urlencode_infor(s)<br></code></pre></td></tr></table></figure>
+                <h1 id="Android-ANR-是什么呢？"><a href="#Android-ANR-是什么呢？" class="headerlink" title="Android ANR 是什么呢？"></a>Android ANR 是什么呢？</h1><p>在日常测试Android我们会经常听到开发讲述一个专业术语ANR，那么ANR是什么呢？又是什么导致的呢？一起来看看吧！</p>
+<h2 id="什么是ANR？"><a href="#什么是ANR？" class="headerlink" title="什么是ANR？"></a>什么是ANR？</h2><p>ANR,(Application Not Responding) 即应用程序无响应，在android应用中，当我们的UI线程被阻塞，就会弹出如下对话框，用户可以选择继续等待或者关闭这个应用程序,这种现象我们称之为ANR.</p>
+<h2 id="ANR的类型"><a href="#ANR的类型" class="headerlink" title="ANR的类型"></a>ANR的类型</h2><p>一共可以分为三种类型：</p>
+<p>1.主线程对输入事件在5秒内没有处理完毕</p>
+<p>   产生这种ANR的前提是要有输入事件，如果用户没有触发任何输入事件，即便是主线程阻塞了，也不会产生ANR，因为InputDispatcher没有分发事件给应用程序，当然也不会检测处理超时和报告ANR了。</p>
+<p>2.主线程在执行BroadcastReceiver的onReceive函数时10秒内没有执行完毕，后台进程是60秒</p>
+<p>   这种情况的ANR系统不会显示对话框提示，仅是输出log而已。</p>
+<p>3.主线程在执行Service的各个生命周期函数时20秒内没有执行完毕,后台进程为200秒</p>
+<p>   同样对这种情况的ANR系统也不会显示对话框提示，仅是输出log。</p>
+<p>总体来说：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Method call</th>
+<th>Logsample</th>
+<th>time out</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Input dispatch</td>
+<td>onClick(),onTouch(),onKeydown(),onKeyup()</td>
+<td>Input dispatching timed out</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td>onReceive()</td>
+<td>Timeout of broadcast</td>
+<td>FG: 10, BG 60</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>onBind(),onCreate(),onStartCommand(),onUnbind(),onDestroy()</td>
+<td>Timeout executing service</td>
+<td>FG: 20, BG 200</td>
+</tr>
+</tbody></table>
+<h2 id="ANR产生的原因"><a href="#ANR产生的原因" class="headerlink" title="ANR产生的原因"></a>ANR产生的原因</h2><p>1.应用自身进程引起的问题，比如, 在oncreate ，onstart等生命周期中执行耗时操作，ui线程阻塞，挂起，死循环等</p>
+<p>2.其他进程引起的，比如：io操作导致cpu使用过高，导致当前应用进程无法抢占到cpu时间片</p>
+<h3 id="细分的话可以分为以下一些情况："><a href="#细分的话可以分为以下一些情况：" class="headerlink" title="细分的话可以分为以下一些情况："></a>细分的话可以分为以下一些情况：</h3><p>耗时的网络访问</p>
+<p>大量的数据读写</p>
+<p>数据库操作</p>
+<p>硬件操作（比如camera）</p>
+<p>调用thread的join()方法、sleep()方法、wait()方法或者等待线程锁的时候</p>
+<p>service binder的数量达到上限</p>
+<p>system server中发生WatchDog ANR</p>
+<p>service忙导致超时无响应</p>
+<p>其他线程持有锁，导致主线程等待超时</p>
+<p>其它线程终止或崩溃导致主线程一直等待…</p>
+<h2 id="如何避免ANR"><a href="#如何避免ANR" class="headerlink" title="如何避免ANR"></a>如何避免ANR</h2><p>耗时的工作()比如数据库操作，I&#x2F;O，网络操作，采用单独的工作线程处理</p>
+<p>用Handler来处理UIthread和工作thread的交互</p>
+<p>合理使用 Handler 来处理其他线程请求</p>
+<p>合理使用并遵循 Android 生命周期, 避免在 onCreate() and onResume() 做过多的事情</p>
+<p>使用一些架构形成规范来避免内存等问题,例如：MVP、RxJava</p>
+<p>经常使用工具来检查内存问题,例如:MAT、TraceView、AS 自带等工具</p>
+<p>避免加载大图片引起内存不足导致 ANR</p>
+<p>避免内存泄露引起的 ANR</p>
+
                 
               </div>
             
@@ -331,17 +388,17 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="category-chain-item">测试常见问题</a>
   
   
     <span>></span>
     
-  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/Android/" class="category-chain-item">Android</a>
   
   
     <span>></span>
     
-  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-url%E7%BC%96%E7%A0%81/" class="category-chain-item">Python url编码</a>
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/Android/Android-ANR%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" class="category-chain-item">Android ANR是什么？</a>
   
   
 
@@ -360,11 +417,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+        <a href="/tags/%E6%B5%8B%E8%AF%95%E7%9F%A5%E8%AF%86/" class="print-no-link">#测试知识</a>
       
-        <a href="/tags/python/" class="print-no-link">#python</a>
+        <a href="/tags/Android-%E6%B5%8B%E8%AF%95%E7%9F%A5%E8%AF%86/" class="print-no-link">#Android 测试知识</a>
       
-        <a href="/tags/yield/" class="print-no-link">#yield</a>
+        <a href="/tags/%E5%8E%9F%E5%88%9B%E3%80%81%E8%BD%AC%E8%BD%BD/" class="print-no-link">#原创、转载</a>
       
     </div>
   
@@ -376,8 +433,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python url编码</div>
-      <div>https://dreamshao.github.io/2024/07/03/url加密/</div>
+      <div>Android ANR是什么？</div>
+      <div>https://dreamshao.github.io/2024/07/03/adroid测试/</div>
     </div>
     <div class="license-meta">
       
@@ -421,9 +478,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/03/adroid%E6%B5%8B%E8%AF%95/" title="Android ANR是什么？">
+                      <a href="/2024/07/04/android%E6%B5%8B%E8%AF%95%E7%82%B9%E6%80%BB%E7%BB%93/" title="Android 测试点总结（长期更新）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Android ANR是什么？</span>
+                        <span class="hidden-mobile">Android 测试点总结（长期更新）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -431,8 +488,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/03/md5%E5%8A%A0%E5%AF%86/" title="Python md5加密">
-                        <span class="hidden-mobile">Python md5加密</span>
+                      <a href="/2024/07/03/url%E5%8A%A0%E5%AF%86/" title="Python url编码">
+                        <span class="hidden-mobile">Python url编码</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
