@@ -16,12 +16,12 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="基于Pytest的接口测试框架这是一款基于pytest框架的开源测试框架,功能涵盖请求体保存, allure生成, log生成, 全局变量存储, 全局变量使用, 断言返回体 等多种功能组合 github地址是：https:&#x2F;&#x2F;github.com&#x2F;dreamshao&#x2F;pytest-autotest-interface 详细介绍框架图：&lt;br&gt;   —接口自动化测试&lt;br&gt;">
+    <meta name="description" content="基于Pytest的接口测试框架这是一款基于pytest框架的开源测试框架,功能涵盖请求体保存, allure生成, log生成, 全局变量存储, 全局变量使用, 断言返回体 等多种功能组合 github地址是：https:&#x2F;&#x2F;github.com&#x2F;dreamshao&#x2F;pytest-autotest-interface 详细介绍框架图：   —接口自动化测试      --allure_report">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Pytest的接口测试框架">
 <meta property="og:url" content="https://dreamshao.github.io/2024/07/12/pytest%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="基于Pytest的接口测试框架这是一款基于pytest框架的开源测试框架,功能涵盖请求体保存, allure生成, log生成, 全局变量存储, 全局变量使用, 断言返回体 等多种功能组合 github地址是：https:&#x2F;&#x2F;github.com&#x2F;dreamshao&#x2F;pytest-autotest-interface 详细介绍框架图：&lt;br&gt;   —接口自动化测试&lt;br&gt;">
+<meta property="og:description" content="基于Pytest的接口测试框架这是一款基于pytest框架的开源测试框架,功能涵盖请求体保存, allure生成, log生成, 全局变量存储, 全局变量使用, 断言返回体 等多种功能组合 github地址是：https:&#x2F;&#x2F;github.com&#x2F;dreamshao&#x2F;pytest-autotest-interface 详细介绍框架图：   —接口自动化测试      --allure_report">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dreamshao.github.io/2024/07/12/pytest%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/sqlite%E5%8F%AF%E8%A7%86%E5%8C%96.png">
 <meta property="og:image" content="https://dreamshao.github.io/2024/07/12/pytest%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/requests%E8%A1%A8.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://dreamshao.github.io/2024/07/12/pytest%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/allure%E6%8A%A5%E5%91%8A2.png">
 <meta property="og:image" content="https://dreamshao.github.io/2024/07/12/pytest%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/log.png">
 <meta property="article:published_time" content="2024-07-12T09:11:14.000Z">
-<meta property="article:modified_time" content="2024-07-12T10:02:35.721Z">
+<meta property="article:modified_time" content="2024-07-13T04:18:17.201Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="Pytest">
@@ -259,7 +259,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.2k 字
         
       </span>
     
@@ -270,7 +270,7 @@
         
         
         
-          16 分钟
+          19 分钟
         
       </span>
     
@@ -322,30 +322,30 @@
                 
                 <h1 id="基于Pytest的接口测试框架"><a href="#基于Pytest的接口测试框架" class="headerlink" title="基于Pytest的接口测试框架"></a>基于Pytest的接口测试框架</h1><p>这是一款基于pytest框架的开源测试框架,功能涵盖请求体保存, allure生成, log生成, 全局变量存储, 全局变量使用, 断言返回体 等多种功能组合</p>
 <p>github地址是：<a target="_blank" rel="noopener" href="https://github.com/dreamshao/pytest-autotest-interface">https://github.com/dreamshao/pytest-autotest-interface</a></p>
-<h2 id="详细介绍"><a href="#详细介绍" class="headerlink" title="详细介绍"></a>详细介绍</h2><pre><code class="hljs">框架图：&lt;br&gt;
-  —接口自动化测试&lt;br&gt;
-     --allure_report&lt;br&gt;
-     --allure-results&lt;br&gt;
-     --BaseRequests&lt;br&gt;
-       ---__init__.py&lt;br&gt;
-       ---BaseRequests.py&lt;br&gt;
-     --Data&lt;br&gt;
-       ---data.db&lt;br&gt;
-       ---data.xlsx&lt;br&gt;
-       ---sqlite 可视化安装包&lt;br&gt;
-       ---read_data.py&lt;br&gt;
-     --logs&lt;br&gt;
-     --RequestObject&lt;br&gt;
-       ---request_runner.py&lt;br&gt;
-     --TestCases&lt;br&gt;
-       -- 测试用例&lt;br&gt;
-     --Utils&lt;br&gt;
-       --json_assert.py&lt;br&gt;
-       --logger.py&lt;br&gt;
-       --replace_requests.py&lt;br&gt;
-       --variable_handler.py&lt;br&gt;
-      --man.py&lt;br&gt;
-      --requirements.txt&lt;br&gt;
+<h2 id="详细介绍"><a href="#详细介绍" class="headerlink" title="详细介绍"></a>详细介绍</h2><pre><code class="hljs">框架图：
+  —接口自动化测试
+     --allure_report
+     --allure-results
+     --BaseRequests
+       ---__init__.py
+       ---BaseRequests.py
+     --Data
+       ---data.db
+       ---data.xlsx
+       ---sqlite 可视化安装包
+       ---read_data.py
+     --logs
+     --RequestObject
+       ---request_runner.py
+     --TestCases
+       -- 测试用例
+     --Utils
+       --json_assert.py
+       --logger.py
+       --replace_requests.py
+       --variable_handler.py
+      --man.py
+      --requirements.txt
 </code></pre>
 <h2 id="开始前必须了解的东西"><a href="#开始前必须了解的东西" class="headerlink" title="开始前必须了解的东西"></a>开始前必须了解的东西</h2><h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>数据存储用到了sqlite，这个轻量级的数据库，无需额外安装第三方的包，也没有mysql那么大对资源要求低，当然也支持excel，里面也封装好了数据。</p>
 <p>支持运行生成sql 的方法：</p>
@@ -399,6 +399,15 @@
 <h3 id="main-文件"><a href="#main-文件" class="headerlink" title="main 文件"></a>main 文件</h3><p>也就是主文件，用来实现调用pytest以及生成allure报告 </p>
 <p>代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    pytest.main([<span class="hljs-string">&#x27;-v&#x27;</span>, <span class="hljs-string">&#x27;-s&#x27;</span>, <span class="hljs-string">&#x27;--alluredir=allure-results&#x27;</span>, <span class="hljs-string">&#x27;--clean-alluredir&#x27;</span>])<br>    cmd = <span class="hljs-string">&quot;allure generate ./allure-results report --clean&quot;</span><br>    subprocess.run(cmd, shell=<span class="hljs-literal">True</span>)<br>    cmd = <span class="hljs-string">&quot;allure open -h 127.0.0.1 -p 8883 allure-report&quot;</span><br>    subprocess.run(cmd, shell=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="demo-解析"><a href="#demo-解析" class="headerlink" title="demo 解析"></a>demo 解析</h2><p>当案例中有四个url</p>
+<p>其中包含变量存储 以及 替换的是：remarks 里面的 比赛列表页， 这里存储了两个变量分别是eventid, competitorid。将对应的值保存到variable表中。</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@allure.step(<span class="hljs-params"><span class="hljs-string">&quot;Today比赛列表&quot;</span></span>)</span><br><span class="hljs-meta">  @pytest.mark.parametrize(<span class="hljs-params"><span class="hljs-string">&#x27;id, url, method, headers, request_data, params, json, assert_jsonpath, response_body, remarks&#x27;</span>,</span></span><br><span class="hljs-params"><span class="hljs-meta">                           DataManger(<span class="hljs-params"></span>).get_data_from_sqlite(<span class="hljs-params">name=<span class="hljs-string">&quot;data&quot;</span>,sql_command=<span class="hljs-string">&#x27;&#x27;&#x27;select * from requests where id= 2&#x27;&#x27;&#x27;</span>,</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">                                                             query_sql_type=<span class="hljs-literal">True</span></span>)</span>)</span><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">test_match_list</span>(<span class="hljs-params">self, <span class="hljs-built_in">id</span>, url, method, headers, request_data, params, json, assert_jsonpath, response_body, remarks</span>):<br>      logger.info(<span class="hljs-string">f&quot;开始测试比赛列表&quot;</span>)<br>      result = Request_Runner(url=url, headers=headers, assert_info=assert_jsonpath).get_request_runner(<span class="hljs-built_in">id</span>=<span class="hljs-built_in">id</span>)<br>      logger.info(<span class="hljs-string">f&quot;测试结果是 <span class="hljs-subst">&#123;result&#125;</span>&quot;</span>)<br>      <span class="hljs-keyword">if</span> result:<br>          Variable_Handler(variable_name=[<span class="hljs-string">&quot;eventid&quot;</span>,<span class="hljs-string">&quot;competitorid&quot;</span>], response_body=result).variable_handler()<br>      <span class="hljs-keyword">assert</span> result <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>使用变量的是 remarks 是订阅比赛，深度数据 这里分别用到了 url 替换 以及 data 替换。</p>
+<p>代码：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta"> @allure.step(<span class="hljs-params"><span class="hljs-string">&quot;订阅比赛，采用全局变量&quot;</span></span>)</span><br><span class="hljs-meta">@pytest.mark.parametrize(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-meta">    <span class="hljs-string">&#x27;id, url, method, headers, request_data, params, json, assert_jsonpath, response_body, remarks&#x27;</span>,</span></span><br><span class="hljs-params"><span class="hljs-meta">    DataManger(<span class="hljs-params"></span>).get_data_from_sqlite(<span class="hljs-params">name=<span class="hljs-string">&quot;data&quot;</span>, sql_command=<span class="hljs-string">&#x27;&#x27;&#x27;select * from requests where id= 4&#x27;&#x27;&#x27;</span>,</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">                                      query_sql_type=<span class="hljs-literal">True</span></span>)</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_match_subscribe_list</span>(<span class="hljs-params">self, <span class="hljs-built_in">id</span>, url, method, headers, request_data, params, json, assert_jsonpath,</span><br><span class="hljs-params">                           response_body,</span><br><span class="hljs-params">                           remarks</span>):<br>    logger.info(<span class="hljs-string">f&quot;订阅比赛信息&quot;</span>)<br>    result = Request_Runner(url=url, headers=headers, data=request_data, assert_info=assert_jsonpath).post_request_runner(<span class="hljs-built_in">id</span>=<span class="hljs-built_in">id</span>, replace_type=<span class="hljs-number">1</span>)<br>    logger.info(<span class="hljs-string">f&quot;测试结果是 <span class="hljs-subst">&#123;result&#125;</span>&quot;</span>)<br>    <span class="hljs-comment"># if result[0] is True:</span><br>    <span class="hljs-comment">#     Variable_Handler(id=2, variable_name=&quot;eventid&quot;).variable_handler()</span><br>    <span class="hljs-keyword">assert</span> result <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">False</span><br><br><span class="hljs-meta">@allure.step(<span class="hljs-params"><span class="hljs-string">&quot;深度数据，采用全局变量&quot;</span></span>)</span><br><span class="hljs-meta">@pytest.mark.parametrize(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-meta">    <span class="hljs-string">&#x27;id, url, method, headers, request_data, params, json, assert_jsonpath, response_body, remarks&#x27;</span>,</span></span><br><span class="hljs-params"><span class="hljs-meta">    DataManger(<span class="hljs-params"></span>).get_data_from_sqlite(<span class="hljs-params">name=<span class="hljs-string">&quot;data&quot;</span>, sql_command=<span class="hljs-string">&#x27;&#x27;&#x27;select * from requests where id= 5&#x27;&#x27;&#x27;</span>,</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">                                      query_sql_type=<span class="hljs-literal">True</span></span>)</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_match_subscribe_list</span>(<span class="hljs-params">self, <span class="hljs-built_in">id</span>, url, method, headers, request_data, params, json, assert_jsonpath,</span><br><span class="hljs-params">                              response_body,</span><br><span class="hljs-params">                              remarks</span>):<br>    logger.info(<span class="hljs-string">f&quot;订阅比赛信息&quot;</span>)<br>    result = Request_Runner(url=url, headers=headers, data=request_data,<br>                            assert_info=assert_jsonpath).post_request_runner(<span class="hljs-built_in">id</span>=<span class="hljs-built_in">id</span>, replace_type=<span class="hljs-number">2</span>)<br>    logger.info(<span class="hljs-string">f&quot;测试结果是 <span class="hljs-subst">&#123;result&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">assert</span> result <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>之前我做的是基于Django+vue 的测试开发平台，已经稳定运行了3年+, 最近想要把部分功能用Pytest实现，也就做出了一版，这版肯定有很多不足，欢迎各位大神批评和建议！让我们一起进步努力！</p>
 
