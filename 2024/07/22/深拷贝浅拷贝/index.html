@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dreamshao.github.io/2024/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E6%B5%85%E6%8B%B7%E8%B4%9D/%E6%B5%85%E6%8B%B7%E8%B4%9D.png">
 <meta property="article:published_time" content="2024-07-22T06:25:28.000Z">
-<meta property="article:modified_time" content="2024-07-22T08:52:04.971Z">
+<meta property="article:modified_time" content="2024-07-24T06:46:40.434Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="python">
@@ -367,7 +367,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-string">&#x27;1&#x27;</span><br>b = a<br><span class="hljs-built_in">print</span>(a==b) <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b) <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
 
 <p>那么，我们以字符类型举例，可见我还是我们赋值给了b，两者也是相同的值，相同的内存地址，那么如果我此时修改a的内容会引发什么呢？</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-string">&#x27;1&#x27;</span><br>b = a<br><span class="hljs-built_in">print</span>(a==b)<br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)<br><br><span class="hljs-built_in">print</span>(a==b) <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b) <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-string">&#x27;1&#x27;</span><br>b = a<br><span class="hljs-built_in">print</span>(a==b)<br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)<br><br>a = <span class="hljs-string">&#x27;2&#x27;</span><br><span class="hljs-built_in">print</span>(a==b) <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b) <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
 
 <p>这时可能有同学就会有疑问了，哎，怎么上面刚刚说完浅拷贝如果改了会都发生变化呀，哈哈，这里其实浅拷贝对应如果是可变的数据结构是可以的，但是如果对应到不可变数据结构就不行了，因为我们的数据结构已经定义了不能被改变，所以这就是为什么要将深拷贝浅拷贝和可变数据结构以及不可变结构放在一起介绍的原因。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-string">&#x27;1&#x27;</span><br>b = a<br><span class="hljs-built_in">print</span>(a==b)<br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a)) <span class="hljs-comment"># 135575780975872</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b)) <span class="hljs-comment"># 135575780975872</span><br><br>a = <span class="hljs-string">&#x27;2&#x27;</span><br><span class="hljs-built_in">print</span>(a==b)<br><span class="hljs-built_in">print</span>(a <span class="hljs-keyword">is</span> b)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a)) <span class="hljs-comment"># 135575780975928</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b)) <span class="hljs-comment"># 135575780975872</span><br></code></pre></td></tr></table></figure>
@@ -486,6 +486,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/07/24/jsonpath/" title="Python JsonPath介绍">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python JsonPath介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
