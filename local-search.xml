@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>Python 单例模式</title>
+    <link href="/2024/08/02/python%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <url>/2024/08/02/python%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-单例模式"><a href="#Python-单例模式" class="headerlink" title="Python 单例模式"></a>Python 单例模式</h1><p>在众多设计模式中，单例模式对于在测试开发过程中应用的还是比较广泛的，例如log, driver实例等。都需要使用到我们的单例模式</p><h2 id="什么是单例模式？"><a href="#什么是单例模式？" class="headerlink" title="什么是单例模式？"></a>什么是单例模式？</h2><p>用我自己的理解的话语来说：“单例模式就是如果一个地方都需要用到这个东西（对象），那么我们只需要创建一次就可以实现维护全局状态的使用”。就是我声明了在用的时候只需还是最初的那个即可，无需再次创建！</p><h2 id="应用常见场景"><a href="#应用常见场景" class="headerlink" title="应用常见场景"></a>应用常见场景</h2><p>单例模式一般用于对于共享资源的并发访问， 例如：数据库的连接， 日志的生成， 全局的工具对于测试而言就是我们的driver实例化。</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">  因为单例模式在全局内只有一个实例，因此可以节省比较多的内存空间。</span><br><span class="hljs-string">全局只有一个接入点，可以更好地进行数据同步控制，避免多重占用。</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">  函数装饰器实现</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sinleton</span>(<span class="hljs-params">cls</span>):<br>    <span class="hljs-comment"># 创建一个字典用来保存被装饰类的实例对象</span><br>    _instance = &#123;&#125;<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_singleton</span>(<span class="hljs-params">*args, **kwargs</span>):<br>        <span class="hljs-comment"># 判断这个类有没有创建过对象， 没有就新创建一个， 有的话则返回之前创建的</span><br>        <span class="hljs-keyword">if</span> cls <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> _instance:<br>            _instance[cls] = cls(*args, **kwargs)<br>        <span class="hljs-keyword">return</span> _instance[cls]<br><br>    <span class="hljs-keyword">return</span> _singleton<br><br><br><span class="hljs-meta">@sinleton</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, a=<span class="hljs-number">0</span></span>):<br>        self.a = a<br><br><br>a1 = A(<span class="hljs-number">1</span>)<br>a2 = A(<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a1), <span class="hljs-built_in">id</span>(a2)) <span class="hljs-comment"># 135962997305040 135962997305040</span><br></code></pre></td></tr></table></figure><p>可以看出上述的id 是一致的也就是我们实现了单例模式。</p><p>下面以初始化driver为例来展示实际应用</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SeleniumSingleton</span>:<br>    _instance = <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params">cls, *args, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> cls._instance <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            cls._instance = <span class="hljs-built_in">super</span>().__new__(cls)<br>            options = webdriver.ChromeOptions()<br>            options.add_argument(<span class="hljs-string">&#x27;--disable-blink-features=AutomationControlled&#x27;</span>)<br>            cls._instance._driver = webdriver.Chrome(options=options)<br>        <span class="hljs-keyword">return</span> cls._instance<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getattr__</span>(<span class="hljs-params">self, name</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">getattr</span>(self._driver, name)<br></code></pre></td></tr></table></figure><p>上述代码解释：</p><p>_instance &#x3D; None：这是一个类属性，用于存储唯一的实例。它初始值为 None，表示还没有创建实例。</p><p><strong>new</strong>(cls, *args, **kwargs)：这是 Python 类中的一个特殊方法，用于创建类的实例。这个方法被重写，确保只创建一次实例。</p><p>如果 _instance 为 None，说明还没有创建实例，则创建一个新的 SeleniumSingleton 实例并赋给 _instance。<br>然后，创建 webdriver.Chrome 实例，并将其保存到 _instance._driver 属性中。<br>最后，返回 _instance。<br><strong>getattr</strong>(self, name)：这个方法用于处理属性访问。当使用 SeleniumSingleton 实例访问属性时，它会调用这个方法。</p><p>它从 self._driver 属性中获取对应属性，并返回给调用者。</p><p>代码的用途:</p><p>这段代码通过单例模式，确保只创建一次 Selenium WebDriver 实例。这样，在不同的地方使用 Selenium WebDriver 时，都可以访问同一个实例，避免重复创建，提高代码效率。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>单例模式在程序编写中有广泛的应用，大家可以把我这个设计模式，做到更加高效的开发！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 设计模式</category>
+      
+      <category>Python 单例模式</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+      <tag>yield</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>真的是人善被人欺吗？</title>
     <link href="/2024/07/29/%E8%84%BE%E6%B0%94/"/>
     <url>/2024/07/29/%E8%84%BE%E6%B0%94/</url>
