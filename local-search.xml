@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Jmeter 逻辑控制器之交替控制器</title>
+    <link href="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/"/>
+    <url>/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Jmeter-逻辑控制器之交替控制器"><a href="#Jmeter-逻辑控制器之交替控制器" class="headerlink" title="Jmeter 逻辑控制器之交替控制器"></a>Jmeter 逻辑控制器之交替控制器</h1><p>大家知道在Jmeter中我们在添加了HTTP请求后，我们有时候都要添加逻辑控制器，也就是需要添加一些对于请求的逻辑控制，那么今天我们介绍的是交替控制器</p><h2 id="什么是交替控制器"><a href="#什么是交替控制器" class="headerlink" title="什么是交替控制器"></a>什么是交替控制器</h2><p>交替控制器顾名思义就是在请求的时候可以进行交替的请求，那么从文字上面很难实现理解，直接来实际操作展示！</p><h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><h3 id="首先我们要添加一个线程组"><a href="#首先我们要添加一个线程组" class="headerlink" title="首先我们要添加一个线程组"></a>首先我们要添加一个线程组</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter1.png" class=""><p>这里设置的线程组中的线程数：1，Ramp-up 秒：0， 循环次数：3， 也就是启动三个线程。</p><h3 id="添加HTTP请求"><a href="#添加HTTP请求" class="headerlink" title="添加HTTP请求"></a>添加HTTP请求</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter2.png" class=""><h3 id="添加交替控制器"><a href="#添加交替控制器" class="headerlink" title="添加交替控制器"></a>添加交替控制器</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter3.png" class=""><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter4.png" class=""><p>此时添加了交替控制器，那么我们将需要交替请求的请求添加到交替控制器中。</p><h3 id="添加交替请求"><a href="#添加交替请求" class="headerlink" title="添加交替请求"></a>添加交替请求</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter6.png" class=""><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter7.png" class=""><p>这里添加了3个请求，百度地图， 百度贴吧， 百度图片。</p><h3 id="添加额外请求"><a href="#添加额外请求" class="headerlink" title="添加额外请求"></a>添加额外请求</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter8.png" class=""><p>这里添加了百度视频的请求</p><p>6.添加查看结果树</p><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jmeter9.png" class=""><h3 id="此时运行查看结果"><a href="#此时运行查看结果" class="headerlink" title="此时运行查看结果"></a>此时运行查看结果</h3><img src="/2024/08/12/jmeter%E4%BA%A4%E6%9B%BF%E6%8E%A7%E5%88%B6%E5%99%A8/jemter5.png" class=""><p>可以看到这里的交替控制器发生了效果，形成了：</p><p>百度-&gt;百度图片-&gt;百度视频</p><p>百度-&gt;百度地图-&gt;百度视频</p><p>百度-&gt;百度贴吧-&gt;百度视频</p><p>每次的请求都按照上述的请求顺序进行交替的请求，这下我想就应该明白了交替控制器的具体逻辑了。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们要善于使用Jmeter逻辑请求中的各个控制器，其中这个交替控制器就是实现了交替请求的效果！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Jmeter</category>
+      
+      <category>Jmeter 交替控制器</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Jmeter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python 装饰器</title>
     <link href="/2024/08/07/python%E8%A3%85%E9%A5%B0%E5%99%A8/"/>
     <url>/2024/08/07/python%E8%A3%85%E9%A5%B0%E5%99%A8/</url>
