@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Jmeter之Jdbc请求</title>
+    <link href="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/"/>
+    <url>/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Jmeter之Jdbc并发请求"><a href="#Jmeter之Jdbc并发请求" class="headerlink" title="Jmeter之Jdbc并发请求"></a>Jmeter之Jdbc并发请求</h1><p>在Jmeter中我们可以使用多种请求协议，其中就包含我们的数据库的压力测试，那么今天就介绍如何通过Jmeter连接mysql进行测试。</p><h2 id="下载jdbc-连接driver"><a href="#下载jdbc-连接driver" class="headerlink" title="下载jdbc 连接driver"></a>下载jdbc 连接driver</h2><p>首先是查看自己mysql的版本，我的是8.0.19，执行命令select version() 即可查看，那么我们就从网上下载我们的driver。</p><p>然后将我们下载好的driver放到jmeter的lib下的ext中。</p><img src="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/jdbc.png" class=""><h2 id="添加jdbc配置原件"><a href="#添加jdbc配置原件" class="headerlink" title="添加jdbc配置原件"></a>添加jdbc配置原件</h2><img src="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/config.png" class=""><h2 id="添加jdbc请求"><a href="#添加jdbc请求" class="headerlink" title="添加jdbc请求"></a>添加jdbc请求</h2><img src="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/request.png" class=""><h2 id="添加结果树"><a href="#添加结果树" class="headerlink" title="添加结果树"></a>添加结果树</h2><img src="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/result.png" class=""><p>这时候我们可以看到我们这边请求成功了！</p><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>一些注意的配置项放在这里</p><p>DatabaseUrl:jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;ui_auto?useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8&amp;serverTimezone&#x3D;UTC</p><p>Jdbc Driver class: com.mysql.jdbc.Driver</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上述的讲解我相信同学已经会了连接mysql，那么其他的数据库也是一样的道理！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Jmeter</category>
+      
+      <category>Jmeter之Jdbc请求</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Jmeter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>招聘</title>
     <link href="/2024/08/17/%E6%8B%9B%E8%81%98/"/>
     <url>/2024/08/17/%E6%8B%9B%E8%81%98/</url>
