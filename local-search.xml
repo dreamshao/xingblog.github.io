@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Python函数指定必须带形参传递</title>
+    <link href="/2024/08/28/python%E6%8C%87%E5%AE%9A%E5%8F%82%E6%95%B0/"/>
+    <url>/2024/08/28/python%E6%8C%87%E5%AE%9A%E5%8F%82%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-函数指定参数必须带形参传递"><a href="#Python-函数指定参数必须带形参传递" class="headerlink" title="Python 函数指定参数必须带形参传递"></a>Python 函数指定参数必须带形参传递</h1><p>可能大家看到这个标题很难理解是什么意思，这里给大家解释一下，就是我们定义函数的时候，会用形参的设置，有时候呢，我们只需要按照顺序传递值就行，不需要在传递的时候指定形参的名字，但是有时候公司要求必须带，但是有的人忘记了怎么办？那么python其实是可以做到不传递就报错的，那么一起来看看怎么实现吧！</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">t,y</span>):<br>    <span class="hljs-keyword">return</span> t,y<br>    <br>result=test(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result)  <span class="hljs-comment"># (1, 2)</span><br></code></pre></td></tr></table></figure><p>这里呢就是虽然我们设置了形参t, y 但是你传递的时候可以只是按照顺序即可，无需使用test(t&#x3D;1,y&#x3D;2)的方式，那么python如何强制使用呢？</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">*,t,y</span>):<br>    <span class="hljs-keyword">return</span> t,y<br>    <br>result=test(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure><p>此时你发现，我在函数定义的时候加了一个*,那么python 就会要去你必须在调用函数的时候带上形参要不然就报错，运行结果如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">ERROR!<br>Traceback (most recent call last):<br>  File &quot;&lt;main.py&gt;&quot;, line 4, in &lt;module&gt;<br>TypeError: test() takes 0 positional arguments but 2 were given<br><br></code></pre></td></tr></table></figure><p>那么我们来修改这个，让其正确运行！</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">*,t,y</span>):<br>    <span class="hljs-keyword">return</span> t,y<br>    <br>result=test(t=<span class="hljs-number">1</span>,y=<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result) <span class="hljs-comment"># (1, 2)</span><br></code></pre></td></tr></table></figure><p>那么，这样就可以了！python实现起来就是这么的简单方便！</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在我们平常要求中可能会有类似的，如果你知道了这个，就无需在注释中强调编码风格，这样就可以强制其他同事按照这个方式实现！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python 函数指定必须带形参传递</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Jmeter之Jdbc请求</title>
     <link href="/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/"/>
     <url>/2024/08/20/jdbc%E8%AF%B7%E6%B1%82jmeter/</url>
