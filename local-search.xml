@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Python reduce函数</title>
+    <link href="/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/"/>
+    <url>/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-reduce-函数介绍"><a href="#Python-reduce-函数介绍" class="headerlink" title="Python reduce 函数介绍"></a>Python reduce 函数介绍</h1><p>reduce() 函数是 Python 中的一个内置高阶函数，于对序列（如列表、元组等）中的元素进行累积操作。reduce() 函数会对参数序列中元素进行迭代，用指定的函数对两个元素（左参数和右参数）进行某种操作，然后将结果和序列中的下一个元素做同样的操作，直到遍历完序列中的所有元素，最终返回累积的结果。那么下面就进行代码解释</p><h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce  <br>  <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x, y</span>):<br>    <span class="hljs-keyword">return</span> x + y<br><br>number_list = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>sum_info = reduce(add,number_list)<br><span class="hljs-built_in">print</span>(sum_info) <span class="hljs-comment"># 15</span><br></code></pre></td></tr></table></figure><p>代码解释：我们定义了一个函数，实现了一个简单的加法运算，但是如果我们想传入一个数字list求和呢？就可以像上面我们写的通过reduce将函数和list传入reduce函数，那么就可以实现将其list中的数字进行求和。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce  <br>  <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x, y</span>):<br>    <span class="hljs-keyword">return</span> x + y<br><br>number_list = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>sum_info = reduce(add,number_list)<br><span class="hljs-built_in">print</span>(sum_info) <span class="hljs-comment"># 20</span><br></code></pre></td></tr></table></figure><p>代码解释： 这个就是将加法改成了乘法依然适用！</p><h2 id="代码解释-lambda函数"><a href="#代码解释-lambda函数" class="headerlink" title="代码解释 lambda函数"></a>代码解释 lambda函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce  <br><br>number_list = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]  <br>sum_info = reduce(<span class="hljs-keyword">lambda</span> x, y: x + y, number_list)  <br><span class="hljs-built_in">print</span>(sum_info)  <span class="hljs-comment"># 输出: 15</span><br></code></pre></td></tr></table></figure><p>代码解释： 虽然我们上面实现了一个加法，但是总体比较臃肿，我们可以借助lambda函数实现一行代码搞定，我们可以看到reduce依旧传入了一个函数和一个list。lambda 函数 lambda x, y: x + y 被用作 reduce() 的第一个参数，它接受两个参数并返回它们的和，numbers 列表作为第二个参数传递给 reduce()，reduce() 函数会依次将列表中的元素相加，最终返回总和。乘法或者其他都一样只需改运算符即可！</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>1.reduce() 函数在处理大型数据集时可能会比较慢，因为它需要遍历整个序列。</p><p>2.在很多情况下，使用列表推导式、循环或其他内置函数（如 sum()）可能更加直观和高效。</p><p>3.reduce() 函数的主要优势在于其通用性和灵活性，它允许你通过自定义函数来执行几乎任何类型的累积操作。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python reduce函数</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python的property属性</title>
     <link href="/2024/09/02/python%E7%9A%84property%E5%B1%9E%E6%80%A7/"/>
     <url>/2024/09/02/python%E7%9A%84property%E5%B1%9E%E6%80%A7/</url>
