@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Chrome调试webview</title>
+    <link href="/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/"/>
+    <url>/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/</url>
+    
+    <content type="html"><![CDATA[<h1 id="如何在Chrome上调试WebView"><a href="#如何在Chrome上调试WebView" class="headerlink" title="如何在Chrome上调试WebView"></a>如何在Chrome上调试WebView</h1><p>有时候在测试过程中，我们会遇见在app或者ios上面跳转wap页面的需求，常见在日常的活动页面等。如果要是这些页面出了问题该怎么办呢？例如我们平常的wap页面可以通过调试工具查看console或者debug等来查看问题，那么这样的在手机端怎么来调试呢？下面一起学习吧！</p><h2 id="详细调试过程"><a href="#详细调试过程" class="headerlink" title="详细调试过程"></a>详细调试过程</h2><p>1.这时候我们只需要将手机通过usb线连接到电脑上面，然后打开chrome，输入网址：chrome:&#x2F;&#x2F;inspect&#x2F;#devices  就可以看到：</p><img src="/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/chrome%E8%B0%83%E8%AF%951.png" class=""><p>2.稍等一下，这时候手机会提示是否允许调试，那么你点击允许调试即可！然后就可以看到手机的型号此时连接成功！</p><img src="/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/chrome%E8%B0%83%E8%AF%952.png" class=""><p>3.打开你的app，打开webview此时就可以看到对应的信息！</p><img src="/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/chrome%E8%B0%83%E8%AF%953.png" class=""><p>4.此时点击inspect</p><img src="/2024/09/10/chrome%E8%B0%83%E8%AF%95webview/chrome%E8%B0%83%E8%AF%954.png" class=""><p>此时就看到了和我们平常调试网页一样的界面，那么你就可以按照调试网页的方式来调试webview了！</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过这个调试方式我们可以轻松应对在测试中面临的webview的问题定位，方便了我们的工作！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Chrome调试</category>
+      
+      <category>Chrome调试webview</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Chrome调试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python reduce函数</title>
     <link href="/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/"/>
     <url>/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/</url>
