@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12306 余票查询开发初衷可能很多同学有疑惑都2024年了，怎么还需要自己开发这个余票查询功能呢？毕竟当前市面太多自动化抢票工具了，只需要填写基本信息就可以完成从抢票到下单等一系列操作，确实，现在有很多抢票软件做的都很完美，但是有一个痛点目前是我遇到的，那就是 1.我想查例如 北京—&gt; 石家庄的票，在这样的大型节假日的时候，我们都会选择抢票，但是抢票软件都是选择你关注的的，虽然抢票软件可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12306 火车票余票查询脚本开发">
+<meta property="og:url" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="12306 余票查询开发初衷可能很多同学有疑惑都2024年了，怎么还需要自己开发这个余票查询功能呢？毕竟当前市面太多自动化抢票工具了，只需要填写基本信息就可以完成从抢票到下单等一系列操作，确实，现在有很多抢票软件做的都很完美，但是有一个痛点目前是我遇到的，那就是 1.我想查例如 北京—&gt; 石家庄的票，在这样的大型节假日的时候，我们都会选择抢票，但是抢票软件都是选择你关注的的，虽然抢票软件可以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_1.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_2.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_3.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_4.png">
+<meta property="og:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_5.png">
+<meta property="article:published_time" content="2024-10-08T06:06:07.000Z">
+<meta property="article:modified_time" content="2024-10-08T07:43:44.766Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="12306 火车票余票查询脚本开发">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_1.png">
+  
+  
+  
+  <title>12306 火车票余票查询脚本开发 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="12306 火车票余票查询脚本开发"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-08 14:06" pubdate>
+          2024年10月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">12306 火车票余票查询脚本开发</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="12306-余票查询开发初衷"><a href="#12306-余票查询开发初衷" class="headerlink" title="12306 余票查询开发初衷"></a>12306 余票查询开发初衷</h1><p>可能很多同学有疑惑都2024年了，怎么还需要自己开发这个余票查询功能呢？毕竟当前市面太多自动化抢票工具了，只需要填写基本信息就可以完成从抢票到下单等一系列操作，确实，现在有很多抢票软件做的都很完美，但是有一个痛点目前是我遇到的，那就是</p>
+<p>1.我想查例如 北京—&gt; 石家庄的票，在这样的大型节假日的时候，我们都会选择抢票，但是抢票软件都是选择你关注的的，虽然抢票软件可以自动抢新开列车，但是如果新开的列车不是你所期望的时间，这时间把钱付了，你还要退票，那么就要面临手续费！</p>
+<p>2.另一方面，我想看当前那些有余票的，我就需要每次打开软件去查询，没有一个很方便的直接告诉我，哪列车当前有票！会感觉很麻烦，如果有一个程序可以帮我自动查询然后告诉我，那么就很完美了！</p>
+<p>那么我开发的这个脚本就可以完美的解决上述的两个问题，但是目前仅限于查询余票，其余还是做不到的！后续功能可以慢慢加上！</p>
+<h2 id="12306-网站接口剖析"><a href="#12306-网站接口剖析" class="headerlink" title="12306 网站接口剖析"></a>12306 网站接口剖析</h2><p>如果我们想查询余票，各位同学肯定会想到的时候通过接口查询，那么我们首先观察12306 网站在查询的时候都用了那些接口呢？假如我们这时候查询 北京—&gt; 石家庄 2024年10月9题的火车票，通过查询NetWork面板我们发现一共请求了2个接口！</p>
+<img src="/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_1.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>那么这两个接口具体是干嘛的呢？ 下面我们就先剖析第一个接口</p>
+<p>url_1: <a target="_blank" rel="noopener" href="https://kyfw.12306.cn/otn/leftTicket/queryG?leftTicketDTO.train_date=2024-10-09&leftTicketDTO.from_station=BJP&leftTicketDTO.to_station=SJP&purpose_codes=ADULT">https://kyfw.12306.cn/otn/leftTicket/queryG?leftTicketDTO.train_date=2024-10-09&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SJP&amp;purpose_codes=ADULT</a></p>
+<p>这个url_1 实现了我们的查询功能就是查询北京—&gt;石家庄 10月09日的票，可以看返回体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;httpstatus&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">200</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;result&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>            <span class="hljs-string">&quot;IN8i2mjU4pcjjt%2FuzxOnHM4uHCelK7W%2FFIJqW4sNvITAIkDPEQXWDCZRPUOlCQDyzvC2TBDcOaw8%0AHDSJMjOYT%2FZUGmDFoxGjVSeCZ0m3vuq11L0d5I8BhBL%2FcWpvvt%2FQzFHg57AgDF%2B24iCwm1rNRfvx%0A8WqPrdaBsIa7ffyQ9%2FNMxitJVEF9AAv0kc8VjDK0wqGAqS%2F6QlXILrQTUeh830ahknr0%2F017eIrI%0A67tFo0WX2HUhszbtLo7mEk%2FFWu%2BovNguW%2BOG7%2BB%2Bh1GBf61lRTktO03u0XOz3Di3NY%2FUKARr7vE5%0AnqcGhjzJ9uFZrXc2Q2gMq04L2uz43U0jxNqtkb9ZmnXO%2BeYC|预订|25000K772836|K7725|QTP|HDP|FTP|SJP|05:10|08:44|03:34|Y|Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-string">&quot;4y1ZRp%2BUDU05TDqqGv5db0B8Ihr2U1k%2FUeqFOAFBuD7D4figNevZqpZ6BhdLoptjhZm0o1VkTITk%0A3ls1ZBfEW%2BM3gjtMX5jVAt7kltUotA8BR7mIkjeKOO1p0%2F6xN13lF5egt%2BVI3l5OH2HCdNox%2BJR0%0AXYaq%2BW%2BIJfFMsylSFQ4VzXzuZT2LZIgB4vJi2L5xnxBbUMWNMVC%2BE2uLm8%2BYUSLVjtA23UYLJCvZ%0AotZroMKl5%2FWYzSTg5t%2BsDf0IWJflfP9oUFRJQ71joO5iAhRO7K2ztONUGpXeegX8iLvFAgGyEy9h%0Af3bbljnIxuSs8earw%2FBRl4QpP5%2F9vcCPe7%2BgkeRHKIA%3D|预订|24000G67010K|G6701|BXP|HPP|BXP|SJP|05:34|06:52|01:18|Y|gM8t0dYOT81RRsMTXqzAZBNqGbCT0vYlvM9nnLI%2F6hDnhC7c|20241009|3|P2|01|03|1|0|||||||||||有|有|9||90M0O0|9MO|1|0||9040700009M016300021O010200021|0|||||1|0#1#0#0#z#0#z#z||7|CHN,CHN|||N#N#||90076M0066O0066|202409250800|&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-string">&quot;aJBRnhEtmXAILBbtHPZE5sGXxKlGgBMT4oHXCbUtcPuZ3qg3wWoFgPftibMhjuGeeMyWLj%2FOMpA4%0A1S0xBnV93r8DZd%2BjeZ4ctKY8mrxeTZqQS2hC%2FQdik20TK%2FDIeoXiTcCkZvD6gVUqMgIDBkb21q1J%0Alo5s%2BHidvNoHsOGvFqN4LHScUsfRvT8bWgW0gjuHs%2F%2FD2LRYdoWI4huvq1ymE112foQZCBFBaMTG%0AerGlG%2BMeFF6Yuk8nfv0jFZ90L3M9LmjZ3juZOklCSAl1bTGx5R31iszI%2BmrAd1NPGazE7VglF5Rz%0A0dxDkY27GSnazC6iVP40G4koVDk8EhXfl81rLTHtopE%3D|预订|24000G67030M|G6703|BXP|SJP|BXP|SJP|06:09|07:38|01:29|Y|3xnb0KoZxbzyVOsX6Abi3Bt1wPSt82%2FVpCTzaT73xMwj4JKw|20241009|3|P3|01|04|1|0|||||||||||有|有|有||90M0O0|9MO|1|0||9040700021M013600021O008500021|0|||||1|0#0#0#0#z#0#z#z||7|CHN,CHN|||N#N#||90076M0056O0055|202409250800|&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-string">&quot;Ogwl8J7aObJfs%2F3CMJhpSdQGFSiYlTW3BFiMMI6XfFv9oGNvbzSdPewztg4FaP7YVypFXeKH4IVI%0AjZs0qTz2jKFKllmW2I3Vb9VQMW6WYOcNk1lX3rJF7vnglUOsQQPQnXeYWPlasqgPchyVoX0lcab3%0AUJJ8p4PRgz1%2BDV11X%2FxqrgBMajeH3oceMve6xFuZPx0hv1ULSLmqzs4soBc4aAqXG1NhnyUn8Cle%0A%2BfIbM%2FGoWvBxny3boSaGHqG0RtOqkSz57MCHny4lhKzj0unAJk9PHWuEKD9pBcZKzMco2FQAZa81%0ABn2yKz%2Fj%2Ff5pL0P93yXy5RrXg9soKhdEzYp40T0DTL8%3D|预订|240000G55920|G559|BXP|JGF|BXP|SJP|06:15|07:26|01:11|Y|IItRSsrNtZYpYkCJw54WZ92Lec8RbTDQ%2BJpF4yOQO%2Bv1U21q|20241009|3|P4|01|02|1|0|||||||||||有|5|无||90M0O0|9MO|0|1||9040700000M020600005O012900021|0|||||1|0#0#0#0#z#0#z#z||7|CHN,CHN|||N#N#||90076M0084O0084|202409250800|&quot;</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;sametlc&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Y&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;map&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;VVP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;石家庄北&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;IFP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京朝阳&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;FTP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京丰台&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;SJP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;石家庄&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;BJP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;QIP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;清河&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;BXP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京西&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;GIP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;高邑&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上述的返回体中我截取了result中的部分数据，因为返回太多了我们只需要对一个观察就可以找到具体的规律，此时我们看到</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">&quot;IN8i2mjU4pcjjt%2FuzxOnHM4uHCelK7W%2FFIJqW4sNvITAIkDPEQXWDCZRPUOlCQDyzvC2TBDcOaw8%0AHDSJMjOYT%2FZUGmDFoxGjVSeCZ0m3vuq11L0d5I8BhBL%2FcWpvvt%2FQzFHg57AgDF%2B24iCwm1rNRfvx%0A8WqPrdaBsIa7ffyQ9%2FNMxitJVEF9AAv0kc8VjDK0wqGAqS%2F6QlXILrQTUeh830ahknr0%2F017eIrI%0A67tFo0WX2HUhszbtLo7mEk%2FFWu%2BovNguW%2BOG7%2BB%2Bh1GBf61lRTktO03u0XOz3Di3NY%2FUKARr7vE5%0AnqcGhjzJ9uFZrXc2Q2gMq04L2uz43U0jxNqtkb9ZmnXO%2BeYC|预订|25000K772836|K7725|QTP|HDP|FTP|SJP|05:10|08:44|03:34|Y|Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|&quot;<br></code></pre></td></tr></table></figure>
+
+<p>首先是一堆乱码，后面我们看到有中文的预定，然后我们继续观察看到有 K7725 这个火车编号的 信息，然后后面后有部分时间信息，以及后续的票务信息：|||||||有||有|有|||||, 那么有人要问了这些<code>|</code>表示什么呢？先不管，这里我们认为是票务的信息，那么我们发现也就这些是我们能看懂的，那么我们怎么利用现有信息来实现余票查询呢？别着急后续继续解释。</p>
+<p>url_2:<a target="_blank" rel="noopener" href="https://kyfw.12306.cn/lcquery/queryG?train_date=2024-10-09&from_station_telecode=BJP&to_station_telecode=SJP&result_index=0&can_query=Y&isShowWZ=Y&sort_type=2&purpose_codes=00&is_loop_transfer=S&channel=E&_json_att=">https://kyfw.12306.cn/lcquery/queryG?train_date=2024-10-09&amp;from_station_telecode=BJP&amp;to_station_telecode=SJP&amp;result_index=0&amp;can_query=Y&amp;isShowWZ=Y&amp;sort_type=2&amp;purpose_codes=00&amp;is_loop_transfer=S&amp;channel=E&amp;_json_att=</a></p>
+<p>url_2 是查询中转的接口，也就是查询北京—&gt;石家庄 10月09日的可以乘坐哪些中转的车，一起看返回体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;result_index&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;can_query&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;N&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;middleList&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>            <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;all_lishi&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;3小时52分钟&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;all_lishi_minutes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">232</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;arrive_date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-10-09&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;arrive_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;12:14&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;end_station_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SJP&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;end_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;石家庄&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;first_train_no&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;24000G780703&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;from_station_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;VNP&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;from_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京南&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;fullList&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-punctuation">&#123;</span><br>                        <span class="hljs-attr">&quot;arrive_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;08:43&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;bed_level_info&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;controlled_train_flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;country_flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CHN,CHN&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;day_difference&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;dw_flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;5#1#0#S#z#0#z#z&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;end_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;廊坊&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;end_station_telecode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;LJP&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;from_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京南&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;from_station_no&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;01&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;from_station_telecode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;VNP&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;gg_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;gr_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;is_support_card&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;lishi&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;00:21&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;local_arrive_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;local_start_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;qt_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;rw_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;rz_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;seat_discount_info&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;90075M0080O0076&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;seat_types&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9MO&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;srrb_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;start_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;北京南&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;start_station_telecode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;VNP&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;start_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;08:22&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;start_train_date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;20241009&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;station_train_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;G7807&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;swz_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;to_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;廊坊&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;to_station_no&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;02&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;to_station_telecode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;LJP&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;train_no&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;24000G780703&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;train_seat_feature&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;3&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;trms_train_flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;tz_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;wz_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;yb_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;yp_info&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9008700002M004200018O002500021&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;yw_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;yz_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;ze_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;有&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-attr">&quot;zy_num&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;18&quot;</span><br>                    <span class="hljs-punctuation">&#125;</span><br>                <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isHeatTrain&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;N&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isOutStation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;lCWaitTime&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;lishi_flag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;middle_date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-10-09&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;middle_station_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;LJP&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;middle_station_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;廊坊&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;same_station&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;same_train&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;N&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;score&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">386</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;score_str&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;276+100+10=386##100#100&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;scretstr&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;MjAyNC0xMC0wOSMwMCNHNzgwNyMwMDoyMSMwODoyMiMyNDAwMEc3ODA3MDMjVk5QI0xKUCMwODo0MyPljJfkuqzljZcj5buK5Z2KIzAxIzAyI2RSWkVHSk9HdTRZdDlVNE0vVkhGaHdRckk5TXpaNGlaYkpYaFJHS1hlNi9RMXo5ZiNQMyMxNCMxMjMwIzMjMzEjMDM1NyMwMSMwMzU4IzAjVk5QI0xKUCMxNzI4MzY4MzQwMjcwIzE3MjcyMzg2MDAwMDAjNSwxLDAsUyx6LDAseix6IyMjQ0hOLENITiM6OjoyMDI0LTEwLTA5IzAwI0c3ODA1IzAyOjQyIzA5OjMyIzJkMDAwRzc4MDUwMyNMSlAjU0pQIzEyOjE0I%2BW7iuWdiiPnn7PlrrbluoQjMDEjMDYjQ1pxYm94dlFlM1Z4Y3ZoYzd4TFlWNnNFN3BjTmNkS2VMSUQ5eXJUWldGTjhxK1k4I1A0IzE0IzE2MDAjMyMwMSMwMzU4IzAxIzAzNDkjMCNMSlAjSFBQIzE3MjgzNjgzNDAyNzAjMTcyNzI1MTIwMDAwMCM1LDEsMCxTLHosMCx6LHojIyNDSE4sQ0hOIzo6Om51bGwjMDo6OjI3RDdGMjg5ODcxODdFNUM3RkJBMEUyMjRDNjkxOTUzOTNCMUY1N0FENThDOUQwMUQ3RkNCN0ZEOjo6MDo6Olk6OjpZ&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;second_train_no&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2d000G780503&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;start_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;08:22&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;train_count&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;train_date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-10-09&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;use_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;wait_time&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;49分钟&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;wait_time_minutes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">49</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;errorMsg&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里返回的信息也依旧截取了部分返回信息，那么可以看到这个返回体更加清晰，描述了中转车量的信息，那么由于我们这里暂时不考虑中转，首先就关心这个接口了！</p>
+<h2 id="针对url-1-接口的返回体解析"><a href="#针对url-1-接口的返回体解析" class="headerlink" title="针对url_1 接口的返回体解析"></a>针对url_1 接口的返回体解析</h2><p>那么从上面我们看到了返回信息里面包含了乘车的编号信息，票务信息，那么就可以实现查询了，首先我们观察第一个也是上面遗留的问题：<code>|||||||有||有|有|||||</code>, 这些 <code>|</code> 表示什么意思？下面我来解释一下，通过观察 我们对比该车次的返回在12306页面的表达看</p>
+<img src="/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_2.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>观察上述信息发现，硬卧 二等卧、 硬座、 无座 均是有，而其他类型的例如 一等座、二等座 二等包座等 都是 <code>--</code>，那么现在很明显了，<code>|</code> 表示的是无，有票以及票有数据，则是显示 有或者具体数据，那么此时我们已经解刨这个接口完毕了，找到了我们想要的信息，那么接下来的难点就是如何从这些返回体中取出想要的数据！</p>
+<h3 id="编写返回体提取票务信息逻辑"><a href="#编写返回体提取票务信息逻辑" class="headerlink" title="编写返回体提取票务信息逻辑"></a>编写返回体提取票务信息逻辑</h3><p>首先观察返回信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">&quot;IN8i2mjU4pcjjt%2FuzxOnHM4uHCelK7W%2FFIJqW4sNvITAIkDPEQXWDCZRPUOlCQDyzvC2TBDcOaw8%0AHDSJMjOYT%2FZUGmDFoxGjVSeCZ0m3vuq11L0d5I8BhBL%2FcWpvvt%2FQzFHg57AgDF%2B24iCwm1rNRfvx%0A8WqPrdaBsIa7ffyQ9%2FNMxitJVEF9AAv0kc8VjDK0wqGAqS%2F6QlXILrQTUeh830ahknr0%2F017eIrI%0A67tFo0WX2HUhszbtLo7mEk%2FFWu%2BovNguW%2BOG7%2BB%2Bh1GBf61lRTktO03u0XOz3Di3NY%2FUKARr7vE5%0AnqcGhjzJ9uFZrXc2Q2gMq04L2uz43U0jxNqtkb9ZmnXO%2BeYC|预订|25000K772836|K7725|QTP|HDP|FTP|SJP|05:10|08:44|03:34|Y|Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|&quot;<br></code></pre></td></tr></table></figure>
+
+<p>我们看到在上面中有一个预定的汉字，那么我就可以先以 <code>预定</code> 进行分割，此时可以获取后面的信息，那么就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">train_info = train_txt.split(<span class="hljs-string">&quot;预定&quot;</span>)[<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+
+<p>那么我们拿到信息如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">|25000K772836|K7725|QTP|HDP|FTP|SJP|05:10|08:44|03:34|Y|Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|<br></code></pre></td></tr></table></figure>
+
+<p>那么我们继续观察发现在上述信息中有一个|Y|,继续观察其他的发现要不就是|Y|要不就是|N|，那么就可以按照这个进行分割。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">train_info = train_txt.split(<span class="hljs-string">&quot;预定&quot;</span>)[<span class="hljs-number">1</span>]split(<span class="hljs-string">&quot;|Y|&quot;</span>)[<span class="hljs-number">0</span>] <br></code></pre></td></tr></table></figure>
+
+<p>也就得到了</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">|25000K772836|K7725|QTP|HDP|FTP|SJP|05:10|08:44|03:34<br></code></pre></td></tr></table></figure>
+
+<p>此时拿到了具体的车次信息，那么想要后续的信息就可以取 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">train_info = train_txt.split(<span class="hljs-string">&quot;预定&quot;</span>)[<span class="hljs-number">1</span>]split(<span class="hljs-string">&quot;|Y|&quot;</span>)[<span class="hljs-number">1</span>] <br></code></pre></td></tr></table></figure>
+
+<p>那么拿到的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|<br></code></pre></td></tr></table></figure>
+
+<p>通过观察，在|20241008| 前面的乱码发现基本上长度一致，那么我就可以指定长度取截取</p>
+<p>至此，我们实现了信息的采集和分割，那么我们能实现拿到具体车次，是否有票这些信息。</p>
+<h3 id="判断信息中是否有票"><a href="#判断信息中是否有票" class="headerlink" title="判断信息中是否有票"></a>判断信息中是否有票</h3><p>那么拿到数据之后，我们就要判断是否有票，我们可以根据是否有有以及是否有数字存在即可！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">contains_number_or_you</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 检查是否包含数字</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(char.isdigit() <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> s):<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-comment"># 检查是否包含“有”</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;有&quot;</span> <span class="hljs-keyword">in</span> s:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-comment"># 如果都不包含，则返回False</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>函数通过检查是否有数字以及是否有有，返回布尔值。</p>
+<h3 id="组装返回信息"><a href="#组装返回信息" class="headerlink" title="组装返回信息"></a>组装返回信息</h3><p>目前计划是通过邮件将信息返回，那么此时已经可以判断车次，是否有票，我们就需要通过将我们拿到的数据进行重写组装，然后将其转化为一个html格式的表格便于我们查看，具体代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">list_to_html</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++++++++++++++++++&quot;</span>)<br>    <span class="hljs-comment"># print(data)</span><br>    <span class="hljs-comment"># print(type(data))</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;++++++++++++++++++&quot;</span>)<br>    headers = [<br>        <span class="hljs-string">&quot;列车号&quot;</span>, <span class="hljs-string">&quot;起点站&quot;</span>, <span class="hljs-string">&quot;途经站1&quot;</span>, <span class="hljs-string">&quot;途经站2&quot;</span>, <span class="hljs-string">&quot;终点站&quot;</span>,<br>        <span class="hljs-string">&quot;出发时间&quot;</span>, <span class="hljs-string">&quot;到达时间&quot;</span>, <span class="hljs-string">&quot;耗费时间&quot;</span>, <span class="hljs-string">&quot;暂无&quot;</span>, <span class="hljs-string">&quot;暂无&quot;</span>,<br>        <span class="hljs-string">&quot;暂无&quot;</span>, <span class="hljs-string">&quot;暂无&quot;</span>, <span class="hljs-string">&quot;暂无&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;优选一等座&quot;</span>,<br>        <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;软卧/动卧&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;无座&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span>, <span class="hljs-string">&quot;硬卧,二等卧&quot;</span>, <span class="hljs-string">&quot;硬座&quot;</span>, <span class="hljs-string">&quot;二等座&quot;</span>, <span class="hljs-string">&quot;一等座&quot;</span>, <span class="hljs-string">&quot;商务座,特等座&quot;</span>, <span class="hljs-string">&quot;座位数目&quot;</span><br>    ]<br><br>    <span class="hljs-comment"># 构造HTML表格的开头部分，包括CSS样式</span><br>    html_table = <span class="hljs-string">&#x27;&#x27;&#x27;  </span><br><span class="hljs-string">    &lt;style&gt;  </span><br><span class="hljs-string">    .table-container &#123;  </span><br><span class="hljs-string">        height: 90vh;  /* 根据视口高度设置，以适应不同屏幕 */  </span><br><span class="hljs-string">        overflow-y: auto; /* 允许垂直滚动 */  </span><br><span class="hljs-string">        display: block; /* 可能需要，取决于布局 */  </span><br><span class="hljs-string">        width: 100%; /* 或固定宽度 */  </span><br><span class="hljs-string">    &#125;  </span><br><span class="hljs-string">    th &#123;  </span><br><span class="hljs-string">        position: sticky;  </span><br><span class="hljs-string">        top: 0;  </span><br><span class="hljs-string">        background-color: #f9f9f9; /* 表头背景色 */  </span><br><span class="hljs-string">    &#125;  </span><br><span class="hljs-string">    table &#123;  </span><br><span class="hljs-string">        width: 100%; /* 确保表格宽度与容器相同 */  </span><br><span class="hljs-string">        border-collapse: collapse; /* 边框合并 */  </span><br><span class="hljs-string">    &#125;  </span><br><span class="hljs-string">    th, td &#123;  </span><br><span class="hljs-string">        border: 1px solid #ddd; /* 边框样式 */  </span><br><span class="hljs-string">        padding: 8px; /* 单元格内边距 */  </span><br><span class="hljs-string">        text-align: left; /* 文本对齐方式 */  </span><br><span class="hljs-string">    &#125;  </span><br><span class="hljs-string">    &lt;/style&gt;  </span><br><span class="hljs-string">    &lt;div class=&quot;table-container&quot;&gt;  </span><br><span class="hljs-string">    &lt;table&gt;  </span><br><span class="hljs-string">    &lt;thead&gt;  </span><br><span class="hljs-string">    &lt;tr&gt;  </span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">for</span> header <span class="hljs-keyword">in</span> headers:<br>        html_table += <span class="hljs-string">f&#x27;&lt;th&gt;<span class="hljs-subst">&#123;header&#125;</span>&lt;/th&gt;&#x27;</span><br>    html_table += <span class="hljs-string">&#x27;&#x27;&#x27;  </span><br><span class="hljs-string">    &lt;/tr&gt;  </span><br><span class="hljs-string">    &lt;/thead&gt;  </span><br><span class="hljs-string">    &lt;tbody&gt;  </span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 遍历数据，并为每一项添加一行到表格体（tbody）中</span><br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> data:<br>        columns = item.split(<span class="hljs-string">&#x27;|&#x27;</span>)<br>        <span class="hljs-comment"># 填充缺失的列</span><br>        columns += [<span class="hljs-string">&#x27;&#x27;</span>] * (<span class="hljs-built_in">len</span>(headers) - <span class="hljs-built_in">len</span>(columns))<br>        html_row = <span class="hljs-string">&#x27;&lt;tr&gt;&#x27;</span> + <span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-string">f&#x27;&lt;td&gt;<span class="hljs-subst">&#123;column&#125;</span>&lt;/td&gt;&#x27;</span> <span class="hljs-keyword">for</span> column <span class="hljs-keyword">in</span> columns) + <span class="hljs-string">&#x27;&lt;/tr&gt;\n&#x27;</span><br>        html_table += html_row<br><br>        <span class="hljs-comment"># 添加表格的结尾部分</span><br>    html_table += <span class="hljs-string">&#x27;&#x27;&#x27;  </span><br><span class="hljs-string">    &lt;/tbody&gt;  </span><br><span class="hljs-string">    &lt;/table&gt;  </span><br><span class="hljs-string">    &lt;/div&gt;  </span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 返回完整的HTML字符串</span><br>    <span class="hljs-built_in">print</span>(html_table)<br>    <span class="hljs-keyword">return</span> html_table<br></code></pre></td></tr></table></figure>
+
+<p>上面的函数接收一个list,然后进行转化生成一个html信息。</p>
+<h3 id="邮件发送"><a href="#邮件发送" class="headerlink" title="邮件发送"></a>邮件发送</h3><p>我们拿到html信息后需要第一时间通知给我，那么就要用到邮件通知，下面是邮件通知代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_mail</span>(<span class="hljs-params">mail_body, receivers</span>):<br>    <span class="hljs-comment"># 发件人邮箱账号</span><br>    sender = <span class="hljs-string">&#x27;1542418645@qq.com&#x27;</span><br>    <span class="hljs-comment"># 发件人邮箱授权码（不是QQ密码）</span><br>    password = <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment"># 此处填写你的授权码</span><br>    <span class="hljs-comment"># SMTP服务器地址</span><br>    smtp_server = <span class="hljs-string">&#x27;smtp.qq.com&#x27;</span><br>    <span class="hljs-comment"># SMTP服务器端口，对于QQ邮箱，使用SSL的465端口</span><br>    smtp_port = <span class="hljs-number">465</span><br><br>    <span class="hljs-comment"># 邮件内容</span><br>    subject = <span class="hljs-string">&#x27;抢到火车票了！&#x27;</span><br>    <span class="hljs-comment"># HTML邮件正文</span><br>    html_body = mail_body<br><br>    <span class="hljs-comment"># 邮件接收者</span><br>    <span class="hljs-comment"># receiver = &#x27;1542418645@qq.com&#x27;</span><br><br>    <span class="hljs-comment"># 创建邮件对象，指定内容为HTML</span><br>    message = MIMEText(html_body, <span class="hljs-string">&#x27;html&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-comment"># 设置From头部，使用formataddr函数来正确设置完整的From头部信息</span><br>    message[<span class="hljs-string">&#x27;From&#x27;</span>] = formataddr((<span class="hljs-string">&#x27;发件人姓名&#x27;</span>, sender))<br>    <span class="hljs-comment"># 设置To头部，同样使用Header</span><br>    <span class="hljs-comment"># message[&#x27;To&#x27;] = Header(receiver, &#x27;utf-8&#x27;)</span><br>    <span class="hljs-comment"># 设置Subject头部，对于中文主题也使用Header</span><br>    message[<span class="hljs-string">&#x27;Subject&#x27;</span>] = Header(subject, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 创建SMTP SSL连接</span><br>        smtpObj = smtplib.SMTP_SSL(smtp_server, smtp_port)<br>        smtpObj.login(sender, password)  <span class="hljs-comment"># 登录到SMTP服务器</span><br><br>        <span class="hljs-comment"># 如果receivers是单个字符串，则转换为列表</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(receivers, <span class="hljs-built_in">str</span>):<br>            receivers = [receivers]<br><br>        <span class="hljs-comment"># 发送邮件给多个接收者</span><br>        smtpObj.sendmail(sender, receivers, message.as_string())<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;邮件发送成功&quot;</span>)<br>        smtpObj.quit()<br>    <span class="hljs-keyword">except</span> smtplib.SMTPException <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;邮件发送失败:&quot;</span>, e)<br></code></pre></td></tr></table></figure>
+
+<p>这里我们声明是一个协程方法也就是发送邮件是异步的，我无需等待邮件发送后才执行下一个逻辑。</p>
+<h3 id="一些固定规律的解决"><a href="#一些固定规律的解决" class="headerlink" title="一些固定规律的解决"></a>一些固定规律的解决</h3><p>在继续查看返回体的时候发现里面会有固定的 W M F 的返回信息，此处为</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Jz1NB7nb1uVJBAoXtjLOZGJ20tRCNaJVqDZwRJdiCitslCNE|20241008|3|P4|05|10|1|0|||||||有||有|有|||||1030W0|131|1|0||100415002130087500211004153540|0|||||1|0#0#0#0#z#0#3#z||7|CHN,CHN|||N#N#|330087531009553200925||202409250800|<br></code></pre></td></tr></table></figure>
+<p>也就是我想去掉 |1030W0| 后面的信息由于后续都是无规律的，但是肯定会有M W F 出现，那么我们可以获取当前位置然后进行分割，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">remove_after_wm</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-comment"># 查找&#x27;W&#x27;或&#x27;M&#x27;首次出现的位置</span><br>    <span class="hljs-comment"># 使用min函数和find方法确保我们找到的是两者中较早出现的一个</span><br>    <span class="hljs-comment"># 如果&#x27;W&#x27;或&#x27;M&#x27;都不存在，find会返回-1，而min(-1, -1)也是-1</span><br>    pos_w = s.find(<span class="hljs-string">&#x27;W&#x27;</span>)<br>    pos_m = s.find(<span class="hljs-string">&#x27;M&#x27;</span>)<br>    pos_f = s.find(<span class="hljs-string">&#x27;F&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> pos_w != -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> pos_m != -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> pos_f != -<span class="hljs-number">1</span>:<br>        pos = <span class="hljs-built_in">min</span>(pos_w, pos_m, pos_f)<br>    <span class="hljs-keyword">elif</span> pos_w != -<span class="hljs-number">1</span>:<br>        pos = pos_w<br>    <span class="hljs-keyword">elif</span> pos_m != -<span class="hljs-number">1</span>:<br>        pos = pos_m<br>    <span class="hljs-keyword">elif</span> pos_f != -<span class="hljs-number">1</span>:<br>        pos = pos_f<br>    <span class="hljs-keyword">else</span>:<br>        pos = -<span class="hljs-number">1</span>  <span class="hljs-comment"># 表示&#x27;W&#x27;和&#x27;M&#x27;都不存在</span><br><br>    <span class="hljs-keyword">return</span> s[:pos]<br></code></pre></td></tr></table></figure>
+
+<h3 id="整体规划"><a href="#整体规划" class="headerlink" title="整体规划"></a>整体规划</h3><p>到现在我们已经拿到了具体的信息，那么就可以规划我们的具体实现，首先我们可以支持 邮件多人发送，请求12306延迟设置防止IP访问频繁被封，用户关注的火车信息，假如我关注的车次只想他有票的时候才会通知也行支持多个车次的设置，假如我们不想一直接收邮件的发送，那么我们可以设置邮件接收的延迟时间，目前支持设置分钟，小时级别的延迟。</p>
+<p>那么上面就是我们要实现的功能，下面就是已经实现的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">train_info</span>(<span class="hljs-params">url, address, receivers, sleep_time=<span class="hljs-number">10</span>, user_focus_train=<span class="hljs-literal">None</span>, email_delay_time=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    =========== dreamshao 12306查询余票函数调用指南=========</span><br><span class="hljs-string"></span><br><span class="hljs-string">    支持多线程查询火车票余票，使用教程：</span><br><span class="hljs-string">    登录12306 网站 https://www.12306.cn/index/</span><br><span class="hljs-string">    选择起点，终点，时间 点击查询</span><br><span class="hljs-string">    此时页面跳转到列车详情页面，打开network 面板，再次点击查询抓取查询接口</span><br><span class="hljs-string">    注意： 此时可能会用2个接口请求，一个是火车列表信息， 一个是中转信息</span><br><span class="hljs-string">    我们需要的url 是这样的： https://kyfw.12306.cn/otn/leftTicket/queryG?leftTicketDTO.train_date=2024-09-30&amp;leftTicketDTO.from_station=SJP&amp;leftTicketDTO.to_station=XTP&amp;purpose_codes=ADULT</span><br><span class="hljs-string">    然后将其作为Url 参数传入，然后选择改url对应的COOKIE, 在程序中替换之前的即可！</span><br><span class="hljs-string"></span><br><span class="hljs-string">    =========== dreamshao 12306查询余票函数调用指南=========</span><br><span class="hljs-string">    :param url: 请求url</span><br><span class="hljs-string">    :param address: 火车起点重点： 北京-----&gt; 邯郸</span><br><span class="hljs-string">    :param user_focus_train: 你关注的列车有票才会发送邮件，格式是list [&#x27;G3433&#x27;,&#x27;K333&#x27;]</span><br><span class="hljs-string">    :param sleep_time: 请求接口休眠时间</span><br><span class="hljs-string">    :param email_delay_time 邮件延迟发送时间，就是当前不希望每次都收到通知，只是希望间隔多久通知一次， 目前是 minutes, hours 格式是(1, 0.5) 是 小时, 其余是按照分钟处理</span><br><span class="hljs-string">    :param receivers 邮件接收人 可以传递一个列表例如 [&#x27;123232@qq.com&#x27;,&#x27;3333@qq.com]  多人接收邮件</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> url == <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">or</span> address == <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">or</span> receivers == <span class="hljs-string">&quot;&quot;</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;please input right url or address or receivers&quot;</span><br>    <span class="hljs-built_in">print</span>(<br>        <span class="hljs-string">f&quot;当前请求地址是<span class="hljs-subst">&#123;url&#125;</span>,请求火车票方向是<span class="hljs-subst">&#123;address&#125;</span>,邮件接收人是<span class="hljs-subst">&#123;receivers&#125;</span>,请求间隔时间是<span class="hljs-subst">&#123;sleep_time&#125;</span>秒,用户关注的火车列表是<span class="hljs-subst">&#123;user_focus_train&#125;</span>,邮件间隔报警时间是<span class="hljs-subst">&#123;email_delay_time&#125;</span>&quot;</span>)<br>    time_info = url.split(<span class="hljs-string">&#x27;train_date=&#x27;</span>)[<span class="hljs-number">1</span>].split(<span class="hljs-string">&quot;&amp;&quot;</span>)[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 出发时间</span><br>    <span class="hljs-keyword">global</span> send_info_type, send_numbers, send_email_all_type, send_all_numbers, email_alert_delay_type, email_alert_delay_time  <span class="hljs-comment"># 关注的火车发送邮件状态</span><br>    send_info_type = <span class="hljs-literal">False</span>  <span class="hljs-comment"># 关注火车列表发送状态</span><br>    send_email_all_type = <span class="hljs-literal">False</span>  <span class="hljs-comment"># 所有火车列表发送状态</span><br>    send_numbers = <span class="hljs-number">0</span><br>    send_all_numbers = <span class="hljs-number">0</span><br>    numbers = <span class="hljs-number">0</span><br>    email_alert = []<br>    email_alert_delay_time = delay_time(email_delay_time)<br><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-comment"># 获取当前时间</span><br>        now = datetime.now()<br>        <span class="hljs-comment"># 是否有票的标志</span><br>        has_ticket = <span class="hljs-literal">False</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;当前正在抢<span class="hljs-subst">&#123;address&#125;</span>的火车票&quot;</span>)<br>        payload = &#123;&#125;<br>        headers = &#123;<br>            <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36&#x27;</span>,<br>            <span class="hljs-string">&#x27;Cookie&#x27;</span>: <span class="hljs-string">&#x27;JSESSIONID=6571054C8C61F63A5F32C82A1A340BED; guidesStatus=off; _big_fontsize=0; highContrastMode=defaltMode; cursorStatus=off; BIGipServerpool_index=821035530.43286.0000; route=6f50b51faa11b987e576cdb301e545c4; BIGipServerotn=670040586.24610.0000&#x27;</span><br><br>        &#125;<br><br>        time.sleep(sleep_time)<br>        response = requests.request(<span class="hljs-string">&quot;GET&quot;</span>, url, headers=headers, data=payload)<br>        <span class="hljs-keyword">if</span> check_http_code(response.status_code):<br>            re_json = json.loads(response.text)<br>            len_nums = <span class="hljs-built_in">len</span>(re_json[<span class="hljs-string">&#x27;data&#x27;</span>][<span class="hljs-string">&#x27;result&#x27;</span>])<br>            <span class="hljs-comment"># print(re_json[&#x27;data&#x27;][&#x27;result&#x27;])</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (re_json[<span class="hljs-string">&#x27;data&#x27;</span>][<span class="hljs-string">&#x27;result&#x27;</span>]):<br>                numbers += <span class="hljs-number">1</span><br>                <span class="hljs-keyword">try</span>:<br>                    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;|N|&quot;</span> <span class="hljs-keyword">in</span> i:<br>                        <span class="hljs-comment"># print(i.split(&quot;预订&quot;)[1][14:].split(&quot;|N|&quot;)[0])</span><br>                        train_info = i.split(<span class="hljs-string">&quot;预订&quot;</span>)[<span class="hljs-number">1</span>][<span class="hljs-number">14</span>:].split(<span class="hljs-string">&quot;|N|&quot;</span>)[<span class="hljs-number">0</span>]<br>                        <span class="hljs-built_in">print</span>(train_info)<br>                    <span class="hljs-keyword">else</span>:<br>                        <span class="hljs-comment"># print(i.split(&quot;预订&quot;)[1][14:].split(&quot;|Y|&quot;)[0])</span><br>                        train_info = i.split(<span class="hljs-string">&quot;预订&quot;</span>)[<span class="hljs-number">1</span>][<span class="hljs-number">14</span>:].split(<span class="hljs-string">&quot;|Y|&quot;</span>)[<span class="hljs-number">0</span>]<br>                        <span class="hljs-built_in">print</span>(train_info)<br>                    info = remove_after_wm(<span class="hljs-built_in">str</span>((i.split(<span class="hljs-string">&quot;预订&quot;</span>)[<span class="hljs-number">1</span>][<span class="hljs-number">14</span>:]).split(<span class="hljs-string">&quot;2024&quot;</span>)[<span class="hljs-number">1</span>]))<br>                    <span class="hljs-comment"># print(info)</span><br>                    <span class="hljs-comment"># print(info[20:][:17])</span><br>                    <span class="hljs-built_in">print</span>(numbers)<br>                    <span class="hljs-built_in">print</span>(len_nums)<br>                    <span class="hljs-keyword">if</span> contains_number_or_you(info[<span class="hljs-number">20</span>:][:<span class="hljs-number">17</span>]):<br>                        <span class="hljs-built_in">print</span>(info)<br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;有票啦！&quot;</span>)<br>                        email_info = train_info + <span class="hljs-string">&quot; &quot;</span> + info<br>                        <span class="hljs-keyword">if</span> email_info <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> email_alert:<br>                            email_alert.append(email_info)<br>                    <span class="hljs-keyword">if</span> numbers == len_nums:<br>                        <span class="hljs-comment"># 替换成表格</span><br>                        email_alert_update = list_to_html(email_alert)<br>                        <span class="hljs-comment"># print(email_alert_update)</span><br>                        <span class="hljs-comment"># print(type(email_alert_update))</span><br>                        <span class="hljs-keyword">if</span> user_focus_train:<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;用户开启了筛选火车发送邮件，当前选择的是<span class="hljs-subst">&#123;user_focus_train&#125;</span>&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            <span class="hljs-keyword">for</span> user_train <span class="hljs-keyword">in</span> user_focus_train:<br>                                <span class="hljs-keyword">for</span> train_single_info <span class="hljs-keyword">in</span> email_alert:<br>                                    <span class="hljs-keyword">if</span> user_train <span class="hljs-keyword">in</span> train_single_info:<br>                                        send_info_type = <span class="hljs-literal">True</span><br>                            <span class="hljs-keyword">if</span> send_info_type <span class="hljs-keyword">and</span> send_numbers == <span class="hljs-number">0</span>:<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;用户开启了筛选火车发送邮件，存在相同列车信息，将会发送邮件！&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                                send_numbers = <span class="hljs-number">1</span><br>                                asyncio.run(send_mail(mail_body=<span class="hljs-string">f&quot;抢到了<span class="hljs-subst">&#123;time_info&#125;</span>,<span class="hljs-subst">&#123;address&#125;</span>的票<span class="hljs-subst">&#123;email_alert_update&#125;</span>&quot;</span>,<br>                                                      receivers=receivers))<br>                                email_alert.clear()<br><br>                            <span class="hljs-keyword">elif</span> send_numbers != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> send_info_type <span class="hljs-keyword">and</span> email_alert_delay_time:<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前设置了邮件发送延迟&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>,定时清空列表时间<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<br>                                    <span class="hljs-string">f&quot;当前用户开启了筛选火车发送邮件，存在相同列车信息, 但是在当前设置的延迟发送邮件中, 下次发送时间是<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>之后, 所以此次不会发送邮件！&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                                email_alert.clear()<br>                                <span class="hljs-keyword">if</span> compare_time(now, email_alert_delay_time):<br>                                    email_alert.clear()<br>                                    send_numbers = <span class="hljs-number">0</span>  <span class="hljs-comment"># 专注火车列表发送次数归零</span><br>                                    <span class="hljs-comment"># send_all_numbers = 0  # 已经发送所有火车有票的记录</span><br>                                    <span class="hljs-comment"># send_email_all_type = True</span><br>                                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;清空列表,重新开始发送邮件&quot;</span>)<br>                                    asyncio.run(send_mail(mail_body=<span class="hljs-string">f&quot;抢到了<span class="hljs-subst">&#123;time_info&#125;</span>,<span class="hljs-subst">&#123;address&#125;</span>的票<span class="hljs-subst">&#123;email_alert_update&#125;</span>&quot;</span>,<br>                                                          receivers=receivers))<br>                                    email_alert_delay_time = delay_time(email_delay_time)<br>                                    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>,定时清空列表时间<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>&quot;</span>)<br>                            <span class="hljs-keyword">else</span>:<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>&quot;</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;用户开启了筛选火车发送邮件，不存在相同列车信息，不会发送邮件！&quot;</span>)<br>                                email_alert.clear()<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                        <span class="hljs-keyword">elif</span> <span class="hljs-keyword">not</span> send_email_all_type <span class="hljs-keyword">and</span> send_all_numbers == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> email_alert_delay_time:<br>                            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">                            首次发送全部有票的火车, 且当前存在邮件延迟发送时间设置</span><br><span class="hljs-string">                            &quot;&quot;&quot;</span><br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;首次发送全部有票的火车,当前设置了邮件发送延迟&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>,定时清空列表时间<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;====================&quot;</span>)<br>                            send_all_numbers += <span class="hljs-number">1</span><br>                            send_email_all_type = <span class="hljs-literal">True</span><br>                            asyncio.run(send_mail(mail_body=<span class="hljs-string">f&quot;抢到了<span class="hljs-subst">&#123;time_info&#125;</span>,<span class="hljs-subst">&#123;address&#125;</span>的票<span class="hljs-subst">&#123;email_alert_update&#125;</span>&quot;</span>,<br>                                                  receivers=receivers))<br>                            email_alert.clear()<br><br>                        <span class="hljs-keyword">elif</span> send_email_all_type <span class="hljs-keyword">and</span> send_all_numbers == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> email_alert_delay_time:<br>                            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">                             当前存在邮件延迟发送时间设置</span><br><span class="hljs-string">                            &quot;&quot;&quot;</span><br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前设置了邮件发送延迟&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>,定时清空列表时间<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;====================&quot;</span>)<br>                            email_alert.clear()<br>                            <span class="hljs-keyword">if</span> compare_time(now, email_alert_delay_time):<br>                                email_alert.clear()<br>                                <span class="hljs-comment"># # send_numbers = 0  # 专注火车列表发送次数归零</span><br>                                <span class="hljs-comment"># send_all_numbers = 1  # 已经发送所有火车有票的记录</span><br>                                <span class="hljs-comment"># send_email_all_type = T  # 回到首次发送的状态</span><br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;清空列表,重新开始发送邮件&quot;</span>)<br>                                asyncio.run(send_mail(mail_body=<span class="hljs-string">f&quot;抢到了<span class="hljs-subst">&#123;time_info&#125;</span>,<span class="hljs-subst">&#123;address&#125;</span>的票<span class="hljs-subst">&#123;email_alert_update&#125;</span>&quot;</span>,<br>                                                      receivers=receivers))<br>                                email_alert_delay_time = delay_time(email_delay_time)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>,定时清空列表时间<span class="hljs-subst">&#123;email_alert_delay_time&#125;</span>&quot;</span>)<br><br>                        <span class="hljs-keyword">else</span>:<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;现在正在查看<span class="hljs-subst">&#123;address&#125;</span>,现在时间<span class="hljs-subst">&#123;now&#125;</span>&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前未设置延迟发送邮件,将即可发送邮件&quot;</span>)<br>                            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===================&quot;</span>)<br>                            asyncio.run(send_mail(mail_body=<span class="hljs-string">f&quot;抢到了<span class="hljs-subst">&#123;time_info&#125;</span>,<span class="hljs-subst">&#123;address&#125;</span>的票<span class="hljs-subst">&#123;email_alert_update&#125;</span>&quot;</span>,<br>                                                  receivers=receivers))<br>                            email_alert.clear()<br><br>                        numbers = <span class="hljs-number">0</span>  <span class="hljs-comment"># 控制整体的数目归零</span><br>                <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                    <span class="hljs-built_in">print</span>(e)<br>                    <span class="hljs-built_in">print</span>(remove_after_wm(<span class="hljs-built_in">str</span>((i.split(<span class="hljs-string">&quot;起售&quot;</span>)[<span class="hljs-number">1</span>][<span class="hljs-number">14</span>:]).split(<span class="hljs-string">&quot;2024&quot;</span>)[<span class="hljs-number">1</span>])))<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&gt;&gt;&gt;&gt;&gt;&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;12306接口请求失败, 状态码是<span class="hljs-subst">&#123;response.status_code&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="多线程和多进程的选择"><a href="#多线程和多进程的选择" class="headerlink" title="多线程和多进程的选择"></a>多线程和多进程的选择</h3><p>刚开始我选择的是多线程，但是在实践中发现在传递信息的时候会发生  A 线路的信息 流转到了 B 线路中，后来查询资料发现，多线程的内存信息共享的可能会发生数据错乱，但是多进程是内存独立的不共享，此时在实现的时候选择了 进程池来实现！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    train_info 函数传递顺序(url, address, receivers, sleep_time, user_focus_train, email_delay_time)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    query_list = [<br>        (<br>            <span class="hljs-string">&quot;https://kyfw.12306.cn/otn/leftTicket/queryG?leftTicketDTO.train_date=2024-10-07&amp;leftTicketDTO.from_station=SJP&amp;leftTicketDTO.to_station=HDP&amp;purpose_codes=ADULT&quot;</span>,<br>            <span class="hljs-string">&quot;石家庄----&gt;邯郸&quot;</span>, [<span class="hljs-string">&quot;154418645@qq.com&quot;</span>, <span class="hljs-string">&quot;385521294@qq.com&quot;</span>], <span class="hljs-number">10</span>, [<span class="hljs-string">&#x27;K7734&#x27;</span>,<span class="hljs-string">&#x27;G543&#x27;</span>], (<span class="hljs-number">2</span>, <span class="hljs-number">1</span>)),  <span class="hljs-comment"># 到邯郸</span><br>        (<br>            <span class="hljs-string">&quot;https://kyfw.12306.cn/otn/leftTicket/queryG?leftTicketDTO.train_date=2024-10-07&amp;leftTicketDTO.from_station=SJP&amp;leftTicketDTO.to_station=XTP&amp;purpose_codes=ADULT&quot;</span>,<br>            <span class="hljs-string">&quot;石家庄----&gt;邢台&quot;</span>, [<span class="hljs-string">&quot;152418645@qq.com&quot;</span>, <span class="hljs-string">&quot;385521294@qq.com&quot;</span>], <span class="hljs-number">20</span>, [], (<span class="hljs-number">2</span>, <span class="hljs-number">2</span>))  <span class="hljs-comment"># 到邢台</span><br>    ]<br><br>    <span class="hljs-keyword">with</span> ProcessPoolExecutor(max_workers=<span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> executor:<br>        <span class="hljs-comment"># 提交任务，每个任务都接收一个args元组，自动解包为多个参数</span><br>        futures = [executor.submit(train_info, *args) <span class="hljs-keyword">for</span> args <span class="hljs-keyword">in</span> query_list]<br>        <span class="hljs-comment"># 等待所有任务完成</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">for</span> future <span class="hljs-keyword">in</span> as_completed(futures):<br>                <span class="hljs-comment"># 处理可能的异常</span><br>                result = future.result()<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Received result: <span class="hljs-subst">&#123;result&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;进程出错了<span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>上述代码采用了进程池的方式进行请求，最大设置了2个，可以自由设置，通过submit 将任务提交返回一个futures对象，然后我们需要看是否每个都完成了调用as_completed这个方法即可！</p>
+<h2 id="效果查看"><a href="#效果查看" class="headerlink" title="效果查看"></a>效果查看</h2><p>运行后如下：</p>
+<img src="/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_3.png" srcset="/img/loading.gif" lazyload class="">
+
+<img src="/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_4.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>可以发现我们实现了我们上述的所有功能，下面看邮件效果：</p>
+<img src="/2024/10/08/12306%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2/12306_5.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>可以看到邮箱收到了我们的邮件以及票务信息！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过编写这个脚本我也学到了很多知识，最大就是利用了进程池来实现，也感受到了多进程和多线程在使用上的差距，那么源码已经共享到github 地址是：<a target="_blank" rel="noopener" href="https://github.com/dreamshao/12306">https://github.com/dreamshao/12306</a><br>在使用过程中，如果无法查询可以将接口请求的最新cookie替换一下本地接口请求的cookie，如果有更好的建议或者有疑问可以联系我哦！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/%E6%95%88%E8%83%BD%E5%B7%A5%E5%85%B7/" class="category-chain-item">效能工具</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/%E6%95%88%E8%83%BD%E5%B7%A5%E5%85%B7/12306-%E7%81%AB%E8%BD%A6%E7%A5%A8%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2%E8%84%9A%E6%9C%AC/" class="category-chain-item">12306 火车票余票查询脚本</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/12306-%E7%81%AB%E8%BD%A6%E7%A5%A8%E4%BD%99%E7%A5%A8%E6%9F%A5%E8%AF%A2%E8%84%9A%E6%9C%AC%E5%BC%80%E5%8F%91/" class="print-no-link">#12306 火车票余票查询脚本开发</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>12306 火车票余票查询脚本开发</div>
+      <div>https://dreamshao.github.io/2024/10/08/12306余票查询/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/11/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="Python 并发编程之多线程由浅入深">
+                        <span class="hidden-mobile">Python 并发编程之多线程由浅入深</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
