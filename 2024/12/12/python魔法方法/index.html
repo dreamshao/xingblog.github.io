@@ -1,0 +1,859 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python 自带魔法方法掌握了就事半功倍Python 的魔法方法是以双下划线开头和结尾的特殊方法。它们允许我们在自定义类中实现类似内置类型的行为，如支持算术运算、索引、迭代等。以下是按功能分类的全面总结，每个分类都有代码案例和详细解释。 1. 对象初始化与表示1.1 __init__ 和 __new__ 作用: 初始化对象和控制对象的创建。  1234567891011class MyClass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 自带魔法方法重点解析">
+<meta property="og:url" content="https://dreamshao.github.io/2024/12/12/python%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Python 自带魔法方法掌握了就事半功倍Python 的魔法方法是以双下划线开头和结尾的特殊方法。它们允许我们在自定义类中实现类似内置类型的行为，如支持算术运算、索引、迭代等。以下是按功能分类的全面总结，每个分类都有代码案例和详细解释。 1. 对象初始化与表示1.1 __init__ 和 __new__ 作用: 初始化对象和控制对象的创建。  1234567891011class MyClass">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-12T06:49:12.000Z">
+<meta property="article:modified_time" content="2024-12-12T07:33:25.566Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 自带魔法方法重点解析 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 自带魔法方法重点解析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-12 14:49" pubdate>
+          2024年12月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 自带魔法方法重点解析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python-自带魔法方法掌握了就事半功倍"><a href="#Python-自带魔法方法掌握了就事半功倍" class="headerlink" title="Python 自带魔法方法掌握了就事半功倍"></a>Python 自带魔法方法掌握了就事半功倍</h1><p>Python 的魔法方法是以双下划线开头和结尾的特殊方法。它们允许我们在自定义类中实现类似内置类型的行为，如支持算术运算、索引、迭代等。以下是按功能分类的全面总结，每个分类都有代码案例和详细解释。</p>
+<h2 id="1-对象初始化与表示"><a href="#1-对象初始化与表示" class="headerlink" title="1. 对象初始化与表示"></a>1. <strong>对象初始化与表示</strong></h2><h3 id="1-1-init-和-new"><a href="#1-1-init-和-new" class="headerlink" title="1.1 __init__ 和 __new__"></a>1.1 <code>__init__</code> 和 <code>__new__</code></h3><ul>
+<li><strong>作用</strong>: 初始化对象和控制对象的创建。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params">cls, *args, **kwargs</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;__new__ is called&quot;</span>)<br>        instance = <span class="hljs-built_in">super</span>().__new__(cls)<br>        <span class="hljs-keyword">return</span> instance<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, value</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;__init__ is called&quot;</span>)<br>        self.value = value<br><br>obj = MyClass(<span class="hljs-number">42</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__new__</code>:</p>
+<p>  控制对象的创建过程。<br>  必须返回一个实例对象。<br>  通常用在需要定制实例化流程的场景，比如实现单例模式。</p>
+<p>2.<code>__init__</code>:</p>
+<p>  初始化对象的属性。<br>  接受实例创建后的数据，并设置初始状态。</p>
+<h3 id="1-2-repr-和-str"><a href="#1-2-repr-和-str" class="headerlink" title="1.2 __repr__  和 __str__"></a>1.2 <code>__repr__ </code> 和 <code>__str__</code></h3><ul>
+<li><strong>作用</strong>: 定义对象的字符串表示。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Point</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, x, y</span>):<br>        self.x = x<br>        self.y = y<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Point(<span class="hljs-subst">&#123;self.x&#125;</span>, <span class="hljs-subst">&#123;self.y&#125;</span>)&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Point at (<span class="hljs-subst">&#123;self.x&#125;</span>, <span class="hljs-subst">&#123;self.y&#125;</span>)&quot;</span><br><br>p = Point(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">repr</span>(p))  <span class="hljs-comment"># 输出：Point(1, 2)</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(p))   <span class="hljs-comment"># 输出：Point at (1, 2)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__repr__</code>:</p>
+<p>  返回开发者友好的表示，通常用于调试。<br>  通常要求输出的字符串能用 eval() 重建该对象。</p>
+<p>2.<code>__str__</code>:</p>
+<p>  返回用户友好的字符串，适合显示给最终用户。</p>
+<h2 id="2-算术运算"><a href="#2-算术运算" class="headerlink" title="2.算术运算"></a>2.算术运算</h2><h3 id="2-1-算数运算符-add-和-sub"><a href="#2-1-算数运算符-add-和-sub" class="headerlink" title="2.1 算数运算符 __add__  和 __sub__"></a>2.1 算数运算符 <code>__add__ </code> 和 <code>__sub__</code></h3><ul>
+<li><p><strong>作用</strong>: 支持自定义类的加、减、乘等运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Number</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, value</span>):<br>        self.value = value<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__add__</span>(<span class="hljs-params">self, other</span>):<br>        <span class="hljs-keyword">return</span> Number(self.value + other.value)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__sub__</span>(<span class="hljs-params">self, other</span>):<br>        <span class="hljs-keyword">return</span> Number(self.value - other.value)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Number(<span class="hljs-subst">&#123;self.value&#125;</span>)&quot;</span><br><br>n1 = Number(<span class="hljs-number">10</span>)<br>n2 = Number(<span class="hljs-number">20</span>)<br><span class="hljs-built_in">print</span>(n1 + n2)  <span class="hljs-comment"># 输出：Number(30)</span><br><span class="hljs-built_in">print</span>(n1 - n2)  <span class="hljs-comment"># 输出：Number(-10)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>解释</strong>:</p>
+</li>
+</ul>
+<p>1.<code>__add__</code>:</p>
+<p>   定义加法操作 +。<br>   接受另一个对象作为参数，并返回新的结果。</p>
+<p>2.<code>__sub__</code>:</p>
+<p>   定义减法操作 -。<br>   类似的魔法方法还有:<br>      <code>__mul__</code>: 定义乘法 *。<br>      <code>__truediv__</code>: 定义除法 &#x2F;。<br>      <code>__floordiv__</code>: 定义整除 &#x2F;&#x2F;。<br>      <code>__mod__</code>: 定义取模 %。<br>      <code>__pow__</code>: 定义幂运算 **</p>
+<h3 id="2-2-反向运算-radd"><a href="#2-2-反向运算-radd" class="headerlink" title="2.2 反向运算 _radd_ "></a>2.2 反向运算 <code>_radd_ </code></h3><ul>
+<li><strong>作用</strong>: 当左操作数不支持运算时调用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Number</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, value</span>):<br>        self.value = value<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__radd__</span>(<span class="hljs-params">self, other</span>):<br>        <span class="hljs-keyword">return</span> Number(self.value + other)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Number(<span class="hljs-subst">&#123;self.value&#125;</span>)&quot;</span><br><br>n = Number(<span class="hljs-number">10</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-number">5</span> + n)  <span class="hljs-comment"># 输出：Number(15)</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__radd__</code>:</p>
+<p>  定义反向加法。<br>  在常规 <code>__add__</code> 不被调用时（如左操作数是非自定义类型）使用。</p>
+<p>2.类似的反向运算符还有:<br>    <code>__rsub__</code>: 反向减法。<br>    <code>__rmul__</code>: 反向乘法。<br>    <code>__rtruediv__</code>: 反向除法。</p>
+<h2 id="3-容器操作"><a href="#3-容器操作" class="headerlink" title="3.容器操作"></a>3.容器操作</h2><h3 id="3-1-索引访问-getitem-和-setitem-以及-delitem"><a href="#3-1-索引访问-getitem-和-setitem-以及-delitem" class="headerlink" title="3.1 索引访问 __getitem__  和 __setitem__以及__delitem__ "></a>3.1 索引访问 <code>__getitem__ </code> 和 <code>__setitem__</code>以及<code>__delitem__ </code></h3><ul>
+<li><strong>作用</strong>: 支持对象的索引操作。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomList</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, items</span>):<br>        self.items = items<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, index</span>):<br>        <span class="hljs-keyword">return</span> self.items[index]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__setitem__</span>(<span class="hljs-params">self, index, value</span>):<br>        self.items[index] = value<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__delitem__</span>(<span class="hljs-params">self, index</span>):<br>        <span class="hljs-keyword">del</span> self.items[index]<br><br>cl = CustomList([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>])<br><span class="hljs-built_in">print</span>(cl[<span class="hljs-number">1</span>])   <span class="hljs-comment"># 输出：20</span><br>cl[<span class="hljs-number">1</span>] = <span class="hljs-number">99</span><br><span class="hljs-built_in">print</span>(cl[<span class="hljs-number">1</span>])   <span class="hljs-comment"># 输出：99</span><br><span class="hljs-keyword">del</span> cl[<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(cl.items)  <span class="hljs-comment"># 输出：[10, 30]</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__getitem__</code>:</p>
+<p>   定义对象的索引读取。<br>   允许使用 obj[index] 的形式访问。</p>
+<p>2.<code>__setitem__</code>:</p>
+<p>  定义索引赋值。<br>  支持 obj[index] &#x3D; value。</p>
+<p>3.<code>__delitem__</code>:</p>
+<p>  定义索引删除。<br>  支持 del obj[index]。</p>
+<h3 id="3-2-容器长度与成员检查-len-和-contains"><a href="#3-2-容器长度与成员检查-len-和-contains" class="headerlink" title="3.2 容器长度与成员检查 __len__  和 __contains__"></a>3.2 容器长度与成员检查 <code>__len__ </code> 和 <code>__contains__</code></h3><ul>
+<li><strong>作用</strong>: 支持 len() 和 in 操作。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bag</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, items</span>):<br>        self.items = items<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.items)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__contains__</span>(<span class="hljs-params">self, item</span>):<br>        <span class="hljs-keyword">return</span> item <span class="hljs-keyword">in</span> self.items<br><br>bag = Bag([<span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-string">&quot;cherry&quot;</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(bag))  <span class="hljs-comment"># 输出：3</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;apple&quot;</span> <span class="hljs-keyword">in</span> bag)  <span class="hljs-comment"># 输出：True</span><br><br></code></pre></td></tr></table></figure></li>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>___len__</code>:</p>
+<p>  定义对象的长度。<br>  支持 len(obj)。</p>
+<p>2.<code>__contains__</code>:</p>
+<p>  定义成员关系操作。<br>  支持 item in obj。</p>
+<h2 id="4-迭代器协议"><a href="#4-迭代器协议" class="headerlink" title="4.迭代器协议"></a>4.迭代器协议</h2><h3 id="4-1-迭代支持-iter-和-next"><a href="#4-1-迭代支持-iter-和-next" class="headerlink" title="4.1 迭代支持 __iter__  和 __next__"></a>4.1 迭代支持 <code>__iter__ </code> 和 <code>__next__</code></h3><ul>
+<li><strong>作用</strong>: 自定义对象支持迭代。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyRange</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, start, end</span>):<br>        self.current = start<br>        self.end = end<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> self<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__next__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">if</span> self.current &gt;= self.end:<br>            <span class="hljs-keyword">raise</span> StopIteration<br>        self.current += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> self.current - <span class="hljs-number">1</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> MyRange(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(i)  <span class="hljs-comment"># 输出：1 2 3 4</span><br><br></code></pre></td></tr></table></figure></li>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__iter__</code>:</p>
+<p> 返回迭代器本身。</p>
+<p>2.<code>__next__</code>:</p>
+<p> 定义每次迭代返回的值。<br> 当没有值可返回时，抛出 StopIteration。</p>
+<h2 id="5-上下文管理"><a href="#5-上下文管理" class="headerlink" title="5.上下文管理"></a>5.上下文管理</h2><h3 id="5-1-上下文管理协议-enter-和-exit"><a href="#5-1-上下文管理协议-enter-和-exit" class="headerlink" title="5.1 上下文管理协议 __enter__  和 __exit__"></a>5.1 上下文管理协议 <code>__enter__ </code> 和 <code>__exit__</code></h3><ul>
+<li><strong>作用</strong>: 支持 with 语句。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">File</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, filename, mode</span>):<br>        self.filename = filename<br>        self.mode = mode<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__enter__</span>(<span class="hljs-params">self</span>):<br>        self.file = <span class="hljs-built_in">open</span>(self.filename, self.mode)<br>        <span class="hljs-keyword">return</span> self.file<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__exit__</span>(<span class="hljs-params">self, exc_type, exc_value, traceback</span>):<br>        self.file.close()<br><br><span class="hljs-keyword">with</span> File(<span class="hljs-string">&quot;example.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;Hello, World!&quot;</span>)<br><br></code></pre></td></tr></table></figure></li>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__enter__</code>:</p>
+<p>  在进入上下文时执行。<br>  返回资源对象。</p>
+<p>2.<code>__exit__</code>:</p>
+<p>  在离开上下文时执行。<br>  负责清理资源。</p>
+<h2 id="6-其他常用魔法方法"><a href="#6-其他常用魔法方法" class="headerlink" title="6.其他常用魔法方法"></a>6.其他常用魔法方法</h2><h3 id="6-1-call"><a href="#6-1-call" class="headerlink" title="6.1 __call__ "></a>6.1 <code>__call__ </code></h3><ul>
+<li><strong>作用</strong>: 使对象像函数一样调用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Greeter</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__call__</span>(<span class="hljs-params">self, name</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;Hello, <span class="hljs-subst">&#123;name&#125;</span>!&quot;</span><br><br>greet = Greeter()<br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;Alice&quot;</span>))  <span class="hljs-comment"># 输出：Hello, Alice!</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__call__</code>:<br>  运行的时候可以直接调用函数</p>
+<h3 id="6-2-del"><a href="#6-2-del" class="headerlink" title="6.2 __del__ "></a>6.2 <code>__del__ </code></h3><ul>
+<li><strong>作用</strong>: 定义对象销毁时的行为。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Resource</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__del__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cleaning up resources!&quot;</span>)<br><br>res = Resource()<br><span class="hljs-keyword">del</span> res  <span class="hljs-comment"># 输出：Cleaning up resources!</span><br><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__del__</code>:<br>  运行的时候可以直接在销毁对象执行的行为</p>
+<h3 id="6-3-比较操作符-eq-和-lt"><a href="#6-3-比较操作符-eq-和-lt" class="headerlink" title="6.3 比较操作符 __eq_  和 __lt__ "></a>6.3 比较操作符 <code>__eq_ </code> 和 <code>__lt__ </code></h3><ul>
+<li><strong>作用</strong>: 支持比较运算符。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Number</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, value</span>):<br>        self.value = value<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__eq__</span>(<span class="hljs-params">self, other</span>):<br>        <span class="hljs-keyword">return</span> self.value == other.value<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__lt__</span>(<span class="hljs-params">self, other</span>):<br>        <span class="hljs-keyword">return</span> self.value &lt; other.value<br><br>n1 = Number(<span class="hljs-number">10</span>)<br>n2 = Number(<span class="hljs-number">20</span>)<br><span class="hljs-built_in">print</span>(n1 == n2)  <span class="hljs-comment"># 输出：False</span><br><span class="hljs-built_in">print</span>(n1 &lt; n2)   <span class="hljs-comment"># 输出：True</span><br><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>:</li>
+</ul>
+<p>1.<code>__eq__</code>:<br>  定义 &#x3D;&#x3D;。</p>
+<p>2.<code>__lt__</code>:<br>  定义 &lt;。</p>
+<p>3.还有类似的:<br>  <code>__le__</code> (&lt;&#x3D;)<br>  <code>__gt__</code> (&gt;)<br>  <code>__ge__</code> (&gt;&#x3D;)</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的这些魔法方法只是python中用的比较多的一部分，还有很多，有时候在编程的时候使用这些高效的魔法方法也是很不错的选择！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/" class="category-chain-item">Python 魔法方法</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 自带魔法方法重点解析</div>
+      <div>https://dreamshao.github.io/2024/12/12/python魔法方法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/12/git/" title="一文讲清 Git 基本常用命令">
+                        <span class="hidden-mobile">一文讲清 Git 基本常用命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
