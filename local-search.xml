@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Python 垃圾回收机制</title>
+    <link href="/2025/01/22/python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/"/>
+    <url>/2025/01/22/python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-垃圾回收机制"><a href="#Python-垃圾回收机制" class="headerlink" title="Python 垃圾回收机制"></a>Python 垃圾回收机制</h1><p>Python 的垃圾回收机制负责自动管理内存，以减少开发者手动管理内存的复杂性。它通过 <strong>引用计数</strong> 和 <strong>垃圾回收器（Garbage Collector）</strong> 两种方式来处理内存中的对象。</p><hr><h2 id="1-引用计数"><a href="#1-引用计数" class="headerlink" title="1. 引用计数"></a>1. 引用计数</h2><p>引用计数是 Python 内存管理的核心机制，每个对象都维护一个 <strong>引用计数器</strong>，表示有多少个引用指向它。</p><h3 id="1-1-引用计数的规则"><a href="#1-1-引用计数的规则" class="headerlink" title="1.1 引用计数的规则"></a>1.1 引用计数的规则</h3><ul><li><strong>引用增加</strong>：当一个新的引用指向对象时，计数增加。</li><li><strong>引用减少</strong>：当引用被删除或覆盖时，计数减少。</li><li><strong>对象销毁</strong>：当引用计数为 <code>0</code> 时，对象会被立即销毁，释放内存。</li></ul><h3 id="1-2-示例"><a href="#1-2-示例" class="headerlink" title="1.2 示例"></a>1.2 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建对象</span><br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]  <span class="hljs-comment"># 引用计数为 1</span><br>b = a           <span class="hljs-comment"># 引用计数为 2</span><br><span class="hljs-keyword">del</span> a           <span class="hljs-comment"># 引用计数为 1</span><br><span class="hljs-keyword">del</span> b           <span class="hljs-comment"># 引用计数为 0，对象被销毁</span><br><br></code></pre></td></tr></table></figure><h3 id="1-3-引用计数的优势"><a href="#1-3-引用计数的优势" class="headerlink" title="1.3 引用计数的优势"></a>1.3 引用计数的优势</h3><ul><li><strong>实现简单，回收及时.</strong></li><li><strong>适合大多数常见的内存管理场景.</strong></li></ul><h3 id="1-4-引用计数的缺陷"><a href="#1-4-引用计数的缺陷" class="headerlink" title="1.4 引用计数的缺陷"></a>1.4 引用计数的缺陷</h3><ul><li><strong>循环引用问题</strong>: 无法处理对象之间存在循环引用的情况。</li></ul><hr><h2 id="2-循环引用问题"><a href="#2-循环引用问题" class="headerlink" title="2. 循环引用问题"></a>2. 循环引用问题</h2><p>循环引用指的是两个或多个对象相互引用，导致它们的引用计数无法归零。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, value</span>):<br>        self.value = value<br>        self.<span class="hljs-built_in">next</span> = <span class="hljs-literal">None</span><br><br>a = Node(<span class="hljs-number">1</span>)<br>b = Node(<span class="hljs-number">2</span>)<br>a.<span class="hljs-built_in">next</span> = b<br>b.<span class="hljs-built_in">next</span> = a  <span class="hljs-comment"># 形成循环引用</span><br><br><span class="hljs-keyword">del</span> a<br><span class="hljs-keyword">del</span> b  <span class="hljs-comment"># 对象的引用计数仍然为 1，无法回收</span><br><br></code></pre></td></tr></table></figure><hr><h2 id="3-垃圾回收器"><a href="#3-垃圾回收器" class="headerlink" title="3. 垃圾回收器"></a>3. 垃圾回收器</h2><p>为了处理循环引用问题，Python 提供了一个基于 分代回收 的垃圾回收器。</p><h3 id="3-1-分代回收机制"><a href="#3-1-分代回收机制" class="headerlink" title="3.1 分代回收机制"></a>3.1 分代回收机制</h3><p>Python 将所有对象分为三代：</p><ul><li><strong>第 0 代</strong>: 新创建的对象。</li><li><strong>第 1 代</strong>: 经过一次垃圾回收后未被销毁的对象。</li><li><strong>第 2 代</strong>: 经过多次垃圾回收仍未被销毁的对象。</li></ul><p> 垃圾回收器通过以下方式提高效率：</p><ul><li>优先回收生命周期短的对象（第 0 代）。</li><li>减少对高代对象的检查频率。</li></ul><h3 id="3-2-回收过程"><a href="#3-2-回收过程" class="headerlink" title="3.2 回收过程"></a>3.2 回收过程</h3><ul><li>垃圾回收器会定期检查循环引用。</li><li>检测对象是否可达（是否还有引用指向它）。</li><li>如果不可达，则将其标记为垃圾并回收。</li></ul><h3 id="3-3-调用垃圾回收器"><a href="#3-3-调用垃圾回收器" class="headerlink" title="3.3 调用垃圾回收器"></a>3.3 调用垃圾回收器</h3><p>  可以使用 gc 模块手动控制垃圾回收：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">  <span class="hljs-keyword">import</span> gc<br><br><span class="hljs-comment"># 强制执行垃圾回收</span><br>gc.collect()<br><br><span class="hljs-comment"># 禁用自动垃圾回收</span><br>gc.disable()<br><br><span class="hljs-comment"># 启用自动垃圾回收</span><br>gc.enable()<br><br></code></pre></td></tr></table></figure><hr><h2 id="4-垃圾回收的性能优化"><a href="#4-垃圾回收的性能优化" class="headerlink" title="4. 垃圾回收的性能优化"></a>4. 垃圾回收的性能优化</h2><ul><li><p><strong>1.减少循环引用</strong>：</p><ul><li>使用弱引用（weakref 模块）来替代强引用。</li><li>合理设计数据结构，避免不必要的循环引用。</li></ul></li><li><p><strong>2.控制垃圾回收行为</strong>：</p><ul><li>调整垃圾回收器的阈值。</li></ul></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-keyword">import</span> gc<br>gc.set_threshold(<span class="hljs-number">700</span>, <span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br><br></code></pre></td></tr></table></figure><ul><li><strong>3.监控内存使用</strong>：<ul><li>使用 objgraph 或 tracemalloc 模块分析内存分配和泄漏问题。</li></ul></li></ul><hr><h2 id="5-常见误区"><a href="#5-常见误区" class="headerlink" title="5. 常见误区"></a>5. 常见误区</h2><ul><li><p><strong>1.垃圾回收会立刻释放内存</strong>： 垃圾回收只会标记不可达对象并释放内存块，但具体的内存释放可能由底层管理器延迟执行。</p></li><li><p><strong>2.大对象的内存回收</strong>：大对象可能直接分配在系统内存中（非 Python 堆内存），回收的效率依赖于操作系统。</p></li></ul><hr><h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><ul><li><p><strong>引用计数</strong> 是 Python 垃圾回收的基础，但无法处理循环引用。</p></li><li><p><strong>垃圾回收器</strong>  通过分代回收机制和不可达对象检测，解决了循环引用的问题。</p></li></ul><p>合理使用垃圾回收机制可以提升程序的内存管理效率。</p><ul><li><p><strong>性能调优建议</strong> ：</p><ul><li>尽量避免创建不必要的对象。</li><li>及时解除不再使用的引用，减少循环引用的发生。</li><li>对于需要频繁分配和释放内存的场景，可以采用对象池或缓存技术优化性能。</li></ul></li><li><p><strong>注意内存泄漏</strong> ：</p><ul><li>虽然 Python 自动管理内存，但不正确的引用或设计仍然可能导致内存泄漏，例如长时间存在的全局变量、未关闭的文件句柄等。</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 内部原理</category>
+      
+      <category>Python 垃圾回收机制</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python 自带魔法方法重点解析</title>
     <link href="/2024/12/12/python%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/"/>
     <url>/2024/12/12/python%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/</url>
