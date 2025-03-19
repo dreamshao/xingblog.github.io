@@ -16,23 +16,25 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python lambda 函数详细介绍在 Python 中，lambda 函数是一种 匿名函数（没有名称的函数），用于创建简短的单行函数。lambda 关键字允许你在不定义正式函数的情况下，快速创建小型函数。 lambad 函数的语法1lambda 参数1, 参数2, ...: 表达式 特点：  只能包含 一个表达式，并且 不能包含赋值操作（如 &#x3D;）。  适用于 简单 的计算或数据转换">
+    <meta name="description" content="Pytest入门系列之pytest的安装和基本使用在 Python 生态中，pytest 是一个强大且流行的测试框架，提供简洁的语法和丰富的插件支持。 pytest 的安装pytest 的安装方法 1pip install pytest  安装完毕后，可以使用以下命令检查pytest版本： 1pytest --version  pytest 入门案例创建 test_sample.py 文件，并添加">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python lambda函数">
-<meta property="og:url" content="https://dreamshao.github.io/2025/03/18/lambda%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="Pytest入门系列之pytest的安装和基本使用">
+<meta property="og:url" content="https://dreamshao.github.io/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%971/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python lambda 函数详细介绍在 Python 中，lambda 函数是一种 匿名函数（没有名称的函数），用于创建简短的单行函数。lambda 关键字允许你在不定义正式函数的情况下，快速创建小型函数。 lambad 函数的语法1lambda 参数1, 参数2, ...: 表达式 特点：  只能包含 一个表达式，并且 不能包含赋值操作（如 &#x3D;）。  适用于 简单 的计算或数据转换">
+<meta property="og:description" content="Pytest入门系列之pytest的安装和基本使用在 Python 生态中，pytest 是一个强大且流行的测试框架，提供简洁的语法和丰富的插件支持。 pytest 的安装pytest 的安装方法 1pip install pytest  安装完毕后，可以使用以下命令检查pytest版本： 1pytest --version  pytest 入门案例创建 test_sample.py 文件，并添加">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-03-18T07:44:25.000Z">
-<meta property="article:modified_time" content="2025-03-18T08:46:27.518Z">
+<meta property="og:image" content="https://dreamshao.github.io/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%971/1.png">
+<meta property="article:published_time" content="2025-03-19T06:46:57.000Z">
+<meta property="article:modified_time" content="2025-03-19T07:39:10.284Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="pytest">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%971/1.png">
   
   
   
-  <title>Python lambda函数 - 韵少的个人技术博客</title>
+  <title>Pytest入门系列之pytest的安装和基本使用 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python lambda函数"></span>
+            <span id="subtitle" data-typed-text="Pytest入门系列之pytest的安装和基本使用"></span>
           
         </div>
 
@@ -238,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-18 15:44" pubdate>
-          2025年3月18日 下午
+        <time datetime="2025-03-19 14:46" pubdate>
+          2025年3月19日 下午
         </time>
       </span>
     
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          550 字
+          671 字
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -306,40 +308,80 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python lambda函数</h1>
+            <h1 id="seo-header">Pytest入门系列之pytest的安装和基本使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python-lambda-函数详细介绍"><a href="#Python-lambda-函数详细介绍" class="headerlink" title="Python lambda 函数详细介绍"></a>Python lambda 函数详细介绍</h1><p>在 Python 中，lambda 函数是一种 匿名函数（没有名称的函数），用于创建简短的单行函数。lambda 关键字允许你在不定义正式函数的情况下，快速创建小型函数。</p>
-<h2 id="lambad-函数的语法"><a href="#lambad-函数的语法" class="headerlink" title="lambad 函数的语法"></a>lambad 函数的语法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">lambda</span> 参数<span class="hljs-number">1</span>, 参数<span class="hljs-number">2</span>, ...: 表达式<br></code></pre></td></tr></table></figure>
-<p>特点：<br>  只能包含 一个表达式，并且 不能包含赋值操作（如 &#x3D;）。<br>  适用于 简单 的计算或数据转换。<br>  返回值 是表达式的计算结果。</p>
-<h2 id="案例-计算和"><a href="#案例-计算和" class="headerlink" title="案例: 计算和"></a>案例: 计算和</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x, y</span>):<br>    <span class="hljs-keyword">return</span> x + y<br><br></code></pre></td></tr></table></figure>
-<p>使用 lambda函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">lambda</span> x,y:x+y<br></code></pre></td></tr></table></figure>
+                <h1 id="Pytest入门系列之pytest的安装和基本使用"><a href="#Pytest入门系列之pytest的安装和基本使用" class="headerlink" title="Pytest入门系列之pytest的安装和基本使用"></a>Pytest入门系列之pytest的安装和基本使用</h1><p>在 Python 生态中，pytest 是一个强大且流行的测试框架，提供简洁的语法和丰富的插件支持。</p>
+<h2 id="pytest-的安装"><a href="#pytest-的安装" class="headerlink" title="pytest 的安装"></a>pytest 的安装</h2><p>pytest 的安装方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install pytest<br></code></pre></td></tr></table></figure>
 
-<h2 id="lambdb-函数的基本实例"><a href="#lambdb-函数的基本实例" class="headerlink" title="lambdb 函数的基本实例"></a>lambdb 函数的基本实例</h2><h2 id="简单的减法"><a href="#简单的减法" class="headerlink" title="简单的减法"></a>简单的减法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">subtraction = <span class="hljs-keyword">lambda</span> x,y:y-x<br><span class="hljs-built_in">print</span>(subtraction(<span class="hljs-number">3</span>,<span class="hljs-number">5</span>)) <span class="hljs-comment"># 输出2</span><br></code></pre></td></tr></table></figure>
+<p>安装完毕后，可以使用以下命令检查pytest版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pytest --version<br></code></pre></td></tr></table></figure>
 
-<h2 id="平方计算"><a href="#平方计算" class="headerlink" title="平方计算"></a>平方计算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">square = <span class="hljs-keyword">lambda</span> x: x ** <span class="hljs-number">2</span><br><span class="hljs-built_in">print</span>(square(<span class="hljs-number">4</span>))  <span class="hljs-comment"># 输出: 16</span><br></code></pre></td></tr></table></figure>
+<h2 id="pytest-入门案例"><a href="#pytest-入门案例" class="headerlink" title="pytest 入门案例"></a>pytest 入门案例</h2><p>创建 test_sample.py 文件，并添加以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_addition</span>():<br>    <span class="hljs-keyword">assert</span> <span class="hljs-number">1</span> + <span class="hljs-number">1</span> == <span class="hljs-number">2</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_subtraction</span>():<br>    <span class="hljs-keyword">assert</span> <span class="hljs-number">5</span> - <span class="hljs-number">3</span> == <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="判断奇偶数"><a href="#判断奇偶数" class="headerlink" title="判断奇偶数"></a>判断奇偶数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">is_even = <span class="hljs-keyword">lambda</span> x: x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span><br><span class="hljs-built_in">print</span>(is_even(<span class="hljs-number">10</span>))  <span class="hljs-comment"># 输出: True</span><br><span class="hljs-built_in">print</span>(is_even(<span class="hljs-number">7</span>))   <span class="hljs-comment"># 输出: False</span><br></code></pre></td></tr></table></figure>
+<p>运行测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pytest test_sample.py<br></code></pre></td></tr></table></figure>
 
-<h1 id="lambda-与map-、fiter-、soretd-结合的高阶使用"><a href="#lambda-与map-、fiter-、soretd-结合的高阶使用" class="headerlink" title="lambda 与map()、fiter()、soretd() 结合的高阶使用"></a>lambda 与map()、fiter()、soretd() 结合的高阶使用</h1><h2 id="使用map-进行列表转换"><a href="#使用map-进行列表转换" class="headerlink" title="使用map() 进行列表转换"></a>使用map() 进行列表转换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">number = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>squared = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x:x**<span class="hljs-number">2</span>, numbers))<br><span class="hljs-built_in">print</span>(squared) <span class="hljs-comment"># 输出[1,2,9,16,25]</span><br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<img src="/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%971/1.png" srcset="/img/loading.gif" lazyload class="">
 
-<h2 id="使用filter-进行列表筛选"><a href="#使用filter-进行列表筛选" class="headerlink" title="使用filter()进行列表筛选"></a>使用filter()进行列表筛选</h2><p>filter() 用于筛选符合条件的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>evens = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>, numbers))<br><span class="hljs-built_in">print</span>(evens)  <span class="hljs-comment"># 输出: [2, 4, 6]</span><br></code></pre></td></tr></table></figure>
+<p>可以看到我们是运行了两个测试用例，目前均是通过的情况</p>
+<h2 id="pytest-命名规则"><a href="#pytest-命名规则" class="headerlink" title="pytest 命名规则"></a>pytest 命名规则</h2><p>虽然我们看到可以正常的运行文件，但是如果你的文件或者函数亦或者类命名规则不符合要求，则无法运行到你想要的文件或者函数亦或者类，那么一起来看一下pytest 文件和函数以及类的命名规则吧！</p>
+<h3 id="pytest-文件夹命名规则"><a href="#pytest-文件夹命名规则" class="headerlink" title="pytest 文件夹命名规则"></a>pytest 文件夹命名规则</h3><p>测试目录可以是任何名称，但推荐使用 tests&#x2F;，test_cases&#x2F; 等常见命名方式。<br>如果目录包含 <code>__init__.py</code>，它会被当作 Python 包，可能会影响 pytest 的测试发现机制，因此 不推荐在 tests&#x2F; 目录下使用 <code>__init__.py</code>。</p>
+<p>示例的目录结构:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs css">project_root/<br>├── <span class="hljs-attribute">src</span>/<br>│   ├── app<span class="hljs-selector-class">.py</span><br>│   ├── utils<span class="hljs-selector-class">.py</span><br>├── tests/<br>│   ├── test_math<span class="hljs-selector-class">.py</span><br>│   ├── test_utils<span class="hljs-selector-class">.py</span><br>│   ├── sub_tests/<br>│   │   ├── test_submodule<span class="hljs-selector-class">.py</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="使用sorted-进行自定义排序"><a href="#使用sorted-进行自定义排序" class="headerlink" title="使用sorted()进行自定义排序"></a>使用sorted()进行自定义排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">students = [(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">85</span>), (<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">75</span>), (<span class="hljs-string">&quot;Charlie&quot;</span>, <span class="hljs-number">90</span>)]<br>students_sorted = <span class="hljs-built_in">sorted</span>(students, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>])  <span class="hljs-comment"># 按成绩排序</span><br><span class="hljs-built_in">print</span>(students_sorted)  <span class="hljs-comment"># 输出: [(&#x27;Bob&#x27;, 75), (&#x27;Alice&#x27;, 85), (&#x27;Charlie&#x27;, 90)]</span><br></code></pre></td></tr></table></figure>
+<h3 id="pytest-文件命名规则"><a href="#pytest-文件命名规则" class="headerlink" title="pytest 文件命名规则"></a>pytest 文件命名规则</h3><p>pytest 默认会识别以下命名格式的测试文件：</p>
+<p>文件名必须以 test_ 开头，或以 _test 结尾，例如：<br>✅ test_example.py<br>✅ example_test.py<br>❌ example.py（不会被 pytest 识别为测试文件）</p>
+<p>但是如果文件不符合默认规则，可以在 pytest.ini文件中自定义测试文件匹配规则，例如：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># pytest.ini</span><br><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">python_files</span> = check_*.py test_*.py *_test.py<br></code></pre></td></tr></table></figure>
+<p>上述配置允许 pytest 识别 check_xxx.py 作为测试文件。</p>
+<h3 id="pytest-函数命名规则"><a href="#pytest-函数命名规则" class="headerlink" title="pytest 函数命名规则"></a>pytest 函数命名规则</h3><p>pytest 默认识别的测试函数格式如下：</p>
+<p>函数名必须以 test_ 开头，例如：<br>✅ def test_addition():<br>❌ def addition_test():（不会被 pytest 识别）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># test_math.py</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_addition</span>():<br>    <span class="hljs-keyword">assert</span> <span class="hljs-number">1</span> + <span class="hljs-number">1</span> == <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="lambda-在reduce-中的高阶应用"><a href="#lambda-在reduce-中的高阶应用" class="headerlink" title="lambda 在reduce() 中的高阶应用"></a>lambda 在reduce() 中的高阶应用</h1><p>可以看 <a target="_blank" rel="noopener" href="https://8888666.top/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/">https://8888666.top/2024/09/04/pythonreduce%E5%87%BD%E6%95%B0/</a> 我之前写的文章</p>
-<h2 id="reduece-进行累积计算"><a href="#reduece-进行累积计算" class="headerlink" title="reduece() 进行累积计算"></a>reduece() 进行累积计算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]<br>product = reduce(<span class="hljs-keyword">lambda</span> x, y: x * y, numbers)<br><span class="hljs-built_in">print</span>(product)  <span class="hljs-comment"># 输出: 120</span><br></code></pre></td></tr></table></figure>
+<h3 id="pytest-类的命名规则"><a href="#pytest-类的命名规则" class="headerlink" title="pytest 类的命名规则"></a>pytest 类的命名规则</h3><p>类名必须以 Test 开头，注意：但不能包含 <code>__init__</code> 方法，否则 pytest 不会识别。</p>
+<p>例如：<br>✅ class TestMathOperations:<br>❌ class MathTests:（不会被 pytest 识别）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># test_class.py</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TestMath</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">test_addition</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">assert</span> <span class="hljs-number">2</span> + <span class="hljs-number">2</span> == <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="lambda-在-if-else-表达式中的应用"><a href="#lambda-在-if-else-表达式中的应用" class="headerlink" title="lambda 在 if-else 表达式中的应用"></a>lambda 在 if-else 表达式中的应用</h1><h2 id="if-else-中应用"><a href="#if-else-中应用" class="headerlink" title="if-else 中应用"></a>if-else 中应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">max_num = <span class="hljs-keyword">lambda</span> x, y: x <span class="hljs-keyword">if</span> x &gt; y <span class="hljs-keyword">else</span> y<br><span class="hljs-built_in">print</span>(max_num(<span class="hljs-number">3</span>, <span class="hljs-number">8</span>))  <span class="hljs-comment"># 输出: 8</span><br></code></pre></td></tr></table></figure>
-<h1 id="lambda-作为函数参数"><a href="#lambda-作为函数参数" class="headerlink" title="lambda 作为函数参数"></a>lambda 作为函数参数</h1><h2 id="lambda-可以作为函数的参数，用于动态定义逻辑"><a href="#lambda-可以作为函数的参数，用于动态定义逻辑" class="headerlink" title="lambda 可以作为函数的参数，用于动态定义逻辑"></a>lambda 可以作为函数的参数，用于动态定义逻辑</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">apply_function</span>(<span class="hljs-params">func, value</span>):<br>    <span class="hljs-keyword">return</span> func(value)<br><br><span class="hljs-built_in">print</span>(apply_function(<span class="hljs-keyword">lambda</span> x: x ** <span class="hljs-number">2</span>, <span class="hljs-number">5</span>))  <span class="hljs-comment"># 输出: 25</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="pytest-自定义测试发现规则"><a href="#pytest-自定义测试发现规则" class="headerlink" title="pytest 自定义测试发现规则"></a>pytest 自定义测试发现规则</h3><p>如果想让 pytest 识别不同的文件或函数命名，可以在 pytest.ini 中配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">python_files</span> = check_*.py  <span class="hljs-comment"># 允许文件名以 check_ 开头</span><br><span class="hljs-attr">python_classes</span> = Check*    <span class="hljs-comment"># 允许类名以 Check 开头</span><br><span class="hljs-attr">python_functions</span> = verify_*  <span class="hljs-comment"># 允许函数名以 verify_ 开头</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="lambda-的局限性"><a href="#lambda-的局限性" class="headerlink" title="lambda 的局限性"></a>lambda 的局限性</h1><p>虽然 lambda 非常方便，但它有一些局限性：</p>
-<p>1.只能包含单个表达式，无法写多行代码。<br>2.不能直接赋值变量，如 lambda x: y &#x3D; x + 1 是错误的。<br>3.可读性差，对于复杂逻辑，普通 def 函数更清晰。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>lambda 是一种简洁的匿名函数，适用于简单操作，但不要滥用复杂逻辑</p>
+<p>此时，pytest 也会识别以下文件和函数：</p>
+<p>check_example.py<br>class CheckOperations:<br>def verify_addition():</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="pytest-文件命名规则总结"><a href="#pytest-文件命名规则总结" class="headerlink" title="pytest 文件命名规则总结"></a><strong>pytest 文件命名规则总结</strong></h2><table>
+<thead>
+<tr>
+<th>规则</th>
+<th>默认格式</th>
+<th>可自定义配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>测试文件</strong></td>
+<td><code>test_*.py</code> 或 <code>*_test.py</code></td>
+<td><code>python_files = check_*.py</code></td>
+</tr>
+<tr>
+<td><strong>测试函数</strong></td>
+<td><code>test_*</code></td>
+<td><code>python_functions = verify_*</code></td>
+</tr>
+<tr>
+<td><strong>测试类</strong></td>
+<td><code>Test*</code></td>
+<td><code>python_classes = Check*</code></td>
+</tr>
+<tr>
+<td><strong>测试目录</strong></td>
+<td>任何名称（推荐 <code>tests/</code>）</td>
+<td>无需特别配置</td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -358,20 +400,13 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/Pytest/" class="category-chain-item">Pytest</a>
   
   
     <span>></span>
     
-  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  <a href="/categories/Pytest/Pytest-%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B9%8BPytest%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="category-chain-item">Pytest 入门系列之Pytest的安装和基本使用</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-lambda%E5%87%BD%E6%95%B0/" class="category-chain-item">Python lambda函数</a>
-  
-  
-
   
 
   
@@ -389,7 +424,7 @@
       
         <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/tags/python/" class="print-no-link">#python</a>
+        <a href="/tags/pytest/" class="print-no-link">#pytest</a>
       
     </div>
   
@@ -401,8 +436,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python lambda函数</div>
-      <div>https://dreamshao.github.io/2025/03/18/lambda函数/</div>
+      <div>Pytest入门系列之pytest的安装和基本使用</div>
+      <div>https://dreamshao.github.io/2025/03/19/pytest入门系列1/</div>
     </div>
     <div class="license-meta">
       
@@ -414,7 +449,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年3月18日</div>
+          <div>2025年3月19日</div>
         </div>
       
       
@@ -446,9 +481,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%971/" title="Pytest入门系列之pytest的安装和基本使用">
+                      <a href="/2025/03/19/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%972/" title="Pytest入门系列之pytest的基本命令">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Pytest入门系列之pytest的安装和基本使用</span>
+                        <span class="hidden-mobile">Pytest入门系列之pytest的基本命令</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -456,8 +491,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/14/DeepSeek%E6%BB%A1%E8%A1%80%E5%9C%A8%E7%BA%BF%E8%AE%BF%E9%97%AE/" title="无需注册在线访问满血DeepSeek">
-                        <span class="hidden-mobile">无需注册在线访问满血DeepSeek</span>
+                      <a href="/2025/03/18/lambda%E5%87%BD%E6%95%B0/" title="Python lambda函数">
+                        <span class="hidden-mobile">Python lambda函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
