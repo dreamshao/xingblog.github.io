@@ -1,0 +1,793 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Pytest入门系列之pytest的ini配置文件pytest 的主配置文件，用于：✅设置默认命令行选项✅配置测试发现规则✅定义全局 Fixture 和插件✅ 管理测试环境参数 基础配置文件位置与结构📌 首先需要创建一个ini文件，取名为pytest.ini 123456# 项目根目录创建 pytest.ini[pytest]# 基本配置项addopts &#x3D; -v --tb&#x3D;shorttestp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytest入门系列之pytest的ini配置文件">
+<meta property="og:url" content="https://dreamshao.github.io/2025/03/21/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%975/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Pytest入门系列之pytest的ini配置文件pytest 的主配置文件，用于：✅设置默认命令行选项✅配置测试发现规则✅定义全局 Fixture 和插件✅ 管理测试环境参数 基础配置文件位置与结构📌 首先需要创建一个ini文件，取名为pytest.ini 123456# 项目根目录创建 pytest.ini[pytest]# 基本配置项addopts &#x3D; -v --tb&#x3D;shorttestp">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-21T06:27:22.000Z">
+<meta property="article:modified_time" content="2025-03-21T07:11:27.626Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="pytest">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Pytest入门系列之pytest的ini配置文件 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Pytest入门系列之pytest的ini配置文件"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-21 14:27" pubdate>
+          2025年3月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Pytest入门系列之pytest的ini配置文件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Pytest入门系列之pytest的ini配置文件"><a href="#Pytest入门系列之pytest的ini配置文件" class="headerlink" title="Pytest入门系列之pytest的ini配置文件"></a>Pytest入门系列之pytest的ini配置文件</h1><p><code>pytest</code> 的主配置文件，用于：<br>✅设置默认命令行选项<br>✅配置测试发现规则<br>✅定义全局 <code>Fixture</code> 和插件<br>✅ 管理测试环境参数</p>
+<h1 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h1><h2 id="文件位置与结构"><a href="#文件位置与结构" class="headerlink" title="文件位置与结构"></a>文件位置与结构</h2><p>📌 首先需要创建一个<code>ini</code>文件，取名为<code>pytest.ini</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 项目根目录创建 pytest.ini</span><br><span class="hljs-section">[pytest]</span><br><span class="hljs-comment"># 基本配置项</span><br><span class="hljs-attr">addopts</span> = -v --tb=short<br><span class="hljs-attr">testpaths</span> = tests<br><span class="hljs-attr">python_files</span> = test_*.py<br></code></pre></td></tr></table></figure>
+
+<p>🔍 验证配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pytest --<span class="hljs-built_in">help</span> | grep <span class="hljs-string">&quot;config file&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="核心配置项"><a href="#核心配置项" class="headerlink" title="核心配置项"></a>核心配置项</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-comment"># 默认命令行参数（多个值用空格分隔）</span><br>&quot;&quot;&quot;<br>-ra  显示所有测试结果摘要  <br>-q 精简输出模式<br><span class="hljs-attr">--durations</span>=<span class="hljs-number">10</span>  <span class="hljs-comment"># 显示最慢的10个测试</span><br><span class="hljs-attr">--junitxml</span>=reports/junit.xml  <span class="hljs-comment"># 生成JUnit报告</span><br><span class="hljs-attr">--color</span>=<span class="hljs-literal">yes</span>  启用终端信息的彩色输出<br>&quot;&quot;&quot;<br><span class="hljs-attr">addopts</span> = -ra -q --durations=<span class="hljs-number">10</span> --junitxml=reports/junit.xml --color=<span class="hljs-literal">yes</span>  <br><span class="hljs-comment"># 测试文件匹配规则</span><br><span class="hljs-attr">python_files</span> = test_*.py<br><span class="hljs-attr">python_classes</span> = Test* *Test<br><span class="hljs-attr">python_functions</span> = test_*<br><br><span class="hljs-comment"># 测试目录（多个目录用空格分隔）</span><br><span class="hljs-attr">testpaths</span> = tests/login tests/team<br><br><span class="hljs-comment"># 排除目录（支持通配符）</span><br><span class="hljs-attr">norecursedirs</span> = <br>    .git<br>    build<br>    dist<br>    legacy_*<br><br><span class="hljs-comment"># 禁用警告</span><br><span class="hljs-attr">filterwarnings</span> =<br>    ignore:.*deprecated.*:DeprecationWarning<br>    error<br></code></pre></td></tr></table></figure>
+
+<h1 id="中级配置"><a href="#中级配置" class="headerlink" title="中级配置"></a>中级配置</h1><h2 id="自定义标记"><a href="#自定义标记" class="headerlink" title="自定义标记"></a>自定义标记</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br>markers =<br>    <span class="hljs-comment"># 冒烟测试标记（可通过 -m smoke 选择）</span><br>    smoke: 冒烟测试（每日执行）<br>    <span class="hljs-comment"># 数据库测试标记（自动跳过无DB环境）</span><br>    db: 需要数据库连接的测试<br>    <span class="hljs-comment"># 性能测试标记（单独执行）</span><br>    performance: 性能测试（单独执行）<br>    nightly: 夜间执行的长耗时测试<br>    <span class="hljs-comment"># 自定义重试机制（需配合pytest-rerunfailures插件）</span><br>    flaky(<span class="hljs-attr">reruns</span>=<span class="hljs-number">2</span>, reruns_delay=<span class="hljs-number">1</span>): 不稳定的测试用例<br></code></pre></td></tr></table></figure>
+
+<p>🔹 示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@pytest.mark.smoke</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_login</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;核心登录功能测试&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">assert</span> auth.login() == <span class="hljs-number">200</span><br><br><span class="hljs-meta">@pytest.mark.db</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_user_query</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;数据库用户查询测试&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">assert</span> db.query_user(<span class="hljs-number">1</span>) <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="日志系统集成"><a href="#日志系统集成" class="headerlink" title="日志系统集成"></a>日志系统集成</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">log_level</span> = DEBUG     <span class="hljs-comment"># 控制台日志级别</span><br><span class="hljs-attr">log_cli</span> = <span class="hljs-literal">true</span>        <span class="hljs-comment"># 启用实时命令行日志</span><br><span class="hljs-attr">log_format</span> = <span class="hljs-string">&quot;%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)&quot;</span>  <span class="hljs-comment"># 日志格式</span><br><span class="hljs-attr">log_date_format</span> = <span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>  <span class="hljs-comment"># 时间格式</span><br><span class="hljs-attr">log_file</span> = logs/pytest.log  <span class="hljs-comment"># 文件日志路径</span><br><span class="hljs-attr">log_file_level</span> = INFO       <span class="hljs-comment"># 文件日志级别</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="测试数据隔离"><a href="#测试数据隔离" class="headerlink" title="测试数据隔离"></a>测试数据隔离</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-comment"># 数据库连接配置（通过环境变量覆盖）</span><br><span class="hljs-attr">db_host</span> = localhost      <span class="hljs-comment"># 数据库主机</span><br><span class="hljs-attr">db_port</span> = <span class="hljs-number">5432</span>           <span class="hljs-comment"># 默认PostgreSQL端口</span><br><span class="hljs-attr">db_name</span> = test_db        <span class="hljs-comment"># 测试专用数据库</span><br><span class="hljs-attr">db_timeout</span> = <span class="hljs-number">5</span>           <span class="hljs-comment"># 连接超时时间（秒）</span><br></code></pre></td></tr></table></figure>
+
+<p>🔹 示例： 使用示例（<code>conftest.py</code>）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@pytest.fixture(<span class="hljs-params">scope=<span class="hljs-string">&quot;session&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">database</span>(<span class="hljs-params">pytestconfig</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;创建数据库连接的全局 Fixture&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">return</span> psycopg2.connect(<br>        host=pytestconfig.getini(<span class="hljs-string">&quot;db_host&quot;</span>),<br>        port=pytestconfig.getini(<span class="hljs-string">&quot;db_port&quot;</span>),<br>        database=pytestconfig.getini(<span class="hljs-string">&quot;db_name&quot;</span>),<br>        connect_timeout=pytestconfig.getini(<span class="hljs-string">&quot;db_timeout&quot;</span>)<br>    )<br></code></pre></td></tr></table></figure>
+
+<h1 id="高级配置-企业级实践"><a href="#高级配置-企业级实践" class="headerlink" title="高级配置 (企业级实践)"></a>高级配置 (企业级实践)</h1><h2 id="动态配置生成"><a href="#动态配置生成" class="headerlink" title="动态配置生成"></a>动态配置生成</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># conftest.py（根据环境加载配置）</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pytest_configure</span>(<span class="hljs-params">config</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;根据命令行参数动态修改配置&quot;&quot;&quot;</span><br>    env = config.getoption(<span class="hljs-string">&quot;--env&quot;</span>)<br>    <span class="hljs-keyword">if</span> env == <span class="hljs-string">&quot;prod&quot;</span>:<br>        <span class="hljs-comment"># 生产环境使用不同的数据库配置</span><br>        config.inicfg[<span class="hljs-string">&quot;db_host&quot;</span>] = <span class="hljs-string">&quot;prod-db.example.com&quot;</span><br>        config.inicfg[<span class="hljs-string">&quot;db_name&quot;</span>] = <span class="hljs-string">&quot;prod_db&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pytest_addoption</span>(<span class="hljs-params">parser</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;添加自定义命令行参数&quot;&quot;&quot;</span><br>    parser.addoption(<br>        <span class="hljs-string">&quot;--env&quot;</span>, <br>        action=<span class="hljs-string">&quot;store&quot;</span>,<br>        default=<span class="hljs-string">&quot;dev&quot;</span>,<br>        choices=[<span class="hljs-string">&quot;dev&quot;</span>, <span class="hljs-string">&quot;staging&quot;</span>, <span class="hljs-string">&quot;prod&quot;</span>],<br>        <span class="hljs-built_in">help</span>=<span class="hljs-string">&quot;设置运行环境&quot;</span><br>    )<br></code></pre></td></tr></table></figure>
+
+<h2 id="多环境配置方案"><a href="#多环境配置方案" class="headerlink" title="多环境配置方案"></a>多环境配置方案</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># pytest.ini</span><br><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">env_files</span> = <br>    config/env_dev.ini   <span class="hljs-comment"># 开发环境配置</span><br>    config/env_prod.ini  <span class="hljs-comment"># 生产环境配置</span><br></code></pre></td></tr></table></figure>
+
+<p>🔹 示例：环境配置文件示例 (<code>config/env_prod.ini</code>)：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[db]</span><br><span class="hljs-attr">host</span> = prod-db.example.com<br><span class="hljs-attr">port</span> = <span class="hljs-number">5432</span><br><span class="hljs-attr">user</span> = prod_user<br><span class="hljs-attr">password</span> = <span class="hljs-variable">$&#123;DB_PASSWORD&#125;</span>  <span class="hljs-comment"># 从环境变量读取敏感信息</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="安全配置规范"><a href="#安全配置规范" class="headerlink" title="安全配置规范"></a>安全配置规范</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">xfail_strict</span> = <span class="hljs-literal">true</span>  <span class="hljs-comment"># 将意外成功的xfail用例标记为失败</span><br><span class="hljs-attr">filterwarnings</span> = <br>    error                  <span class="hljs-comment"># 将警告升级为错误</span><br>    ignore::DeprecationWarning  <span class="hljs-comment"># 忽略所有弃用警告</span><br>    ignore:.*Unexpected kwargs.*:UserWarning  <span class="hljs-comment"># 忽略特定警告</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="效能优化"><a href="#效能优化" class="headerlink" title="效能优化"></a>效能优化</h1><h2 id="缓存配置优化"><a href="#缓存配置优化" class="headerlink" title="缓存配置优化"></a>缓存配置优化</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">cache_dir</span> = .pytest_cache  <span class="hljs-comment"># 指定缓存目录</span><br><span class="hljs-attr">enable_caching</span> = <span class="hljs-literal">true</span>      <span class="hljs-comment"># 启用测试缓存</span><br><span class="hljs-attr">cache_show</span> = <span class="hljs-literal">true</span>          <span class="hljs-comment"># 显示缓存使用情况</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="并行测试配置"><a href="#并行测试配置" class="headerlink" title="并行测试配置"></a>并行测试配置</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-attr">addopts</span> = -n auto         <span class="hljs-comment"># 自动检测CPU核心数</span><br><span class="hljs-attr">dist</span> = loadscope         <span class="hljs-comment"># 按测试模块分发任务</span><br><span class="hljs-attr">tx</span> = <span class="hljs-number">3</span>                   <span class="hljs-comment"># 每个worker的超时时间(分钟)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="分层配置架构"><a href="#分层配置架构" class="headerlink" title="分层配置架构"></a>分层配置架构</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">project/<br>├── pytest.ini          # 全局基础配置<br>├── conftest.py         # 全局Fixtures和hooks<br>├── config/<br>│   ├── env_dev.ini     # 开发环境参数<br>│   └── env_prod.ini    # 生产环境参数<br>└── tests/<br>    ├── conftest.py     # 测试目录级配置<br>    └── api/<br>        └── conftest.py # API测试专用配置<br></code></pre></td></tr></table></figure>
+
+<h1 id="调试与验证"><a href="#调试与验证" class="headerlink" title="调试与验证"></a>调试与验证</h1><h2 id="配置验证命令"><a href="#配置验证命令" class="headerlink" title="配置验证命令"></a>配置验证命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看生效配置</span><br>pytest --version<br><br><span class="hljs-comment"># 检查配置语法</span><br>pytest --check-config<br><br><span class="hljs-comment"># 调试模式（显示加载过程）</span><br>PYTEST_DEBUG=1 pytest -rA<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="配置覆盖示例"><a href="#配置覆盖示例" class="headerlink" title="配置覆盖示例"></a>配置覆盖示例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 临时覆盖日志配置</span><br>pytest -o <span class="hljs-string">&quot;log_cli=false&quot;</span> -o <span class="hljs-string">&quot;log_file=debug.log&quot;</span><br><br><span class="hljs-comment"># 动态修改测试目录</span><br>pytest -o <span class="hljs-string">&quot;testpaths=tests/unit&quot;</span> <br><br></code></pre></td></tr></table></figure>
+
+<h2 id="完整配置实例"><a href="#完整配置实例" class="headerlink" title="完整配置实例"></a>完整配置实例</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[pytest]</span><br><span class="hljs-comment"># 核心运行配置</span><br><span class="hljs-attr">addopts</span> = -v -ra --strict-markers --tb=short<br><span class="hljs-attr">testpaths</span> = tests<br><span class="hljs-attr">python_files</span> = test_*.py<br><span class="hljs-attr">python_classes</span> = Test* *Test<br><span class="hljs-attr">python_functions</span> = test_*<br><br><span class="hljs-comment"># 标记管理系统</span><br><span class="hljs-attr">markers</span> =<br>    smoke: 核心功能验证<br>    db: 需要数据库连接<br>    api: 外部API调用测试<br><br><span class="hljs-comment"># 环境配置系统</span><br><span class="hljs-attr">env_files</span> = config/env.ini<br><br><span class="hljs-comment"># 日志管理系统</span><br><span class="hljs-attr">log_cli</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">log_level</span> = INFO<br><span class="hljs-attr">log_format</span> = <span class="hljs-string">&quot;%(asctime)s [%(levelname)s] %(message)s&quot;</span><br><span class="hljs-attr">log_file</span> = reports/pytest.log<br><br><span class="hljs-comment"># 安全配置</span><br><span class="hljs-attr">filterwarnings</span> = error<br><span class="hljs-attr">xfail_strict</span> = <span class="hljs-literal">true</span><br><br></code></pre></td></tr></table></figure>
+<p>📌 配置文件需保存为 UTF-8 编码，避免中文乱码问题。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>pytest.ini</code> 可以很高效的提高我们的开发效率和质量</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Pytest/" class="category-chain-item">Pytest</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Pytest/Pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B9%8Bpytest%E7%9A%84ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="category-chain-item">Pytest入门系列之pytest的ini配置文件</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/pytest/" class="print-no-link">#pytest</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Pytest入门系列之pytest的ini配置文件</div>
+      <div>https://dreamshao.github.io/2025/03/21/pytest入门系列5/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/21/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%976/" title="Pytest入门系列之pytest的conftest.py">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pytest入门系列之pytest的conftest.py</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/20/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%974/" title="Pytest入门系列之pytest的内置fixture">
+                        <span class="hidden-mobile">Pytest入门系列之pytest的内置fixture</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
