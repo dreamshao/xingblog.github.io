@@ -1,0 +1,878 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python requests 模块的使用requests 是 Python 最流行的 HTTP 客户端，用于：  ✅ 发送 GET、POST、PUT、DELETE 等请求✅ 处理 JSON 数据✅ 设置 Headers、Cookies、代理、认证✅ 文件上传、下载✅ 超时、重试、并发请求✅ 结合 pytest 进行 API 测试 🔹 安装 requests 1pip install reque">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python requests 模块的使用">
+<meta property="og:url" content="https://dreamshao.github.io/2025/03/27/python%E5%B8%B8%E8%A7%81request%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Python requests 模块的使用requests 是 Python 最流行的 HTTP 客户端，用于：  ✅ 发送 GET、POST、PUT、DELETE 等请求✅ 处理 JSON 数据✅ 设置 Headers、Cookies、代理、认证✅ 文件上传、下载✅ 超时、重试、并发请求✅ 结合 pytest 进行 API 测试 🔹 安装 requests 1pip install reque">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-27T06:28:48.000Z">
+<meta property="article:modified_time" content="2025-03-27T06:50:23.878Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="requests">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python requests 模块的使用 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python requests 模块的使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-27 14:28" pubdate>
+          2025年3月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          860 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python requests 模块的使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python-requests-模块的使用"><a href="#Python-requests-模块的使用" class="headerlink" title="Python requests 模块的使用"></a>Python requests 模块的使用</h1><p><code>requests</code> 是 <code>Python</code> 最流行的 <code>HTTP </code>客户端，用于： </p>
+<p>✅ 发送 <code>GET、POST、PUT、DELETE</code> 等请求<br>✅ 处理 <code>JSON</code> 数据<br>✅ 设置<code> Headers、Cookies、</code>代理、认证<br>✅ 文件上传、下载<br>✅ 超时、重试、并发请求<br>✅ 结合 <code>pytest</code> 进行 <code>API</code> 测试</p>
+<p>🔹 安装 requests</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">pip install requests<br></code></pre></td></tr></table></figure>
+<p>检查是否安装成功：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-built_in">print</span>(requests.__version__)  <span class="hljs-comment"># 输出版本号</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="requests-入门：基本-GET、POST-请求"><a href="#requests-入门：基本-GET、POST-请求" class="headerlink" title="requests 入门：基本 GET、POST 请求"></a>requests 入门：基本 GET、POST 请求</h1><p>🔹 发送 <code>GET</code> 请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-comment"># 发送 GET 请求</span><br>response = requests.get(<span class="hljs-string">&quot;https://jsonplaceholder.typicode.com/posts/1&quot;</span>)<br><br><span class="hljs-comment"># 输出响应状态码</span><br><span class="hljs-built_in">print</span>(response.status_code)  <span class="hljs-comment"># 200</span><br><br><span class="hljs-comment"># 输出 JSON 响应内容</span><br><span class="hljs-built_in">print</span>(response.json())  <br><br></code></pre></td></tr></table></figure>
+
+<p>🔹 发送带参数的 <code>GET</code> 请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>params = &#123;<span class="hljs-string">&quot;q&quot;</span>: <span class="hljs-string">&quot;Python&quot;</span>, <span class="hljs-string">&quot;sort&quot;</span>: <span class="hljs-string">&quot;stars&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com/search/repositories&quot;</span>, params=params)<br><span class="hljs-built_in">print</span>(response.json())  <br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>🔹 发送 <code>POST</code> 请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-comment"># 发送 POST 请求</span><br>data = &#123;<span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;Python&quot;</span>, <span class="hljs-string">&quot;body&quot;</span>: <span class="hljs-string">&quot;requests 模块&quot;</span>, <span class="hljs-string">&quot;userId&quot;</span>: <span class="hljs-number">1</span>&#125;<br>response = requests.post(<span class="hljs-string">&quot;https://jsonplaceholder.typicode.com/posts&quot;</span>, json=data)<br><br><span class="hljs-comment"># 输出返回的 JSON 数据</span><br><span class="hljs-built_in">print</span>(response.json())  <br><br></code></pre></td></tr></table></figure>
+
+<p>🔹 自定义 Headers</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>headers = &#123;<br>    <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&quot;</span><br>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://httpbin.org/headers&quot;</span>, headers=headers)<br><span class="hljs-built_in">print</span>(response.json())  <br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：模拟浏览器访问、避免反爬</p>
+<p>🔹 设置 Cookies</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>cookies = &#123;<span class="hljs-string">&quot;session_id&quot;</span>: <span class="hljs-string">&quot;123456&quot;</span>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://httpbin.org/cookies&quot;</span>, cookies=cookies)<br><span class="hljs-built_in">print</span>(response.json())  <br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：模拟登录后的请求</p>
+<p>📌 除此之外，<code>requests</code> 还支持<code>put、delete</code>等 <code>Http</code>请求大同小异，这里不在赘述</p>
+<h1 id="处理Json数据"><a href="#处理Json数据" class="headerlink" title="处理Json数据"></a>处理Json数据</h1><p>🔹 发送 JSON 数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>data = &#123;<span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;admin&quot;</span>, <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;123456&quot;</span>&#125;<br>response = requests.post(<span class="hljs-string">&quot;https://httpbin.org/post&quot;</span>, json=data)<br><br><span class="hljs-built_in">print</span>(response.json())  <br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：用户登录、API 测试</p>
+<p>🔹 解析 JSON 响应</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://jsonplaceholder.typicode.com/users/1&quot;</span>)<br>data = response.json()<br><span class="hljs-built_in">print</span>(data[<span class="hljs-string">&quot;name&quot;</span>])  <span class="hljs-comment"># 解析 JSON 数据</span><br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：获取 API 返回的用户数据</p>
+<h1 id="处理文件"><a href="#处理文件" class="headerlink" title="处理文件"></a>处理文件</h1><p>🔹 上传文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>files = &#123;<span class="hljs-string">&quot;file&quot;</span>: <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>)&#125;<br>response = requests.post(<span class="hljs-string">&quot;https://httpbin.org/post&quot;</span>, files=files)<br><span class="hljs-built_in">print</span>(response.json())  <br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：图片上传、Excel 数据上传</p>
+<p>🔹 下载文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://www.example.com/image.jpg&quot;</span>)<br><br><span class="hljs-comment"># 保存图片</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;image.jpg&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(response.content)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：爬取图片、文档</p>
+<h1 id="超时、重试、代理"><a href="#超时、重试、代理" class="headerlink" title="超时、重试、代理"></a>超时、重试、代理</h1><p>🔹 设置超时</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-keyword">try</span>:<br>    response = requests.get(<span class="hljs-string">&quot;https://httpbin.org/delay/5&quot;</span>, timeout=<span class="hljs-number">3</span>)<br>    <span class="hljs-built_in">print</span>(response.text)<br><span class="hljs-keyword">except</span> requests.Timeout:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求超时！&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：避免卡死，设定 API 超时时间</p>
+<p>🔹 代理请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>proxies = &#123;<br>    <span class="hljs-string">&quot;http&quot;</span>: <span class="hljs-string">&quot;http://127.0.0.1:8080&quot;</span>,<br>    <span class="hljs-string">&quot;https&quot;</span>: <span class="hljs-string">&quot;https://127.0.0.1:8080&quot;</span>,<br>&#125;<br>response = requests.get(<span class="hljs-string">&quot;https://httpbin.org/ip&quot;</span>, proxies=proxies)<br><span class="hljs-built_in">print</span>(response.json())  <br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：突破 IP 限制、反爬虫绕过</p>
+<h1 id="结合-pytest-进行-API-测试"><a href="#结合-pytest-进行-API-测试" class="headerlink" title="结合 pytest 进行 API 测试"></a>结合 pytest 进行 API 测试</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> pytest<br><br>BASE_URL = <span class="hljs-string">&quot;https://jsonplaceholder.typicode.com&quot;</span><br><br><span class="hljs-meta">@pytest.mark.parametrize(<span class="hljs-params"><span class="hljs-string">&quot;user_id&quot;</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_get_user</span>(<span class="hljs-params">user_id</span>):<br>    response = requests.get(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;BASE_URL&#125;</span>/users/<span class="hljs-subst">&#123;user_id&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">assert</span> response.status_code == <span class="hljs-number">200</span><br>    <span class="hljs-keyword">assert</span> <span class="hljs-string">&quot;name&quot;</span> <span class="hljs-keyword">in</span> response.json()<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：自动化 API 测试</p>
+<h1 id="结合-allure-生成-API-测试报告"><a href="#结合-allure-生成-API-测试报告" class="headerlink" title="结合 allure 生成 API 测试报告"></a>结合 allure 生成 API 测试报告</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> allure<br><br>BASE_URL = <span class="hljs-string">&quot;https://jsonplaceholder.typicode.com&quot;</span><br><br><span class="hljs-meta">@allure.feature(<span class="hljs-params"><span class="hljs-string">&quot;用户信息&quot;</span></span>)</span><br><span class="hljs-meta">@allure.story(<span class="hljs-params"><span class="hljs-string">&quot;获取用户数据&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_get_user</span>():<br>    <span class="hljs-keyword">with</span> allure.step(<span class="hljs-string">&quot;发送 API 请求&quot;</span>):<br>        response = requests.get(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;BASE_URL&#125;</span>/users/1&quot;</span>)<br>    <br>    <span class="hljs-keyword">with</span> allure.step(<span class="hljs-string">&quot;校验返回状态码&quot;</span>):<br>        <span class="hljs-keyword">assert</span> response.status_code == <span class="hljs-number">200</span><br><br>    <span class="hljs-keyword">with</span> allure.step(<span class="hljs-string">&quot;校验 JSON 数据&quot;</span>):<br>        <span class="hljs-keyword">assert</span> <span class="hljs-string">&quot;name&quot;</span> <span class="hljs-keyword">in</span> response.json()<br><br>    allure.attach(response.text, name=<span class="hljs-string">&quot;API Response&quot;</span>, attachment_type=allure.attachment_type.JSON)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：生成美观的 API 测试报告</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>代码示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发送 <code>GET</code> 请求</td>
+<td><code>requests.get(url)</code></td>
+</tr>
+<tr>
+<td>发送 <code>POST</code> 请求</td>
+<td><code>requests.post(url, json=data)</code></td>
+</tr>
+<tr>
+<td>设置 <code>Headers</code></td>
+<td><code> wronrequests.get(url, headers=headers)</code></td>
+</tr>
+<tr>
+<td>超时设置</td>
+<td><code> requests.get(url, timeout=3)</code></td>
+</tr>
+<tr>
+<td>代理请求</td>
+<td><code> requests.get(url, proxies=proxies)</code></td>
+</tr>
+<tr>
+<td>文件上传</td>
+<td><code> requests.post(url, files=files)</code></td>
+</tr>
+<tr>
+<td>文件下载</td>
+<td><code> requests.get(url).content</code></td>
+</tr>
+<tr>
+<td>自动重试</td>
+<td><code> requests.Session().mount(&quot;https://&quot;, adapter)</code></td>
+</tr>
+<tr>
+<td>API 测试</td>
+<td><code> pytest + requests</code></td>
+</tr>
+<tr>
+<td>测试报告</td>
+<td><code> pytest + allure</code></td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-requests-%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="category-chain-item">Python requests 模块的使用</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+        <a href="/tags/requests/" class="print-no-link">#requests</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python requests 模块的使用</div>
+      <div>https://dreamshao.github.io/2025/03/27/python常见request的使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/27/python%E5%B8%B8%E8%A7%81os%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" title="Python常见模块之os模块详解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python常见模块之os模块详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/26/pytest%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%9710/" title="Pytest入门系列之pytest和Allure结合详细指南">
+                        <span class="hidden-mobile">Pytest入门系列之pytest和Allure结合详细指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

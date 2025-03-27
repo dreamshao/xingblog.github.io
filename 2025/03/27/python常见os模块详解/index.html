@@ -1,0 +1,886 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python常见模块之os模块详解os 是 Python 内置的 操作系统接口模块，用于： ✅ 文件和目录操作（创建、删除、移动）✅ 环境变量管理✅ 权限控制（修改文件权限、用户组）✅ 进程管理（多进程、shell 命令执行）✅ 企业实战应用：批量文件管理、日志分析、定时任务 导入 os 模块📌 获取当前工作目录，动态加载配置文件 1234567import os# 查看操作系统类型print(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python常见模块之os模块详解">
+<meta property="og:url" content="https://dreamshao.github.io/2025/03/27/python%E5%B8%B8%E8%A7%81os%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Python常见模块之os模块详解os 是 Python 内置的 操作系统接口模块，用于： ✅ 文件和目录操作（创建、删除、移动）✅ 环境变量管理✅ 权限控制（修改文件权限、用户组）✅ 进程管理（多进程、shell 命令执行）✅ 企业实战应用：批量文件管理、日志分析、定时任务 导入 os 模块📌 获取当前工作目录，动态加载配置文件 1234567import os# 查看操作系统类型print(">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-27T06:50:51.000Z">
+<meta property="article:modified_time" content="2025-03-27T07:14:51.716Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python常见模块之os模块详解 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python常见模块之os模块详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-27 14:50" pubdate>
+          2025年3月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python常见模块之os模块详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python常见模块之os模块详解"><a href="#Python常见模块之os模块详解" class="headerlink" title="Python常见模块之os模块详解"></a>Python常见模块之os模块详解</h1><p><code>os</code> 是 <code>Python</code> 内置的 操作系统接口模块，用于：</p>
+<p>✅ 文件和目录操作（创建、删除、移动）<br>✅ 环境变量管理<br>✅ 权限控制（修改文件权限、用户组）<br>✅ 进程管理（多进程、shell 命令执行）<br>✅ 企业实战应用：批量文件管理、日志分析、定时任务</p>
+<h1 id="导入-os-模块"><a href="#导入-os-模块" class="headerlink" title="导入 os 模块"></a>导入 os 模块</h1><p>📌 获取当前工作目录，动态加载配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 查看操作系统类型</span><br><span class="hljs-built_in">print</span>(os.name)  <span class="hljs-comment"># Windows: &#x27;nt&#x27;, Linux/Mac: &#x27;posix&#x27;</span><br><br><span class="hljs-comment"># 获取当前 Python 运行的目录</span><br><span class="hljs-built_in">print</span>(os.getcwd())  <br></code></pre></td></tr></table></figure>
+
+<h1 id="文件和目录操作"><a href="#文件和目录操作" class="headerlink" title="文件和目录操作"></a>文件和目录操作</h1><p>🔹 获取当前目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 获取当前目录</span><br>current_dir = os.getcwd()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;当前目录: <span class="hljs-subst">&#123;current_dir&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：动态获取路径，避免硬编码</p>
+<p>🔹 列出目录内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 获取当前目录下的所有文件和文件夹</span><br>files = os.listdir(<span class="hljs-string">&quot;.&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;目录内容: <span class="hljs-subst">&#123;files&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：批量读取文件夹中的数据文件</p>
+<p>🔹 创建新目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 创建单层目录</span><br>os.mkdir(<span class="hljs-string">&quot;new_folder&quot;</span>)<br><br><span class="hljs-comment"># 创建多层目录</span><br>os.makedirs(<span class="hljs-string">&quot;new_folder/sub_folder&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：创建日志存放目录</p>
+<p>🔹 删除目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 删除空目录</span><br>os.rmdir(<span class="hljs-string">&quot;new_folder&quot;</span>)<br><br><span class="hljs-comment"># 删除多级目录</span><br>os.removedirs(<span class="hljs-string">&quot;new_folder/sub_folder&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：清理临时文件夹</p>
+<p>🔹 判断文件&#x2F;目录是否存在</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">&quot;test.txt&quot;</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;文件存在&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;文件不存在&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：防止文件读写错误</p>
+<p>🔹 递归遍历目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(<span class="hljs-string">&quot;.&quot;</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;目录: <span class="hljs-subst">&#123;root&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;子目录: <span class="hljs-subst">&#123;dirs&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;文件: <span class="hljs-subst">&#123;files&#125;</span>&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：快速列出父子目录</p>
+<p>🔹 拆分文件扩展名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>file_name, ext = os.path.splitext(<span class="hljs-string">&quot;test.txt&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;文件名: <span class="hljs-subst">&#123;file_name&#125;</span>, 扩展名: <span class="hljs-subst">&#123;ext&#125;</span>&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>🔹 拼接路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>path = os.path.join(<span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;file.txt&quot;</span>)<br><span class="hljs-built_in">print</span>(path)  <span class="hljs-comment"># &quot;home/user/file.txt&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><p>🔹 创建和写入文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;Hello, os module!&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：自动化日志生成</p>
+<p>🔹 读取文件内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：读取配置文件、日志分析</p>
+<p>🔹 删除文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">&quot;test.txt&quot;</span>):<br>    os.remove(<span class="hljs-string">&quot;test.txt&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;文件已删除&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：定期清理无用文件</p>
+<h1 id="修改文件名和路径"><a href="#修改文件名和路径" class="headerlink" title="修改文件名和路径"></a>修改文件名和路径</h1><p>🔹 获取文件路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>file_path = os.path.abspath(<span class="hljs-string">&quot;test.txt&quot;</span>) <span class="hljs-comment"># os.path.abspath()：获取绝对路径</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;文件路径: <span class="hljs-subst">&#123;file_path&#125;</span>&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：日志分析、数据处理</p>
+<p>🔹 拆分文件路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>path = <span class="hljs-string">&quot;/home/user/data/file.txt&quot;</span><br>dirname, filename = os.path.split(path)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;目录: <span class="hljs-subst">&#123;dirname&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;文件名: <span class="hljs-subst">&#123;filename&#125;</span>&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：动态管理文件路径</p>
+<p>🔹 修改文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.rename(<span class="hljs-string">&quot;old_name.txt&quot;</span>, <span class="hljs-string">&quot;new_name.txt&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：批量重命名文件</p>
+<h1 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h1><p>🔹 获取当前进程 ID</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;当前进程 ID: <span class="hljs-subst">&#123;os.getpid()&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：监控程序运行状态</p>
+<p>🔹 运行系统命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>os.system(<span class="hljs-string">&quot;ls&quot;</span>)  <span class="hljs-comment"># Linux/macOS</span><br>os.system(<span class="hljs-string">&quot;dir&quot;</span>)  <span class="hljs-comment"># Windows</span><br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：自动执行系统任务</p>
+<p>🔹 获取系统环境变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-built_in">print</span>(os.environ.get(<span class="hljs-string">&quot;HOME&quot;</span>))  <span class="hljs-comment"># macOS/Linux</span><br><span class="hljs-built_in">print</span>(os.environ.get(<span class="hljs-string">&quot;USERPROFILE&quot;</span>))  <span class="hljs-comment"># Windows</span><br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：动态读取系统配置</p>
+<h1 id="修改文件权限"><a href="#修改文件权限" class="headerlink" title="修改文件权限"></a>修改文件权限</h1><p>🔹 修改文件权限</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>os.chmod(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-number">0o777</span>)  <span class="hljs-comment"># 赋予所有权限</span><br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：批量修改权限</p>
+<p>🔹 修改文件所有者</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> shutil<br>shutil.chown(<span class="hljs-string">&quot;test.txt&quot;</span>, user=<span class="hljs-string">&quot;username&quot;</span>, group=<span class="hljs-string">&quot;groupname&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：管理服务器文件权限</p>
+<h1 id="批量处理企业级任务"><a href="#批量处理企业级任务" class="headerlink" title="批量处理企业级任务"></a>批量处理企业级任务</h1><p>🔹 批量重命名文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>folder = <span class="hljs-string">&quot;data&quot;</span><br><span class="hljs-keyword">for</span> filename <span class="hljs-keyword">in</span> os.listdir(folder):<br>    old_path = os.path.join(folder, filename)<br>    new_path = os.path.join(folder, <span class="hljs-string">&quot;new_&quot;</span> + filename)<br>    os.rename(old_path, new_path)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：批量重命名日志文件</p>
+<p>🔹 批量删除大文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br>folder = <span class="hljs-string">&quot;backup&quot;</span><br><span class="hljs-keyword">for</span> filename <span class="hljs-keyword">in</span> os.listdir(folder):<br>    file_path = os.path.join(folder, filename)<br>    <span class="hljs-keyword">if</span> os.path.getsize(file_path) &gt; <span class="hljs-number">100</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>:  <span class="hljs-comment"># 删除大于 100MB 的文件</span><br>        os.remove(file_path)<br><br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：清理磁盘空间</p>
+<h1 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h1><p>🔹 获取磁盘使用情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> shutil<br><br>total, used, free = shutil.disk_usage(<span class="hljs-string">&quot;/&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;总大小: <span class="hljs-subst">&#123;total // (<span class="hljs-number">1024</span>**<span class="hljs-number">3</span>)&#125;</span> GB&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;已使用: <span class="hljs-subst">&#123;used // (<span class="hljs-number">1024</span>**<span class="hljs-number">3</span>)&#125;</span> GB&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;可用: <span class="hljs-subst">&#123;free // (<span class="hljs-number">1024</span>**<span class="hljs-number">3</span>)&#125;</span> GB&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>📌 企业应用：服务器磁盘监控</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>代码示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>获取当前目录</td>
+<td><code>os.getcwd()</code></td>
+</tr>
+<tr>
+<td>列出目录内容</td>
+<td><code>os.listdir()</code></td>
+</tr>
+<tr>
+<td>创建目录</td>
+<td><code> os.mkdir() / os.makedirs()</code></td>
+</tr>
+<tr>
+<td>删除目录</td>
+<td><code> ros.rmdir() / os.removedirs()</code></td>
+</tr>
+<tr>
+<td>修改文件权限</td>
+<td><code> os.chmod()</code></td>
+</tr>
+<tr>
+<td>执行 shell 命令</td>
+<td><code> os.system()</code></td>
+</tr>
+<tr>
+<td>批量重命名文件</td>
+<td><code>os.rename()</code></td>
+</tr>
+<tr>
+<td>监控磁盘使用情况</td>
+<td><code> shutil.disk_usage()</code></td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%9D%97%E4%B9%8Bos%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3/" class="category-chain-item">Python 常见模块之os模块详解</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python常见模块之os模块详解</div>
+      <div>https://dreamshao.github.io/2025/03/27/python常见os模块详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/27/python%E5%B8%B8%E8%A7%81request%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Python requests 模块的使用">
+                        <span class="hidden-mobile">Python requests 模块的使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
