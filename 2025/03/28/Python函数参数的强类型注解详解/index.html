@@ -1,0 +1,942 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python 函数的 -&gt; 及参数的强类型注解详解什么是类型注解？📌 Python 从 3.5 开始支持类型注解（Type Hinting），用于指定函数参数和返回值的类型，使代码更可读、可维护，并可使用 mypy 等工具进行静态类型检查。 💡 语法： 12def 函数名(参数1: 类型, 参数2: 类型) -&gt; 返回类型:    代码块  🔹 示例 12def add(x: i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 函数的 -&gt; 及参数的强类型注解详解">
+<meta property="og:url" content="https://dreamshao.github.io/2025/03/28/Python%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E5%BC%BA%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Python 函数的 -&gt; 及参数的强类型注解详解什么是类型注解？📌 Python 从 3.5 开始支持类型注解（Type Hinting），用于指定函数参数和返回值的类型，使代码更可读、可维护，并可使用 mypy 等工具进行静态类型检查。 💡 语法： 12def 函数名(参数1: 类型, 参数2: 类型) -&gt; 返回类型:    代码块  🔹 示例 12def add(x: i">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-28T08:19:18.000Z">
+<meta property="article:modified_time" content="2025-03-28T08:38:47.250Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 函数的 -&gt; 及参数的强类型注解详解 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 函数的 -&gt; 及参数的强类型注解详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-28 16:19" pubdate>
+          2025年3月28日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          928 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 函数的 -&gt; 及参数的强类型注解详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python-函数的-及参数的强类型注解详解"><a href="#Python-函数的-及参数的强类型注解详解" class="headerlink" title="Python 函数的 -&gt; 及参数的强类型注解详解"></a>Python 函数的 -&gt; 及参数的强类型注解详解</h1><h1 id="什么是类型注解？"><a href="#什么是类型注解？" class="headerlink" title="什么是类型注解？"></a>什么是类型注解？</h1><p>📌 <code>Python</code> 从 3.5 开始支持类型注解<code>（Type Hinting）</code>，用于指定函数参数和返回值的类型，使代码更可读、可维护，并可使用 <code>mypy</code> 等工具进行静态类型检查。</p>
+<p>💡 语法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">函数名</span>(<span class="hljs-params">参数<span class="hljs-number">1</span>: 类型, 参数<span class="hljs-number">2</span>: 类型</span>) -&gt; 返回类型:<br>    代码块<br></code></pre></td></tr></table></figure>
+
+<p>🔹 示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x: <span class="hljs-built_in">int</span>, y: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-keyword">return</span> x + y<br></code></pre></td></tr></table></figure>
+<p>✅ 这里 <code>x: int </code>和 <code>y: int </code>指定参数类型，<code>-&gt; int </code>指定返回值类型。</p>
+<h1 id="为什么要使用类型注解？"><a href="#为什么要使用类型注解？" class="headerlink" title="为什么要使用类型注解？"></a>为什么要使用类型注解？</h1><table>
+<thead>
+<tr>
+<th>特点</th>
+<th>无类型注解</th>
+<th>有类型注解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>代码可读性</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>静态错误检测</td>
+<td>❌ 运行时报错</td>
+<td>✅ 提前检查</td>
+</tr>
+<tr>
+<td>IDE 支持</td>
+<td>较差，提示不精准</td>
+<td>✅ 自动补全更准确</td>
+</tr>
+<tr>
+<td>适用于大型项目</td>
+<td>❌ 维护困难</td>
+<td>✅ 代码更稳定</td>
+</tr>
+</tbody></table>
+<h1 id="基础类型注解"><a href="#基础类型注解" class="headerlink" title="基础类型注解"></a>基础类型注解</h1><p>📌 <code>Python</code> 中常见的类型：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据类型</strong></th>
+<th><strong>注解方式</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>整数</td>
+<td><code>int</code></td>
+<td><code>x: int = 10</code></td>
+</tr>
+<tr>
+<td>浮点数</td>
+<td><code>float</code></td>
+<td><code>y: float = 3.14</code></td>
+</tr>
+<tr>
+<td>字符串</td>
+<td><code>str</code></td>
+<td><code>name: str = &quot;Tom&quot;</code></td>
+</tr>
+<tr>
+<td>布尔值</td>
+<td><code>bool</code></td>
+<td><code>flag: bool = True</code></td>
+</tr>
+<tr>
+<td>列表</td>
+<td><code>List[类型]</code></td>
+<td><code>scores: List[int] = [90, 80, 70]</code></td>
+</tr>
+<tr>
+<td>元组</td>
+<td><code>Tuple[类型1, 类型2]</code></td>
+<td><code>data: Tuple[int, str] = (1, &quot;hello&quot;)</code></td>
+</tr>
+<tr>
+<td>字典</td>
+<td><code>Dict[键类型, 值类型]</code></td>
+<td><code>info: Dict[str, int] = &#123;&quot;age&quot;: 25&#125;</code></td>
+</tr>
+<tr>
+<td>集合</td>
+<td><code>Set[类型]</code></td>
+<td><code>nums: Set[int] = &#123;1, 2, 3&#125;</code></td>
+</tr>
+</tbody></table>
+<h1 id="进阶：可选参数-Optional"><a href="#进阶：可选参数-Optional" class="headerlink" title="进阶：可选参数 (Optional)"></a>进阶：可选参数 (Optional)</h1><p>📌 有些参数可能是 <code>None</code>，可以使用 <code>Optional</code>（等价于 <code>Union[类型, None]</code>）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Optional</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_username</span>(<span class="hljs-params">user_id: <span class="hljs-built_in">int</span>, nickname: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = <span class="hljs-literal">None</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>    <span class="hljs-keyword">return</span> nickname <span class="hljs-keyword">if</span> nickname <span class="hljs-keyword">else</span> <span class="hljs-string">f&quot;User-<span class="hljs-subst">&#123;user_id&#125;</span>&quot;</span><br><br><span class="hljs-built_in">print</span>(get_username(<span class="hljs-number">1</span>))  <span class="hljs-comment"># ✅ 输出: User-1</span><br><span class="hljs-built_in">print</span>(get_username(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Tom&quot;</span>))  <span class="hljs-comment"># ✅ 输出: Tom</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="进阶：多个返回类型（Union）"><a href="#进阶：多个返回类型（Union）" class="headerlink" title="进阶：多个返回类型（Union）"></a>进阶：多个返回类型（Union）</h1><p>📌 如果函数可能返回多种类型，如 <code>int</code> 或 <code>str</code>，可以使用 <code>Union</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Union</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_discount</span>(<span class="hljs-params">price: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-type">Union</span>[<span class="hljs-built_in">float</span>, <span class="hljs-built_in">str</span>]:<br>    <span class="hljs-keyword">return</span> price * <span class="hljs-number">0.9</span> <span class="hljs-keyword">if</span> price &gt; <span class="hljs-number">100</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;无折扣&quot;</span><br><br><span class="hljs-built_in">print</span>(get_discount(<span class="hljs-number">120</span>))  <span class="hljs-comment"># ✅ 输出: 108.0</span><br><span class="hljs-built_in">print</span>(get_discount(<span class="hljs-number">80</span>))   <span class="hljs-comment"># ✅ 输出: 无折扣</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="高级：泛型-Generics"><a href="#高级：泛型-Generics" class="headerlink" title="高级：泛型 (Generics)"></a>高级：泛型 (Generics)</h1><p>📌 当参数或返回值的类型不确定时，可以使用泛型<code>（TypeVar）</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> TypeVar, <span class="hljs-type">List</span><br><br>T = TypeVar(<span class="hljs-string">&quot;T&quot;</span>)  <span class="hljs-comment"># 定义泛型变量</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">first_element</span>(<span class="hljs-params">elements: <span class="hljs-type">List</span>[T]</span>) -&gt; T:<br>    <span class="hljs-keyword">return</span> elements[<span class="hljs-number">0</span>]<br><br><span class="hljs-built_in">print</span>(first_element([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]))  <span class="hljs-comment"># ✅ 1</span><br><span class="hljs-built_in">print</span>(first_element([<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>]))  <span class="hljs-comment"># ✅ &#x27;a&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="Callable（函数类型）"><a href="#Callable（函数类型）" class="headerlink" title="Callable（函数类型）"></a>Callable（函数类型）</h1><p>📌 有时，我们需要传递函数作为参数，可以使用 <code>Callable</code> 指定函数的参数和返回类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Callable</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">execute_twice</span>(<span class="hljs-params">func: <span class="hljs-type">Callable</span>[[<span class="hljs-built_in">int</span>], <span class="hljs-built_in">int</span>], value: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-keyword">return</span> func(func(value))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">square</span>(<span class="hljs-params">x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-keyword">return</span> x * x<br><br><span class="hljs-built_in">print</span>(execute_twice(square, <span class="hljs-number">2</span>))  <span class="hljs-comment"># ✅ 16</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="Any（任意类型）"><a href="#Any（任意类型）" class="headerlink" title="Any（任意类型）"></a>Any（任意类型）</h1><p>📌 如果参数或返回值可以是任意类型，使用<code> Any</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Any</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">print_value</span>(<span class="hljs-params">value: <span class="hljs-type">Any</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>    <span class="hljs-built_in">print</span>(value)<br><br>print_value(<span class="hljs-number">123</span>)        <span class="hljs-comment"># ✅ 输出: 123</span><br>print_value(<span class="hljs-string">&quot;hello&quot;</span>)    <span class="hljs-comment"># ✅ 输出: hello</span><br>print_value([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])  <span class="hljs-comment"># ✅ 输出: [1, 2, 3]</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="企业实战：数据库查询"><a href="#企业实战：数据库查询" class="headerlink" title="企业实战：数据库查询"></a>企业实战：数据库查询</h1><p>📌 在企业开发中，我们常用类型注解来约束数据库返回的数据结构。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Dict</span>, <span class="hljs-type">Union</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_info</span>(<span class="hljs-params">user_id: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Union</span>[<span class="hljs-built_in">str</span>, <span class="hljs-built_in">int</span>]]:<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;id&quot;</span>: user_id, <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">25</span>&#125;<br><br><span class="hljs-built_in">print</span>(get_user_info(<span class="hljs-number">1</span>))  <span class="hljs-comment"># ✅ &#123;&#x27;id&#x27;: 1, &#x27;name&#x27;: &#x27;Alice&#x27;, &#x27;age&#x27;: 25&#125;</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="结合-mypy-进行静态类型检查"><a href="#结合-mypy-进行静态类型检查" class="headerlink" title="结合 mypy 进行静态类型检查"></a>结合 mypy 进行静态类型检查</h1><p>📌 <code>Python</code> 本身不会强制类型检查，但可以使用 <code>mypy </code>进行静态检查：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">pip install mypy<br>mypy my_script.py<br></code></pre></td></tr></table></figure>
+
+<p>⚠️ 如果 <code>my_script.py</code> 里有错误：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x: <span class="hljs-built_in">int</span>, y: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-keyword">return</span> x + y<br><br><span class="hljs-built_in">print</span>(add(<span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-number">5</span>))  <span class="hljs-comment"># ❌ TypeError</span><br></code></pre></td></tr></table></figure>
+
+<p>🔴 <code>mypy</code> 会报错：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">error: Argument 1 to <span class="hljs-string">&quot;add&quot;</span> has incompatible <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;str&quot;</span>; expected <span class="hljs-string">&quot;int&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="使用-overload-进行重载"><a href="#使用-overload-进行重载" class="headerlink" title="使用 @overload 进行重载"></a>使用 @overload 进行重载</h1><p>📌 在 <code>Python</code> 中，函数可以有不同的参数和返回值，使用 <code>@overload</code> 提供更精准的类型提示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> overload<br><br><span class="hljs-meta">@overload</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_data</span>(<span class="hljs-params">data: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>: ...<br><span class="hljs-meta">@overload</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_data</span>(<span class="hljs-params">data: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">str</span>: ...<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_data</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(data) <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(data, <span class="hljs-built_in">str</span>) <span class="hljs-keyword">else</span> <span class="hljs-built_in">str</span>(data)<br><br><span class="hljs-built_in">print</span>(process_data(<span class="hljs-string">&quot;hello&quot;</span>))  <span class="hljs-comment"># ✅ 5</span><br><span class="hljs-built_in">print</span>(process_data(<span class="hljs-number">123</span>))      <span class="hljs-comment"># ✅ &#x27;123&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th><strong>概念</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数类型注解</td>
+<td>指定函数参数类型</td>
+<td><code>def func(a: int):</code></td>
+</tr>
+<tr>
+<td>返回值注解</td>
+<td>指定返回值类型</td>
+<td><code>-&gt; int</code></td>
+</tr>
+<tr>
+<td><code>Optional</code></td>
+<td>允许<code>None</code>值</td>
+<td><code>Optional[str]</code></td>
+</tr>
+<tr>
+<td><code>Union</code></td>
+<td>多种可能类型</td>
+<td><code>Union[int, str]</code></td>
+</tr>
+<tr>
+<td><code>List</code>&#x2F;<code>Dict</code></td>
+<td>复杂数据类型</td>
+<td><code>List[int]</code>&#x2F;<code>Dict[str, int]</code></td>
+</tr>
+<tr>
+<td>泛型<code>TypeVar</code></td>
+<td>适配多个类型</td>
+<td><code>T = TypeVar(&quot;T&quot;)</code></td>
+</tr>
+<tr>
+<td><code>Callable</code></td>
+<td>传递函数</td>
+<td><code>Callable[[int], int]</code></td>
+</tr>
+<tr>
+<td><code>Any</code></td>
+<td>任意类型</td>
+<td><code>Any</code></td>
+</tr>
+<tr>
+<td><code>mypy</code></td>
+<td>静态类型检查</td>
+<td><code>mypy script.py</code></td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E5%87%BD%E6%95%B0%E7%9A%84-%E5%8F%8A%E5%8F%82%E6%95%B0%E7%9A%84%E5%BC%BA%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/" class="category-chain-item">Python 函数的 -&gt; 及参数的强类型注解详解</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 函数的 -&gt; 及参数的强类型注解详解</div>
+      <div>https://dreamshao.github.io/2025/03/28/Python函数参数的强类型注解详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/28/python%E8%84%9A%E6%9C%AC%E4%B8%AD%E7%9A%84main%E6%96%B9%E6%B3%95/" title="Python脚本中的__main__中的作用">
+                        <span class="hidden-mobile">Python脚本中的__main__中的作用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
