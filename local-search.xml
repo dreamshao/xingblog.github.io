@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Python 反转字符串并按照长度排序</title>
+    <link href="/2025/04/08/python%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <url>/2025/04/08/python%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Python-反转字符串并按照长度排序"><a href="#Python-反转字符串并按照长度排序" class="headerlink" title="Python 反转字符串并按照长度排序"></a>Python 反转字符串并按照长度排序</h1><h1 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h1><p>根据单词长度由高到低进行排序，相同长度的单词保持原顺序，首字母大写，<code>e.g. ，输入：I am a student，输出： Student am i a</code></p><h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sort</span>(<span class="hljs-params">str_name</span>):<br>    <span class="hljs-keyword">if</span> str_name:<br>        str_name = str_name.split()<br>        str_name = <span class="hljs-built_in">sorted</span>(str_name, key=<span class="hljs-built_in">len</span>, reverse=<span class="hljs-literal">True</span>)<br>        str_name[<span class="hljs-number">0</span>] = str_name[<span class="hljs-number">0</span>].capitalize()<br>        <span class="hljs-built_in">print</span>(str_name)<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27; &#x27;</span>.join(str_name)<br><br><br><span class="hljs-built_in">print</span>(sort(<span class="hljs-string">&quot;I am a student&quot;</span>))<br><br></code></pre></td></tr></table></figure><h1 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h1><p>这里首先使用<code>split</code> 进行按照空格分隔，从而生成列表，然后使用<code>sorted</code>函数实现按照<code>len</code>的长度并且反转输出，也就实现了题目的要求按照从高到低的顺序，然后我们将首字母实现大写使用的是<code>capitalize()</code>这个函数，最后使用<code>join</code>将其组装成一个新的句子输出！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>面试题目搜集</category>
+      
+      <category>Python 算法题目</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>互联网广告测试全面指南</title>
     <link href="/2025/04/02/%E4%B8%B4%E6%97%B6/"/>
     <url>/2025/04/02/%E4%B8%B4%E6%97%B6/</url>
