@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Python sorted 函数详细介绍📌 Python 中的 sorted() 函数详解（从入门到高阶） ✅ 1. 什么是 sorted()？sorted() 是 Python 内置的​排序函数​，可以对​任意可迭代对象（如列表、元组、集合、字典等）进行排序，并返回一个新的有序列表​，​不会修改原始数据​。 🔹 基本语法：1sorted(iterable, *, key&#x3D;None, reve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python sorted函数详细介绍">
+<meta property="og:url" content="https://dreamshao.github.io/2025/04/14/sorted%E5%87%BD%E6%95%B0%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Python sorted 函数详细介绍📌 Python 中的 sorted() 函数详解（从入门到高阶） ✅ 1. 什么是 sorted()？sorted() 是 Python 内置的​排序函数​，可以对​任意可迭代对象（如列表、元组、集合、字典等）进行排序，并返回一个新的有序列表​，​不会修改原始数据​。 🔹 基本语法：1sorted(iterable, *, key&#x3D;None, reve">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-14T07:47:34.000Z">
+<meta property="article:modified_time" content="2025-04-14T07:58:22.147Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="python sorted函数">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python sorted函数详细介绍 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python sorted函数详细介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-14 15:47" pubdate>
+          2025年4月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python sorted函数详细介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python-sorted-函数详细介绍"><a href="#Python-sorted-函数详细介绍" class="headerlink" title="Python sorted 函数详细介绍"></a>Python sorted 函数详细介绍</h1><h1 id="📌-Python-中的-sorted-函数详解（从入门到高阶）"><a href="#📌-Python-中的-sorted-函数详解（从入门到高阶）" class="headerlink" title="📌 Python 中的 sorted() 函数详解（从入门到高阶）"></a><strong>📌 Python 中的 <code>sorted()</code> 函数详解（从入门到高阶）</strong></h1><hr>
+<h2 id="✅-1-什么是-sorted-？"><a href="#✅-1-什么是-sorted-？" class="headerlink" title="✅ 1. 什么是 sorted()？"></a>✅ 1. 什么是 <code>sorted()</code>？</h2><p><code>sorted()</code> 是 Python 内置的​<strong>排序函数</strong>​，可以对​<strong>任意可迭代对象（如列表、元组、集合、字典等）</strong>进行排序，并<strong>返回一个新的有序列表</strong>​，​<strong>不会修改原始数据</strong>​。</p>
+<h3 id="🔹-基本语法："><a href="#🔹-基本语法：" class="headerlink" title="🔹 基本语法："></a><strong>🔹 基本语法：</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">sorted</span>(iterable, *, key=<span class="hljs-literal">None</span>, reverse=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>iterable</code></td>
+<td>可迭代对象，如<code>list</code>、<code>tuple</code>、<code>dict</code>等</td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td>排序函数，用于指定排序依据</td>
+</tr>
+<tr>
+<td><code>reverse</code></td>
+<td>是否反向排序，默认为<code>False</code>（升序）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-2-基础用法：对列表排序"><a href="#✅-2-基础用法：对列表排序" class="headerlink" title="✅ 2. 基础用法：对列表排序"></a>✅ 2. 基础用法：对列表排序</h2><h3 id="📌-示例-1：数字升序排序"><a href="#📌-示例-1：数字升序排序" class="headerlink" title="📌 示例 1：数字升序排序"></a><strong>📌 示例 1：数字升序排序</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">numbers = [<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>]<br>result = <span class="hljs-built_in">sorted</span>(numbers)<br><span class="hljs-built_in">print</span>(result)  <span class="hljs-comment"># ✅ [1, 1, 2, 3, 4, 5, 9]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="📌-示例-2：字符串排序（按字母）"><a href="#📌-示例-2：字符串排序（按字母）" class="headerlink" title="📌 示例 2：字符串排序（按字母）"></a><strong>📌 示例 2：字符串排序（按字母）</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">words = [<span class="hljs-string">&#x27;banana&#x27;</span>, <span class="hljs-string">&#x27;apple&#x27;</span>, <span class="hljs-string">&#x27;cherry&#x27;</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words))  <span class="hljs-comment"># ✅ [&#x27;apple&#x27;, &#x27;banana&#x27;, &#x27;cherry&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="✅-注意：原始列表未被修改"><a href="#✅-注意：原始列表未被修改" class="headerlink" title="✅ 注意：原始列表未被修改"></a>✅ <strong>注意：原始列表未被修改</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(numbers)  <span class="hljs-comment"># ✅ [3, 1, 4, 1, 5, 9, 2]</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-3-与-sort-的区别"><a href="#✅-3-与-sort-的区别" class="headerlink" title="✅ 3. 与 .sort() 的区别"></a>✅ 3. 与 <code>.sort()</code> 的区别</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>sorted()</code></th>
+<th><code>list.sort()</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>返回新列表</td>
+<td>✅ 是</td>
+<td>❌ 否（就地排序）</td>
+</tr>
+<tr>
+<td>适用于所有可迭代对象</td>
+<td>✅ 是</td>
+<td>❌ 仅限<code>list</code></td>
+</tr>
+<tr>
+<td>更推荐在函数式编程中使用</td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td>是否破坏原数据</td>
+<td>❌ 不破坏</td>
+<td>✅ 修改原对象</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-4-使用-reverse-True-实现降序排序"><a href="#✅-4-使用-reverse-True-实现降序排序" class="headerlink" title="✅ 4. 使用 reverse=True 实现降序排序"></a>✅ 4. 使用 <code>reverse=True</code> 实现降序排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">scores = [<span class="hljs-number">60</span>, <span class="hljs-number">75</span>, <span class="hljs-number">90</span>, <span class="hljs-number">88</span>, <span class="hljs-number">70</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(scores, reverse=<span class="hljs-literal">True</span>))  <span class="hljs-comment"># ✅ [90, 88, 75, 70, 60]</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-5-使用-key-指定排序依据"><a href="#✅-5-使用-key-指定排序依据" class="headerlink" title="✅ 5. 使用 key 指定排序依据"></a>✅ 5. 使用 <code>key</code> 指定排序依据</h2><h3 id="📌-示例-1：按字符串长度排序"><a href="#📌-示例-1：按字符串长度排序" class="headerlink" title="📌 示例 1：按字符串长度排序"></a><strong>📌 示例 1：按字符串长度排序</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">words = [<span class="hljs-string">&#x27;apple&#x27;</span>, <span class="hljs-string">&#x27;banana&#x27;</span>, <span class="hljs-string">&#x27;pear&#x27;</span>, <span class="hljs-string">&#x27;kiwi&#x27;</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words, key=<span class="hljs-built_in">len</span>))  <span class="hljs-comment"># ✅ [&#x27;kiwi&#x27;, &#x27;pear&#x27;, &#x27;apple&#x27;, &#x27;banana&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="📌-示例-2：忽略大小写排序"><a href="#📌-示例-2：忽略大小写排序" class="headerlink" title="📌 示例 2：忽略大小写排序"></a><strong>📌 示例 2：忽略大小写排序</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">words = [<span class="hljs-string">&#x27;Banana&#x27;</span>, <span class="hljs-string">&#x27;apple&#x27;</span>, <span class="hljs-string">&#x27;Cherry&#x27;</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(words, key=<span class="hljs-built_in">str</span>.lower))  <span class="hljs-comment"># ✅ [&#x27;apple&#x27;, &#x27;Banana&#x27;, &#x27;Cherry&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-6-排序字典列表（企业常用）"><a href="#✅-6-排序字典列表（企业常用）" class="headerlink" title="✅ 6. 排序字典列表（企业常用）"></a>✅ 6. 排序字典列表（企业常用）</h2><h3 id="📌-示例-1：按年龄排序员工列表"><a href="#📌-示例-1：按年龄排序员工列表" class="headerlink" title="📌 示例 1：按年龄排序员工列表"></a><strong>📌 示例 1：按年龄排序员工列表</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">employees = [<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">30</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">25</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">35</span>&#125;<br>]<br><br><span class="hljs-comment"># 使用 key=lambda 获取字典中的 age 值</span><br>sorted_employees = <span class="hljs-built_in">sorted</span>(employees, key=<span class="hljs-keyword">lambda</span> emp: emp[<span class="hljs-string">&quot;age&quot;</span>])<br><span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> sorted_employees:<br>    <span class="hljs-built_in">print</span>(e[<span class="hljs-string">&quot;name&quot;</span>], e[<span class="hljs-string">&quot;age&quot;</span>])<br></code></pre></td></tr></table></figure>
+
+<p>✅ 输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Bob</span> <span class="hljs-number">25</span><br><span class="hljs-attribute">Alice</span> <span class="hljs-number">30</span><br><span class="hljs-attribute">Tom</span> <span class="hljs-number">35</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📌-示例-2：按多个字段排序（先按年龄，再按姓名）"><a href="#📌-示例-2：按多个字段排序（先按年龄，再按姓名）" class="headerlink" title="📌 示例 2：按多个字段排序（先按年龄，再按姓名）"></a><strong>📌 示例 2：按多个字段排序（先按年龄，再按姓名）</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">employees = [<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">30</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">25</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">25</span>&#125;<br>]<br><br><span class="hljs-comment"># 多条件排序：先按 age 升序，再按 name 升序</span><br>sorted_employees = <span class="hljs-built_in">sorted</span>(employees, key=<span class="hljs-keyword">lambda</span> e: (e[<span class="hljs-string">&quot;age&quot;</span>], e[<span class="hljs-string">&quot;name&quot;</span>]))<br><span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> sorted_employees:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;e[<span class="hljs-string">&quot;name&quot;</span>]&#125;</span> - <span class="hljs-subst">&#123;e[<span class="hljs-string">&quot;age&quot;</span>]&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-7-复杂数据结构排序（企业实战）"><a href="#✅-7-复杂数据结构排序（企业实战）" class="headerlink" title="✅ 7. 复杂数据结构排序（企业实战）"></a>✅ 7. 复杂数据结构排序（企业实战）</h2><h3 id="📌-按文件大小排序（模拟文件信息）"><a href="#📌-按文件大小排序（模拟文件信息）" class="headerlink" title="📌 按文件大小排序（模拟文件信息）"></a><strong>📌 按文件大小排序（模拟文件信息）</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">files = [<br>    &#123;<span class="hljs-string">&quot;filename&quot;</span>: <span class="hljs-string">&quot;report.docx&quot;</span>, <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">2400</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;filename&quot;</span>: <span class="hljs-string">&quot;data.xlsx&quot;</span>, <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">5000</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;filename&quot;</span>: <span class="hljs-string">&quot;image.png&quot;</span>, <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">3200</span>&#125;,<br>]<br><br><span class="hljs-comment"># 按 size 降序排序</span><br>largest_first = <span class="hljs-built_in">sorted</span>(files, key=<span class="hljs-keyword">lambda</span> f: f[<span class="hljs-string">&quot;size&quot;</span>], reverse=<span class="hljs-literal">True</span>)<br><span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> largest_first:<br>    <span class="hljs-built_in">print</span>(f[<span class="hljs-string">&quot;filename&quot;</span>], f[<span class="hljs-string">&quot;size&quot;</span>])<br></code></pre></td></tr></table></figure>
+
+<p>✅ 输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">data</span>.xlsx <span class="hljs-number">5000</span><br><span class="hljs-attribute">image</span>.png <span class="hljs-number">3200</span><br><span class="hljs-attribute">report</span>.docx <span class="hljs-number">2400</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-8-与自定义函数结合"><a href="#✅-8-与自定义函数结合" class="headerlink" title="✅ 8. 与自定义函数结合"></a>✅ 8. 与自定义函数结合</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_last_digit</span>(<span class="hljs-params">num</span>):<br>    <span class="hljs-keyword">return</span> num % <span class="hljs-number">10</span><br><br>nums = [<span class="hljs-number">23</span>, <span class="hljs-number">41</span>, <span class="hljs-number">56</span>, <span class="hljs-number">77</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(nums, key=get_last_digit))  <span class="hljs-comment"># ✅ [41, 23, 56, 77]</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-9-使用-operator-模块简化排序"><a href="#✅-9-使用-operator-模块简化排序" class="headerlink" title="✅ 9. 使用 operator 模块简化排序"></a>✅ 9. 使用 <code>operator</code> 模块简化排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> itemgetter<br><br>employees = [<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">30</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">25</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">35</span>&#125;<br>]<br><br><span class="hljs-comment"># itemgetter(&#x27;age&#x27;) 等同于 lambda e: e[&#x27;age&#x27;]</span><br>sorted_list = <span class="hljs-built_in">sorted</span>(employees, key=itemgetter(<span class="hljs-string">&quot;age&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-10-不使用-sorted-的影响"><a href="#✅-10-不使用-sorted-的影响" class="headerlink" title="✅ 10. 不使用 sorted() 的影响"></a>✅ 10. 不使用 <code>sorted()</code> 的影响</h2><h3 id="❌-手动排序效率低-不安全"><a href="#❌-手动排序效率低-不安全" class="headerlink" title="❌ 手动排序效率低 &amp; 不安全"></a>❌ 手动排序效率低 &amp; 不安全</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 模拟手动排序逻辑（不推荐）</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(scores)):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(scores)):<br>        <span class="hljs-keyword">if</span> scores[i] &gt; scores[j]:<br>            scores[i], scores[j] = scores[j], scores[i]<br></code></pre></td></tr></table></figure>
+
+<p>🔴 问题：</p>
+<ul>
+<li>❌ 手写排序容易出错</li>
+<li>❌ 可读性差</li>
+<li>❌ 无法快速切换排序依据</li>
+<li>✅ <code>sorted()</code> 性能优化好、支持多条件、key 定制灵活</li>
+</ul>
+<hr>
+<h2 id="✅-11-函数式编程中的-sorted"><a href="#✅-11-函数式编程中的-sorted" class="headerlink" title="✅ 11. 函数式编程中的 sorted()"></a>✅ 11. 函数式编程中的 <code>sorted()</code></h2><p>结合 <code>map</code>、<code>filter</code>、<code>lambda</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">products = [<span class="hljs-string">&quot;book&quot;</span>, <span class="hljs-string">&quot;TV&quot;</span>, <span class="hljs-string">&quot;laptop&quot;</span>, <span class="hljs-string">&quot;pen&quot;</span>, <span class="hljs-string">&quot;speaker&quot;</span>]<br><span class="hljs-comment"># 过滤出长度 &gt; 3 的，并按字母排序</span><br>result = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: <span class="hljs-built_in">len</span>(x) &gt; <span class="hljs-number">3</span>, products))<br><span class="hljs-built_in">print</span>(result)  <span class="hljs-comment"># ✅ [&#x27;book&#x27;, &#x27;laptop&#x27;, &#x27;speaker&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-12-总结：sorted-的强大之处"><a href="#✅-12-总结：sorted-的强大之处" class="headerlink" title="✅ 12. 总结：sorted() 的强大之处"></a>✅ 12. 总结：<code>sorted()</code> 的强大之处</h2><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>使用方式</th>
+<th>优点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基本排序</td>
+<td><code>sorted(list)</code></td>
+<td>升序、稳定排序</td>
+</tr>
+<tr>
+<td>降序排序</td>
+<td><code>sorted(list, reverse=True)</code></td>
+<td>快速实现降序</td>
+</tr>
+<tr>
+<td>自定义排序</td>
+<td><code>key=lambda x: ...</code></td>
+<td>灵活</td>
+</tr>
+<tr>
+<td>多字段排序</td>
+<td><code>key=lambda x: (a, b)</code></td>
+<td>企业数据处理场景</td>
+</tr>
+<tr>
+<td>不修改原始数据</td>
+<td><code>返回新列表</code></td>
+<td>更安全</td>
+</tr>
+<tr>
+<td>可排序任意可迭代对象</td>
+<td><code>dict, tuple, set</code>等</td>
+<td>更通用</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-企业场景建议"><a href="#✅-企业场景建议" class="headerlink" title="✅ 企业场景建议"></a>✅ 企业场景建议</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>排序列表中的数字或字符串</td>
+<td><code>sorted(list)</code></td>
+</tr>
+<tr>
+<td>对复杂对象如字典排序</td>
+<td><code>key=lambda x: x[&quot;key&quot;]</code></td>
+</tr>
+<tr>
+<td>多字段排序</td>
+<td><code>key=lambda x: (x[&quot;a&quot;], x[&quot;b&quot;])</code></td>
+</tr>
+<tr>
+<td>处理大数据列表</td>
+<td><code>sorted()</code>+<code>key</code>+<code>reverse</code>组合</td>
+</tr>
+<tr>
+<td>工具型模块</td>
+<td>使用<code>operator.itemgetter</code>提高效率</td>
+</tr>
+</tbody></table>
+<hr>
+<p>🧠 ​<strong>记住</strong>​：<code>sorted()</code> 是 Python 数据处理的​<strong>必备工具</strong>​，写清楚排序逻辑，让你的代码更清晰、更安全、更优雅。掌握 <code>key</code> 和 <code>reverse</code>，你就掌握了数据排序的核心。</p>
+<p>🚀 <strong>从现在开始，让你的排序从手动实现 → Pythonic 优雅！</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-sorted%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" class="category-chain-item">Python sorted函数介绍</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/python-sorted%E5%87%BD%E6%95%B0/" class="print-no-link">#python sorted函数</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python sorted函数详细介绍</div>
+      <div>https://dreamshao.github.io/2025/04/14/sorted函数详细介绍/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/08/python%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python 反转字符串并按照长度排序">
+                        <span class="hidden-mobile">Python 反转字符串并按照长度排序</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
