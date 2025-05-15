@@ -17,35 +17,23 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Chome 如何 mock 请求及回应平常我们mock接口或者修改请求或者修改header都是通过fiddler或者charles等工具实现，但是其实chrome已经兼具了这个功能！ Chrome mock 返回内容修改返回的数据改为特定的值，那么我们可以通过chrome开发者工具的network，在你想要修改的接口上面右击，然后选择Override content   此时浏览器会提示你: 选择">
+    <meta name="description" content="一文讲明白 Python 的递归一、📌 什么是递归？递归（Recursion）是指在函数内部调用自己本身的编程技巧。它通常用于解决可以分解为子问题的问题，比如树结构、图遍历等。  简单理解：一个问题的解依赖于它更小规模的子问题的解。   二、🧠 递归的基本结构12345def recursive_function(parameters):    if termination_condition">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chrome mock 请求以及回应">
-<meta property="og:url" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/index.html">
+<meta property="og:title" content="一文讲明白 Python 递归">
+<meta property="og:url" content="https://dreamshao.github.io/2025/05/15/python%E9%80%92%E5%BD%92/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Chome 如何 mock 请求及回应平常我们mock接口或者修改请求或者修改header都是通过fiddler或者charles等工具实现，但是其实chrome已经兼具了这个功能！ Chrome mock 返回内容修改返回的数据改为特定的值，那么我们可以通过chrome开发者工具的network，在你想要修改的接口上面右击，然后选择Override content   此时浏览器会提示你: 选择">
+<meta property="og:description" content="一文讲明白 Python 的递归一、📌 什么是递归？递归（Recursion）是指在函数内部调用自己本身的编程技巧。它通常用于解决可以分解为子问题的问题，比如树结构、图遍历等。  简单理解：一个问题的解依赖于它更小规模的子问题的解。   二、🧠 递归的基本结构12345def recursive_function(parameters):    if termination_condition">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/1.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/2.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/3.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/4.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/5.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/6.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/7.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/8.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/9.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/10.png">
-<meta property="og:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/11.png">
-<meta property="article:published_time" content="2025-05-15T06:23:15.000Z">
-<meta property="article:modified_time" content="2025-05-15T07:07:10.521Z">
+<meta property="article:published_time" content="2025-05-15T07:23:44.000Z">
+<meta property="article:modified_time" content="2025-05-15T07:31:39.115Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="Chrome调试">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://dreamshao.github.io/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/1.png">
   
   
   
-  <title>Chrome mock 请求以及回应 - 韵少的个人技术博客</title>
+  <title>一文讲明白 Python 递归 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -260,7 +248,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Chrome mock 请求以及回应"></span>
+            <span id="subtitle" data-typed-text="一文讲明白 Python 递归"></span>
           
         </div>
 
@@ -271,7 +259,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-15 14:23" pubdate>
+        <time datetime="2025-05-15 15:23" pubdate>
           2025年5月15日 下午
         </time>
       </span>
@@ -283,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          618 字
+          769 字
         
       </span>
     
@@ -294,7 +282,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -339,49 +327,103 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Chrome mock 请求以及回应</h1>
+            <h1 id="seo-header">一文讲明白 Python 递归</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Chome-如何-mock-请求及回应"><a href="#Chome-如何-mock-请求及回应" class="headerlink" title="Chome 如何 mock 请求及回应"></a>Chome 如何 mock 请求及回应</h1><p>平常我们mock接口或者修改请求或者修改header都是通过fiddler或者charles等工具实现，但是其实chrome已经兼具了这个功能！</p>
-<h2 id="Chrome-mock-返回内容"><a href="#Chrome-mock-返回内容" class="headerlink" title="Chrome mock 返回内容"></a>Chrome mock 返回内容</h2><p>修改返回的数据改为特定的值，那么我们可以通过chrome开发者工具的network，在你想要修改的接口上面右击，然后选择<code>Override content</code></p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/1.png" srcset="/img/loading.gif" lazyload class="">
+                <h1 id="一文讲明白-Python-的递归"><a href="#一文讲明白-Python-的递归" class="headerlink" title="一文讲明白 Python 的递归"></a>一文讲明白 Python 的递归</h1><h2 id="一、📌-什么是递归？"><a href="#一、📌-什么是递归？" class="headerlink" title="一、📌 什么是递归？"></a>一、📌 什么是递归？</h2><p>递归（Recursion）是指在函数内部调用自己本身的编程技巧。它通常用于解决可以分解为子问题的问题，比如树结构、图遍历等。</p>
+<blockquote>
+<p>简单理解：一个问题的解依赖于它更小规模的子问题的解。</p>
+</blockquote>
+<hr>
+<h2 id="二、🧠-递归的基本结构"><a href="#二、🧠-递归的基本结构" class="headerlink" title="二、🧠 递归的基本结构"></a>二、🧠 递归的基本结构</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">recursive_function</span>(<span class="hljs-params">parameters</span>):<br>    <span class="hljs-keyword">if</span> termination_condition:<br>        <span class="hljs-keyword">return</span> result  <span class="hljs-comment"># 终止条件，防止无限调用</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> recursive_function(smaller_parameters)<br></code></pre></td></tr></table></figure>
 
-<p>此时浏览器会提示你: <code>选择一个文件夹进行存储文件</code>， 也就是将你的信息保存到本地，再次请求的时候如果url一样则会走你的本地这个文件的信息</p>
-<p>当然，在提示需要<code>DevTools的权限获取</code>的时候需要给予允许！</p>
-<p>这时候你就可以看到你可以将返回的信息进行修改了！</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/2.png" srcset="/img/loading.gif" lazyload class="">
+<h3 id="✅-必须包含："><a href="#✅-必须包含：" class="headerlink" title="✅ 必须包含："></a>✅ 必须包含：</h3><ol>
+<li><strong>终止条件（Base Case）</strong></li>
+<li><strong>递归调用（Recursive Case）</strong></li>
+</ol>
+<hr>
+<h2 id="三、🌱-新手入门：经典案例示例"><a href="#三、🌱-新手入门：经典案例示例" class="headerlink" title="三、🌱 新手入门：经典案例示例"></a>三、🌱 新手入门：经典案例示例</h2><h3 id="1-阶乘计算"><a href="#1-阶乘计算" class="headerlink" title="1. 阶乘计算"></a>1. 阶乘计算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">factorial</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>  <span class="hljs-comment"># 基本情况</span><br>    <span class="hljs-keyword">return</span> n * factorial(n - <span class="hljs-number">1</span>)  <span class="hljs-comment"># 递归调用</span><br></code></pre></td></tr></table></figure>
 
-<p>下面我们来修改一下！</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/3.png" srcset="/img/loading.gif" lazyload class="">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(factorial(<span class="hljs-number">5</span>))  <span class="hljs-comment"># 输出 120</span><br></code></pre></td></tr></table></figure>
 
-<p>我将ads之前的数据全部清空，然后我们看一下请求的返回接口</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/4.png" srcset="/img/loading.gif" lazyload class="">
+<h3 id="2-斐波那契数列（演示递归的效率瓶颈）"><a href="#2-斐波那契数列（演示递归的效率瓶颈）" class="headerlink" title="2. 斐波那契数列（演示递归的效率瓶颈）"></a>2. 斐波那契数列（演示递归的效率瓶颈）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> n<br>    <span class="hljs-keyword">return</span> fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
 
-<p>此时我们就看到了已经mock成功了，但是需要注意的是，<code>mock完毕之后记得改回来或者移除mock，因为很长时间忘记后，再次测试可能会让自己觉得是BUG，然后找到开发，最后发现是自己的问题，因为我就出现过，因为无感知！</code></p>
-<h1 id="Chrome-mock-返回的response-header"><a href="#Chrome-mock-返回的response-header" class="headerlink" title="Chrome mock 返回的response header"></a>Chrome mock 返回的response header</h1><p>会了上面的，那么下面的就很简单了，此时我们打开<code>chrome开发者工具</code>，选择<code>network面板</code>，选择对应的接口，然后右击选择<code>Override headers</code></p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/5.png" srcset="/img/loading.gif" lazyload class="">
+<blockquote>
+<p>❗ 该方法效率低，适合用来演示“重叠子问题”的场景。</p>
+</blockquote>
+<hr>
+<h2 id="四、🔍-递归的应用场景（企业级实战）"><a href="#四、🔍-递归的应用场景（企业级实战）" class="headerlink" title="四、🔍 递归的应用场景（企业级实战）"></a>四、🔍 递归的应用场景（企业级实战）</h2><h3 id="示例1：📂-遍历嵌套文件夹结构"><a href="#示例1：📂-遍历嵌套文件夹结构" class="headerlink" title="示例1：📂 遍历嵌套文件夹结构"></a>示例1：📂 遍历嵌套文件夹结构</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">traverse_directory</span>(<span class="hljs-params">path</span>):<br>    <span class="hljs-keyword">for</span> entry <span class="hljs-keyword">in</span> os.listdir(path):<br>        full_path = os.path.join(path, entry)<br>        <span class="hljs-keyword">if</span> os.path.isdir(full_path):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;📁 目录：&quot;</span>, full_path)<br>            traverse_directory(full_path)  <span class="hljs-comment"># 递归进入子目录</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;📄 文件：&quot;</span>, full_path)<br></code></pre></td></tr></table></figure>
 
-<p>此时你会发现，可以在<code>network</code>的<code>Response header</code>下直接进行添加想要的<code>header</code></p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/6.png" srcset="/img/loading.gif" lazyload class="">
+<p>📌 实用场景：企业系统自动部署、日志批处理、全盘搜索等。</p>
+<hr>
+<h3 id="示例2：🌳-树形组织架构数据解析（JSON格式）"><a href="#示例2：🌳-树形组织架构数据解析（JSON格式）" class="headerlink" title="示例2：🌳 树形组织架构数据解析（JSON格式）"></a>示例2：🌳 树形组织架构数据解析（JSON格式）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">org_chart = &#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;CEO&quot;</span>,<br>    <span class="hljs-string">&quot;children&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;CTO&quot;</span>, <span class="hljs-string">&quot;children&quot;</span>: [<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Dev Manager&quot;</span>, <span class="hljs-string">&quot;children&quot;</span>: []&#125;<br>        ]&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;CFO&quot;</span>, <span class="hljs-string">&quot;children&quot;</span>: []&#125;<br>    ]<br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">print_org_chart</span>(<span class="hljs-params">node, level=<span class="hljs-number">0</span></span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;  &quot;</span> * level + <span class="hljs-string">f&quot;👤 <span class="hljs-subst">&#123;node[<span class="hljs-string">&#x27;name&#x27;</span>]&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> node.get(<span class="hljs-string">&quot;children&quot;</span>, []):<br>        print_org_chart(child, level + <span class="hljs-number">1</span>)<br><br>print_org_chart(org_chart)<br></code></pre></td></tr></table></figure>
 
-<p>也可以通过右侧的headers文件链接进行在文件中的编辑，这里我们以这样的方式举例！这里我们新增一个返回的<code>header</code>，<code>key:value</code> 为<code>testtraceid:11112222333444</code></p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/7.png" srcset="/img/loading.gif" lazyload class="">
+<p>📌 实用场景：企业HR系统组织管理、后台权限树、菜单树等。</p>
+<hr>
+<h3 id="示例3：🧾-递归计算订单明细的总价（嵌套结构）"><a href="#示例3：🧾-递归计算订单明细的总价（嵌套结构）" class="headerlink" title="示例3：🧾 递归计算订单明细的总价（嵌套结构）"></a>示例3：🧾 递归计算订单明细的总价（嵌套结构）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">order = &#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;套餐A&quot;</span>,<br>    <span class="hljs-string">&quot;price&quot;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&quot;items&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;汉堡&quot;</span>, <span class="hljs-string">&quot;price&quot;</span>: <span class="hljs-number">20</span>&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;配菜&quot;</span>, <span class="hljs-string">&quot;price&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&quot;items&quot;</span>: [<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;薯条&quot;</span>, <span class="hljs-string">&quot;price&quot;</span>: <span class="hljs-number">10</span>&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;鸡翅&quot;</span>, <span class="hljs-string">&quot;price&quot;</span>: <span class="hljs-number">12</span>&#125;<br>        ]&#125;<br>    ]<br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calc_price</span>(<span class="hljs-params">item</span>):<br>    total = item.get(<span class="hljs-string">&quot;price&quot;</span>, <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">for</span> sub <span class="hljs-keyword">in</span> item.get(<span class="hljs-string">&quot;items&quot;</span>, []):<br>        total += calc_price(sub)<br>    <span class="hljs-keyword">return</span> total<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;总价：¥&quot;</span>, calc_price(order))  <span class="hljs-comment"># 输出：¥42</span><br></code></pre></td></tr></table></figure>
 
-<p>再次请求接口，发现已经返回了我们新增的header</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/8.png" srcset="/img/loading.gif" lazyload class="">
+<p>📌 实用场景：ERP系统、商品打包套餐系统等。</p>
+<hr>
+<h2 id="五、⛏️-常见问题及优化"><a href="#五、⛏️-常见问题及优化" class="headerlink" title="五、⛏️ 常见问题及优化"></a>五、⛏️ 常见问题及优化</h2><h3 id="❓-问题1：栈溢出（RecursionError）"><a href="#❓-问题1：栈溢出（RecursionError）" class="headerlink" title="❓ 问题1：栈溢出（RecursionError）"></a>❓ 问题1：栈溢出（RecursionError）</h3><ul>
+<li>默认递归深度：1000（可通过 <code>sys.setrecursionlimit</code> 修改）</li>
+</ul>
+<h3 id="❓-问题2：重复计算（如-Fibonacci）"><a href="#❓-问题2：重复计算（如-Fibonacci）" class="headerlink" title="❓ 问题2：重复计算（如 Fibonacci）"></a>❓ 问题2：重复计算（如 Fibonacci）</h3><ul>
+<li>✅ 可使用 ​<strong>缓存优化</strong>​（如：<code>functools.lru_cache</code>）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> lru_cache<br><br><span class="hljs-meta">@lru_cache()</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fibonacci</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> n<br>    <span class="hljs-keyword">return</span> fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
 
-<p>如果想要修改已经存在的response header,则只需要增加相同的key即可,例如修改 tracid</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/9.png" srcset="/img/loading.gif" lazyload class="">
-
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/10.png" srcset="/img/loading.gif" lazyload class="">
-
-<p>可以看到我们已经将存在的header替换成了我们指定的值</p>
-<h2 id="Chrome-mock的接口会有标识"><a href="#Chrome-mock的接口会有标识" class="headerlink" title="Chrome mock的接口会有标识"></a>Chrome mock的接口会有标识</h2><p>如果接口被<code>mock</code>则<code>chrome</code>会有一个标识在请求的前面展示，用来标记这个接口是被<code>Mock</code>过的</p>
-<img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/11.png" srcset="/img/loading.gif" lazyload class="">
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个用起来蛮方便的就是在我上面提到的一定在用完后移除，要不然到了后期你在用的时候发现会很懵，为什么我的返回和别人的不一样呢？</p>
+<hr>
+<h2 id="六、⚙️-企业实战中使用递归的技巧总结"><a href="#六、⚙️-企业实战中使用递归的技巧总结" class="headerlink" title="六、⚙️ 企业实战中使用递归的技巧总结"></a>六、⚙️ 企业实战中使用递归的技巧总结</h2><table>
+<thead>
+<tr>
+<th>技巧</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ 设定终止条件</td>
+<td>防止死循环或栈溢出</td>
+</tr>
+<tr>
+<td>✅ 添加缓存</td>
+<td>提升性能（如动态规划+备忘录）</td>
+</tr>
+<tr>
+<td>✅ 使用尾递归&#x2F;转循环</td>
+<td>Python不优化尾递归，必要时改用循环</td>
+</tr>
+<tr>
+<td>✅ 日志&#x2F;print辅助调试</td>
+<td>观察递归栈的变化</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、📌-小结"><a href="#七、📌-小结" class="headerlink" title="七、📌 小结"></a>七、📌 小结</h2><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>入门</td>
+<td>理解递归结构、终止条件</td>
+</tr>
+<tr>
+<td>提升</td>
+<td>掌握递归在树形&#x2F;图结构中的应用</td>
+</tr>
+<tr>
+<td>实战</td>
+<td>构建企业级功能：文件遍历、组织结构、订单价格、权限系统等</td>
+</tr>
+<tr>
+<td>优化</td>
+<td>使用缓存、转换为循环、控制递归深度</td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -400,17 +442,17 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/" class="category-chain-item">测试开发工具/框架</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Chrome%E8%B0%83%E8%AF%95/" class="category-chain-item">Chrome调试</a>
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%A1%86%E6%9E%B6/Chrome%E8%B0%83%E8%AF%95/Chrome-mock-%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/" class="category-chain-item">Chrome mock 请求以及回应</a>
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-%E9%80%92%E5%BD%92/" class="category-chain-item">Python 递归</a>
   
   
 
@@ -431,7 +473,7 @@
       
         <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/tags/Chrome%E8%B0%83%E8%AF%95/" class="print-no-link">#Chrome调试</a>
+        <a href="/tags/python/" class="print-no-link">#python</a>
       
     </div>
   
@@ -443,8 +485,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Chrome mock 请求以及回应</div>
-      <div>https://dreamshao.github.io/2025/05/15/chromemock请求以及回应/</div>
+      <div>一文讲明白 Python 递归</div>
+      <div>https://dreamshao.github.io/2025/05/15/python递归/</div>
     </div>
     <div class="license-meta">
       
@@ -488,18 +530,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/15/python%E9%80%92%E5%BD%92/" title="一文讲明白 Python 递归">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一文讲明白 Python 递归</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/21/cloudfare%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="Cloudfare内网穿透效能工具">
-                        <span class="hidden-mobile">Cloudfare内网穿透效能工具</span>
+                      <a href="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/" title="Chrome mock 请求以及回应">
+                        <span class="hidden-mobile">Chrome mock 请求以及回应</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
