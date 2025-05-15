@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Chrome mock 请求以及回应</title>
+    <link href="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/"/>
+    <url>/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Chome-如何-mock-请求及回应"><a href="#Chome-如何-mock-请求及回应" class="headerlink" title="Chome 如何 mock 请求及回应"></a>Chome 如何 mock 请求及回应</h1><p>平常我们mock接口或者修改请求或者修改header都是通过fiddler或者charles等工具实现，但是其实chrome已经兼具了这个功能！</p><h2 id="Chrome-mock-返回内容"><a href="#Chrome-mock-返回内容" class="headerlink" title="Chrome mock 返回内容"></a>Chrome mock 返回内容</h2><p>修改返回的数据改为特定的值，那么我们可以通过chrome开发者工具的network，在你想要修改的接口上面右击，然后选择<code>Override content</code></p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/1.png" class=""><p>此时浏览器会提示你: <code>选择一个文件夹进行存储文件</code>， 也就是将你的信息保存到本地，再次请求的时候如果url一样则会走你的本地这个文件的信息</p><p>当然，在提示需要<code>DevTools的权限获取</code>的时候需要给予允许！</p><p>这时候你就可以看到你可以将返回的信息进行修改了！</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/2.png" class=""><p>下面我们来修改一下！</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/3.png" class=""><p>我将ads之前的数据全部清空，然后我们看一下请求的返回接口</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/4.png" class=""><p>此时我们就看到了已经mock成功了，但是需要注意的是，<code>mock完毕之后记得改回来或者移除mock，因为很长时间忘记后，再次测试可能会让自己觉得是BUG，然后找到开发，最后发现是自己的问题，因为我就出现过，因为无感知！</code></p><h1 id="Chrome-mock-返回的response-header"><a href="#Chrome-mock-返回的response-header" class="headerlink" title="Chrome mock 返回的response header"></a>Chrome mock 返回的response header</h1><p>会了上面的，那么下面的就很简单了，此时我们打开<code>chrome开发者工具</code>，选择<code>network面板</code>，选择对应的接口，然后右击选择<code>Override headers</code></p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/5.png" class=""><p>此时你会发现，可以在<code>network</code>的<code>Response header</code>下直接进行添加想要的<code>header</code></p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/6.png" class=""><p>也可以通过右侧的headers文件链接进行在文件中的编辑，这里我们以这样的方式举例！这里我们新增一个返回的<code>header</code>，<code>key:value</code> 为<code>testtraceid:11112222333444</code></p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/7.png" class=""><p>再次请求接口，发现已经返回了我们新增的header</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/8.png" class=""><p>如果想要修改已经存在的response header,则只需要增加相同的key即可,例如修改 tracid</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/9.png" class=""><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/10.png" class=""><p>可以看到我们已经将存在的header替换成了我们指定的值</p><h2 id="Chrome-mock的接口会有标识"><a href="#Chrome-mock的接口会有标识" class="headerlink" title="Chrome mock的接口会有标识"></a>Chrome mock的接口会有标识</h2><p>如果接口被<code>mock</code>则<code>chrome</code>会有一个标识在请求的前面展示，用来标记这个接口是被<code>Mock</code>过的</p><img src="/2025/05/15/chromemock%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E5%9B%9E%E5%BA%94/11.png" class=""><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个用起来蛮方便的就是在我上面提到的一定在用完后移除，要不然到了后期你在用的时候发现会很懵，为什么我的返回和别人的不一样呢？</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Chrome调试</category>
+      
+      <category>Chrome mock 请求以及回应</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>Chrome调试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Cloudfare内网穿透效能工具</title>
     <link href="/2025/04/21/cloudfare%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     <url>/2025/04/21/cloudfare%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
