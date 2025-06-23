@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Python常见函数之rsplit函数用法</title>
+    <link href="/2025/06/23/rsplit%E4%BB%8B%E7%BB%8D/"/>
+    <url>/2025/06/23/rsplit%E4%BB%8B%E7%BB%8D/</url>
+    
+    <content type="html"><![CDATA[<h1 id="📘-Python常见函数之rsplit函数用法"><a href="#📘-Python常见函数之rsplit函数用法" class="headerlink" title="📘 Python常见函数之rsplit函数用法"></a>📘 Python常见函数之rsplit函数用法</h1><hr><h2 id="✨-一、rsplit-基础语法"><a href="#✨-一、rsplit-基础语法" class="headerlink" title="✨ 一、rsplit() 基础语法"></a>✨ 一、<code>rsplit()</code> 基础语法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">str</span>.rsplit(sep=<span class="hljs-literal">None</span>, maxsplit=-<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td><code>sep</code></td><td>可选。指定分隔符（默认是任意空白字符）。</td></tr><tr><td><code>maxsplit</code></td><td>可选。最多分割几次，从<strong>右边开始</strong>分割。默认 <code>-1</code> 表示全部分割。</td></tr></tbody></table><hr><h2 id="✅-二、与-split-的区别"><a href="#✅-二、与-split-的区别" class="headerlink" title="✅ 二、与 split() 的区别"></a>✅ 二、与 <code>split()</code> 的区别</h2><table><thead><tr><th>方法</th><th>分割方向</th><th>举例说明</th></tr></thead><tbody><tr><td><code>split()</code></td><td>从左向右</td><td><code>&#39;a-b-c&#39;.split(&#39;-&#39;, 1)</code> → <code>[&#39;a&#39;, &#39;b-c&#39;]</code></td></tr><tr><td><code>rsplit()</code></td><td>从右向左</td><td><code>&#39;a-b-c&#39;.rsplit(&#39;-&#39;, 1)</code> → <code>[&#39;a-b&#39;, &#39;c&#39;]</code></td></tr></tbody></table><hr><h2 id="📌-三、基础示例"><a href="#📌-三、基础示例" class="headerlink" title="📌 三、基础示例"></a>📌 三、基础示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">s = <span class="hljs-string">&quot;2024-05-01&quot;</span><br>parts = s.rsplit(<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(parts)  <span class="hljs-comment"># [&#x27;2024-05&#x27;, &#x27;01&#x27;]</span><br></code></pre></td></tr></table></figure><p>对日期字符串 <code>YYYY-MM-DD</code> 进行拆分，只取出最后的“日”。</p><hr><h2 id="🚀-四、企业实战示例"><a href="#🚀-四、企业实战示例" class="headerlink" title="🚀 四、企业实战示例"></a>🚀 四、企业实战示例</h2><h3 id="📁-场景一：日志路径解析"><a href="#📁-场景一：日志路径解析" class="headerlink" title="📁 场景一：日志路径解析"></a>📁 场景一：日志路径解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">log_path = <span class="hljs-string">&quot;/var/log/app/2024-06-23-error.log&quot;</span><br>filename = log_path.rsplit(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(filename)  <span class="hljs-comment"># 输出: &#x27;2024-06-23-error.log&#x27;</span><br></code></pre></td></tr></table></figure><p><strong>用法说明</strong>：提取日志文件名，适用于自动扫描、归档日志系统。</p><hr><h3 id="📧-场景二：邮箱账号拆分"><a href="#📧-场景二：邮箱账号拆分" class="headerlink" title="📧 场景二：邮箱账号拆分"></a>📧 场景二：邮箱账号拆分</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">email = <span class="hljs-string">&quot;admin@mail.example.com&quot;</span><br>domain = email.rsplit(<span class="hljs-string">&quot;@&quot;</span>, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(domain)  <span class="hljs-comment"># 输出: &#x27;mail.example.com&#x27;</span><br></code></pre></td></tr></table></figure><p><strong>企业用途</strong>：用于邮件域名白名单、账号验证、邮件分发系统等。</p><hr><h3 id="🛠️-场景三：用户操作记录解析"><a href="#🛠️-场景三：用户操作记录解析" class="headerlink" title="🛠️ 场景三：用户操作记录解析"></a>🛠️ 场景三：用户操作记录解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">record = <span class="hljs-string">&quot;操作人ID-时间戳-操作描述&quot;</span><br><span class="hljs-comment"># 仅分割最后两个字段</span><br>user_id, timestamp, description = record.rsplit(<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure><p><strong>用途</strong>：在操作记录、审计日志中，能准确提取不同层级的数据，避免前缀变化影响解析。</p><hr><h3 id="🌐-场景四：URL-反向解析"><a href="#🌐-场景四：URL-反向解析" class="headerlink" title="🌐 场景四：URL 反向解析"></a>🌐 场景四：URL 反向解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">url = <span class="hljs-string">&quot;https://example.com/api/v1/resource/12345&quot;</span><br>resource_id = url.rsplit(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(resource_id)  <span class="hljs-comment"># 输出: &#x27;12345&#x27;</span><br></code></pre></td></tr></table></figure><p><strong>用途</strong>：在爬虫、日志追踪、API 调试时快速提取资源 ID。</p><hr><h2 id="🔍-五、注意事项"><a href="#🔍-五、注意事项" class="headerlink" title="🔍 五、注意事项"></a>🔍 五、注意事项</h2><ol><li>如果 <code>sep</code> 不存在于字符串中，返回整个字符串为列表元素。</li><li><code>rsplit()</code> 对于<strong>不确定前缀、但格式稳定的后缀结构</strong>，非常有用。</li><li><code>rsplit()</code> 比正则更高效、语义清晰，优先使用。</li></ol><hr><h2 id="🧠-六、总结记忆"><a href="#🧠-六、总结记忆" class="headerlink" title="🧠 六、总结记忆"></a>🧠 六、总结记忆</h2><table><thead><tr><th>功能</th><th>推荐方法</th></tr></thead><tbody><tr><td>从左向右按分隔符拆</td><td><code>split()</code></td></tr><tr><td>从右向左按分隔符拆</td><td>✅ <code>rsplit()</code></td></tr><tr><td>对于文件路径、URL、操作日志等“右侧结构固定”的业务，首选 <code>rsplit()</code></td><td></td></tr></tbody></table>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Python 常见函数</category>
+      
+      <category>Python rsplit函数用法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>互联网广告常见算法介绍</title>
     <link href="/2025/05/15/%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/"/>
     <url>/2025/05/15/%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/</url>
