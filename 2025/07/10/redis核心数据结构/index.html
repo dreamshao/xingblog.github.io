@@ -1,0 +1,836 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis 核心数据结构介绍2.1 String（字符串）核心命令 SET key value：设置 key 对应的字符串值 GET key：获取 key 对应的值 INCR key：将 key 中存储的数字值加一 EXPIRE key seconds：设置 key 的过期时间 APPEND key value：追加字符串到指定 key 的末尾  企业应用场景 用户登录状态缓存 短信验证码临时存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 核心数据结构介绍">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/10/redis%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Redis 核心数据结构介绍2.1 String（字符串）核心命令 SET key value：设置 key 对应的字符串值 GET key：获取 key 对应的值 INCR key：将 key 中存储的数字值加一 EXPIRE key seconds：设置 key 的过期时间 APPEND key value：追加字符串到指定 key 的末尾  企业应用场景 用户登录状态缓存 短信验证码临时存储">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-10T11:09:31.000Z">
+<meta property="article:modified_time" content="2025-07-10T11:16:18.390Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Redis 核心数据结构介绍 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis 核心数据结构介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-10 19:09" pubdate>
+          2025年7月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          735 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis 核心数据结构介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Redis-核心数据结构介绍"><a href="#Redis-核心数据结构介绍" class="headerlink" title="Redis 核心数据结构介绍"></a>Redis 核心数据结构介绍</h1><h2 id="2-1-String（字符串）"><a href="#2-1-String（字符串）" class="headerlink" title="2.1 String（字符串）"></a>2.1 String（字符串）</h2><h3 id="核心命令"><a href="#核心命令" class="headerlink" title="核心命令"></a>核心命令</h3><ul>
+<li><code>SET key value</code>：设置 key 对应的字符串值</li>
+<li><code>GET key</code>：获取 key 对应的值</li>
+<li><code>INCR key</code>：将 key 中存储的数字值加一</li>
+<li><code>EXPIRE key seconds</code>：设置 key 的过期时间</li>
+<li><code>APPEND key value</code>：追加字符串到指定 key 的末尾</li>
+</ul>
+<h3 id="企业应用场景"><a href="#企业应用场景" class="headerlink" title="企业应用场景"></a>企业应用场景</h3><ul>
+<li>用户登录状态缓存</li>
+<li>短信验证码临时存储（过期自动删除）</li>
+<li>PV&#x2F;UV 计数器、接口访问次数统计</li>
+</ul>
+<h3 id="Python-示例（短信验证码）"><a href="#Python-示例（短信验证码）" class="headerlink" title="Python 示例（短信验证码）"></a>Python 示例（短信验证码）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> redis<br><span class="hljs-keyword">import</span> random<br><br>r = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send_sms_code</span>(<span class="hljs-params">phone</span>):<br>    code = <span class="hljs-built_in">str</span>(random.randint(<span class="hljs-number">100000</span>, <span class="hljs-number">999999</span>))<br>    key = <span class="hljs-string">f&quot;sms:<span class="hljs-subst">&#123;phone&#125;</span>&quot;</span><br>    r.<span class="hljs-built_in">set</span>(key, code)<br>    r.expire(key, <span class="hljs-number">300</span>)  <span class="hljs-comment"># 设置5分钟过期</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;验证码已发送至 <span class="hljs-subst">&#123;phone&#125;</span>：<span class="hljs-subst">&#123;code&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_sms_code</span>(<span class="hljs-params">phone, code_input</span>):<br>    key = <span class="hljs-string">f&quot;sms:<span class="hljs-subst">&#123;phone&#125;</span>&quot;</span><br>    code = r.get(key)<br>    <span class="hljs-keyword">return</span> code_input == code<br><br><span class="hljs-comment"># 示例</span><br>send_sms_code(<span class="hljs-string">&quot;13800000000&quot;</span>)<br><span class="hljs-built_in">print</span>(validate_sms_code(<span class="hljs-string">&quot;13800000000&quot;</span>, <span class="hljs-string">&quot;123456&quot;</span>))  <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-2-List（列表）"><a href="#2-2-List（列表）" class="headerlink" title="2.2 List（列表）"></a>2.2 List（列表）</h2><h3 id="核心命令-1"><a href="#核心命令-1" class="headerlink" title="核心命令"></a>核心命令</h3><ul>
+<li><code>LPUSH key value</code>：从左侧推入元素</li>
+<li><code>RPUSH key value</code>：从右侧推入元素</li>
+<li><code>LPOP key</code>：从左侧弹出元素</li>
+<li><code>LRANGE key start stop</code>：获取指定区间内的元素列表</li>
+</ul>
+<h3 id="企业应用场景-1"><a href="#企业应用场景-1" class="headerlink" title="企业应用场景"></a>企业应用场景</h3><ul>
+<li>消息队列系统（左进右出&#x2F;右进左出）</li>
+<li>实时评论系统</li>
+<li>待处理任务队列</li>
+</ul>
+<h3 id="Python-示例（待处理任务队列）"><a href="#Python-示例（待处理任务队列）" class="headerlink" title="Python 示例（待处理任务队列）"></a>Python 示例（待处理任务队列）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">push_task</span>(<span class="hljs-params">task</span>):<br>    r.lpush(<span class="hljs-string">&quot;task_queue&quot;</span>, task)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_task</span>():<br>    task = r.rpop(<span class="hljs-string">&quot;task_queue&quot;</span>)<br>    <span class="hljs-keyword">if</span> task:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;处理任务：&quot;</span>, task)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前无任务&quot;</span>)<br><br><span class="hljs-comment"># 示例</span><br>push_task(<span class="hljs-string">&quot;任务1&quot;</span>)<br>push_task(<span class="hljs-string">&quot;任务2&quot;</span>)<br>process_task()<br>process_task()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-3-Hash（哈希表）"><a href="#2-3-Hash（哈希表）" class="headerlink" title="2.3 Hash（哈希表）"></a>2.3 Hash（哈希表）</h2><h3 id="核心命令-2"><a href="#核心命令-2" class="headerlink" title="核心命令"></a>核心命令</h3><ul>
+<li><code>HSET key field value</code>：设置哈希字段</li>
+<li><code>HGET key field</code>：获取哈希字段的值</li>
+<li><code>HGETALL key</code>：获取整个哈希表内容</li>
+<li><code>HDEL key field</code>：删除指定字段</li>
+</ul>
+<h3 id="企业应用场景-2"><a href="#企业应用场景-2" class="headerlink" title="企业应用场景"></a>企业应用场景</h3><ul>
+<li>用户基本信息缓存</li>
+<li>商品详情缓存</li>
+<li>配置项快速读取</li>
+</ul>
+<h3 id="Python-示例（用户信息存储）"><a href="#Python-示例（用户信息存储）" class="headerlink" title="Python 示例（用户信息存储）"></a>Python 示例（用户信息存储）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">user_id = <span class="hljs-string">&quot;user:1001&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_user_info</span>(<span class="hljs-params">uid, field, value</span>):<br>    r.hset(uid, field, value)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_info</span>(<span class="hljs-params">uid</span>):<br>    <span class="hljs-keyword">return</span> r.hgetall(uid)<br><br><span class="hljs-comment"># 示例</span><br>set_user_info(user_id, <span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>)<br>set_user_info(user_id, <span class="hljs-string">&quot;email&quot;</span>, <span class="hljs-string">&quot;alice@example.com&quot;</span>)<br><br>info = get_user_info(user_id)<br><span class="hljs-built_in">print</span>(info)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-4-Set（集合）"><a href="#2-4-Set（集合）" class="headerlink" title="2.4 Set（集合）"></a>2.4 Set（集合）</h2><h3 id="核心命令-3"><a href="#核心命令-3" class="headerlink" title="核心命令"></a>核心命令</h3><ul>
+<li><code>SADD key value</code>：向集合添加元素</li>
+<li><code>SREM key value</code>：移除集合元素</li>
+<li><code>SISMEMBER key value</code>：判断是否是集合成员</li>
+<li><code>SDIFF key1 key2</code>：返回 key1 独有的元素</li>
+</ul>
+<h3 id="企业应用场景-3"><a href="#企业应用场景-3" class="headerlink" title="企业应用场景"></a>企业应用场景</h3><ul>
+<li>标签系统（如兴趣、分类标签）</li>
+<li>用户黑名单系统</li>
+<li>抽奖系统去重存储（唯一参与者）</li>
+</ul>
+<h3 id="Python-示例（黑名单系统）"><a href="#Python-示例（黑名单系统）" class="headerlink" title="Python 示例（黑名单系统）"></a>Python 示例（黑名单系统）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">blacklist_key = <span class="hljs-string">&quot;user:blacklist&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_to_blacklist</span>(<span class="hljs-params">user_id</span>):<br>    r.sadd(blacklist_key, user_id)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_blacklisted</span>(<span class="hljs-params">user_id</span>):<br>    <span class="hljs-keyword">return</span> r.sismember(blacklist_key, user_id)<br><br><span class="hljs-comment"># 示例</span><br>add_to_blacklist(<span class="hljs-string">&quot;user:1002&quot;</span>)<br><span class="hljs-built_in">print</span>(is_blacklisted(<span class="hljs-string">&quot;user:1002&quot;</span>))  <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-5-Sorted-Set（有序集合）"><a href="#2-5-Sorted-Set（有序集合）" class="headerlink" title="2.5 Sorted Set（有序集合）"></a>2.5 Sorted Set（有序集合）</h2><h3 id="核心命令-4"><a href="#核心命令-4" class="headerlink" title="核心命令"></a>核心命令</h3><ul>
+<li><code>ZADD key score value</code>：添加元素及分数</li>
+<li><code>ZRANGE key start stop [WITHSCORES]</code>：获取元素按分数升序排列</li>
+<li><code>ZREM key value</code>：删除指定元素</li>
+<li><code>ZSCORE key value</code>：获取某个元素的分数</li>
+</ul>
+<h3 id="企业应用场景-4"><a href="#企业应用场景-4" class="headerlink" title="企业应用场景"></a>企业应用场景</h3><ul>
+<li>实时排行榜（如积分、活跃度）</li>
+<li>热搜榜（搜索次数排名）</li>
+<li>新闻&#x2F;文章推荐系统（根据时间和热度排序）</li>
+</ul>
+<h3 id="Python-示例（积分排行榜）"><a href="#Python-示例（积分排行榜）" class="headerlink" title="Python 示例（积分排行榜）"></a>Python 示例（积分排行榜）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">leaderboard = <span class="hljs-string">&quot;game:scoreboard&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_score</span>(<span class="hljs-params">user, score</span>):<br>    r.zadd(leaderboard, &#123;user: score&#125;)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_top_users</span>(<span class="hljs-params">n=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-keyword">return</span> r.zrange(leaderboard, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, withscores=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 示例</span><br>add_score(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">80</span>)<br>add_score(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">95</span>)<br>add_score(<span class="hljs-string">&quot;Charlie&quot;</span>, <span class="hljs-number">90</span>)<br><br>top_users = get_top_users()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;排行榜：&quot;</span>, top_users)<br></code></pre></td></tr></table></figure>
+
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Redis/Redis-%E6%95%99%E7%A8%8B/" class="category-chain-item">Redis 教程</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis 核心数据结构介绍</div>
+      <div>https://dreamshao.github.io/2025/07/10/redis核心数据结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/09/redis%E6%95%99%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%AF%87/" title="Redis 学习基础篇">
+                        <span class="hidden-mobile">Redis 学习基础篇</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
