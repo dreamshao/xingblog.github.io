@@ -1,0 +1,974 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis 进阶与持久化机制1.1 持久化机制Redis 提供三种持久化机制： ✅ 1. RDB（快照）持久化RDB 将 Redis 在某个时间点的数据保存成二进制文件 dump.rdb。 🧩 特点： 启动恢复速度快 性能好，适合冷备份 但断电会丢失最后一次快照之后的数据  💡 配置（redis.conf）：123save 900 1     # 900秒内至少1个key变化，触发快照save">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 进阶与持久化实战教程">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/15/redis%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Redis 进阶与持久化机制1.1 持久化机制Redis 提供三种持久化机制： ✅ 1. RDB（快照）持久化RDB 将 Redis 在某个时间点的数据保存成二进制文件 dump.rdb。 🧩 特点： 启动恢复速度快 性能好，适合冷备份 但断电会丢失最后一次快照之后的数据  💡 配置（redis.conf）：123save 900 1     # 900秒内至少1个key变化，触发快照save">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-15T11:14:39.000Z">
+<meta property="article:modified_time" content="2025-07-15T11:35:59.882Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Redis 进阶与持久化实战教程 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis 进阶与持久化实战教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-15 19:14" pubdate>
+          2025年7月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis 进阶与持久化实战教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Redis-进阶与持久化机制"><a href="#Redis-进阶与持久化机制" class="headerlink" title="Redis 进阶与持久化机制"></a>Redis 进阶与持久化机制</h1><h2 id="1-1-持久化机制"><a href="#1-1-持久化机制" class="headerlink" title="1.1 持久化机制"></a>1.1 持久化机制</h2><p>Redis 提供三种持久化机制：</p>
+<h3 id="✅-1-RDB（快照）持久化"><a href="#✅-1-RDB（快照）持久化" class="headerlink" title="✅ 1. RDB（快照）持久化"></a>✅ 1. RDB（快照）持久化</h3><p>RDB 将 Redis 在某个时间点的数据保存成二进制文件 <code>dump.rdb</code>。</p>
+<h3 id="🧩-特点："><a href="#🧩-特点：" class="headerlink" title="🧩 特点："></a>🧩 特点：</h3><ul>
+<li>启动恢复速度快</li>
+<li>性能好，适合冷备份</li>
+<li>但断电会丢失最后一次快照之后的数据</li>
+</ul>
+<h3 id="💡-配置（redis-conf）："><a href="#💡-配置（redis-conf）：" class="headerlink" title="💡 配置（redis.conf）："></a>💡 配置（<code>redis.conf</code>）：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini">save 900 1     <span class="hljs-comment"># 900秒内至少1个key变化，触发快照</span><br>save 300 10    <span class="hljs-comment"># 5分钟内至少10个key变化</span><br>save 60 10000  <span class="hljs-comment"># 60秒内超过10000个key变化</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="📌-Python-示例（模拟写数据-强制触发-RDB）："><a href="#📌-Python-示例（模拟写数据-强制触发-RDB）：" class="headerlink" title="📌 Python 示例（模拟写数据 + 强制触发 RDB）："></a>📌 Python 示例（模拟写数据 + 强制触发 RDB）：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> redis<br><br>r = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 写入大量数据</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000</span>):<br>    r.<span class="hljs-built_in">set</span>(<span class="hljs-string">f&quot;user:<span class="hljs-subst">&#123;i&#125;</span>&quot;</span>, <span class="hljs-string">f&quot;value-<span class="hljs-subst">&#123;i&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 手动触发RDB保存（需开启redis-cli）</span><br><span class="hljs-comment"># 命令行输入 SAVE</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-2-AOF（Append-Only-File）持久化"><a href="#✅-2-AOF（Append-Only-File）持久化" class="headerlink" title="✅ 2. AOF（Append Only File）持久化"></a>✅ 2. AOF（Append Only File）持久化</h3><p>记录每一个写命令，并在重启时重新执行。</p>
+<h3 id="🧩-特点：-1"><a href="#🧩-特点：-1" class="headerlink" title="🧩 特点："></a>🧩 特点：</h3><ul>
+<li>数据更不易丢失</li>
+<li>文件体积大</li>
+<li>恢复速度慢于 RDB</li>
+</ul>
+<h3 id="💡-配置（redis-conf）：-1"><a href="#💡-配置（redis-conf）：-1" class="headerlink" title="💡 配置（redis.conf）："></a>💡 配置（<code>redis.conf</code>）：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini">appendonly yes<br>appendfilename &quot;appendonly.aof&quot;<br>appendfsync everysec    <span class="hljs-comment"># 推荐：每秒同步</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="📌-Python-示例："><a href="#📌-Python-示例：" class="headerlink" title="📌 Python 示例："></a>📌 Python 示例：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> redis<br><br>r = redis.Redis()<br>r.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;product:1001&quot;</span>, <span class="hljs-string">&quot;iPhone15&quot;</span>)<br>r.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;stock:1001&quot;</span>, <span class="hljs-number">50</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这些命令都会追加到 AOF 文件中。</p>
+<hr>
+<h3 id="✅-3-混合持久化（RDB-AOF）"><a href="#✅-3-混合持久化（RDB-AOF）" class="headerlink" title="✅ 3. 混合持久化（RDB + AOF）"></a>✅ 3. 混合持久化（RDB + AOF）</h3><p>Redis 4.0 起支持混合方式，在 AOF 文件中先写入 RDB 再写命令。</p>
+<h3 id="📌-开启方式："><a href="#📌-开启方式：" class="headerlink" title="📌 开启方式："></a>📌 开启方式：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini">aof-use-rdb-preamble yes<br></code></pre></td></tr></table></figure>
+
+<h3 id="🎯-实战建议："><a href="#🎯-实战建议：" class="headerlink" title="🎯 实战建议："></a>🎯 实战建议：</h3><p>企业中可选 <strong>混合持久化</strong>，在容灾与性能间做平衡。</p>
+<hr>
+<h2 id="1-2-主从复制（Replication）"><a href="#1-2-主从复制（Replication）" class="headerlink" title="1.2 主从复制（Replication）"></a>1.2 主从复制（Replication）</h2><p>Redis 支持一主多从结构，从节点实时同步主节点数据。</p>
+<hr>
+<h3 id="🧩-优势："><a href="#🧩-优势：" class="headerlink" title="🧩 优势："></a>🧩 优势：</h3><ul>
+<li>读写分离，减轻主节点压力</li>
+<li>灾备冗余，容灾恢复快</li>
+</ul>
+<hr>
+<h3 id="💡-主从配置："><a href="#💡-主从配置：" class="headerlink" title="💡 主从配置："></a>💡 主从配置：</h3><p><strong>主节点无需配置，子节点配置如下：</strong></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini">replicaof 127.0.0.1 6379   <span class="hljs-comment"># 指定主节点IP和端口</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="📌-Python-示例：-1"><a href="#📌-Python-示例：-1" class="headerlink" title="📌 Python 示例："></a>📌 Python 示例：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> redis<br><br><span class="hljs-comment"># 写数据到主节点</span><br>master = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>)<br>master.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;user:1&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>)<br><br><span class="hljs-comment"># 读数据从从节点（主从同步完成后）</span><br>slave = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6380</span>)<br><span class="hljs-built_in">print</span>(slave.get(<span class="hljs-string">&quot;user:1&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-3-Redis-哨兵模式（Sentinel）"><a href="#1-3-Redis-哨兵模式（Sentinel）" class="headerlink" title="1.3 Redis 哨兵模式（Sentinel）"></a>1.3 Redis 哨兵模式（Sentinel）</h2><p>Redis Sentinel 用于<strong>监控主从结构</strong>、<strong>自动主从切换</strong>。</p>
+<hr>
+<h3 id="🧩-工作机制："><a href="#🧩-工作机制：" class="headerlink" title="🧩 工作机制："></a>🧩 工作机制：</h3><ul>
+<li>节点故障时自动切换主节点</li>
+<li>通知客户端新的主节点地址</li>
+</ul>
+<h3 id="💡-sentinel-conf-示例："><a href="#💡-sentinel-conf-示例：" class="headerlink" title="💡 sentinel.conf 示例："></a>💡 sentinel.conf 示例：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini">sentinel monitor mymaster 127.0.0.1 6379 2<br>sentinel down-after-milliseconds mymaster 5000<br>sentinel failover-timeout mymaster 10000<br>sentinel parallel-syncs mymaster 1<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📌-启动哨兵："><a href="#📌-启动哨兵：" class="headerlink" title="📌 启动哨兵："></a>📌 启动哨兵：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">redis-sentinel sentinel.conf<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📌-Python-示例（感知主节点）："><a href="#📌-Python-示例（感知主节点）：" class="headerlink" title="📌 Python 示例（感知主节点）："></a>📌 Python 示例（感知主节点）：</h3><p>建议使用 <code>redis.sentinel.Sentinel</code> 模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> redis.sentinel <span class="hljs-keyword">import</span> Sentinel<br><br>sentinel = Sentinel([(<span class="hljs-string">&#x27;localhost&#x27;</span>, <span class="hljs-number">26379</span>)], socket_timeout=<span class="hljs-number">0.1</span>)<br>master = sentinel.master_for(<span class="hljs-string">&#x27;mymaster&#x27;</span>, socket_timeout=<span class="hljs-number">0.1</span>)<br><br>master.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>)<br><span class="hljs-built_in">print</span>(master.get(<span class="hljs-string">&quot;key&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-4-Redis-集群模式（Cluster）"><a href="#1-4-Redis-集群模式（Cluster）" class="headerlink" title="1.4 Redis 集群模式（Cluster）"></a>1.4 Redis 集群模式（Cluster）</h2><p>Redis Cluster 是官方提供的<strong>分布式方案</strong>。</p>
+<hr>
+<h3 id="🧩-特点：-2"><a href="#🧩-特点：-2" class="headerlink" title="🧩 特点："></a>🧩 特点：</h3><ul>
+<li>分片存储数据（哈希槽 slot）</li>
+<li>自带容错、主从、复制机制</li>
+<li>最少需要 6 个节点（3 主 3 从）</li>
+</ul>
+<hr>
+<h3 id="💡-搭建-Redis-Cluster："><a href="#💡-搭建-Redis-Cluster：" class="headerlink" title="💡 搭建 Redis Cluster："></a>💡 搭建 Redis Cluster：</h3><ul>
+<li>每个节点配置：</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini">port 7000<br>cluster-enabled yes<br>cluster-config-file nodes.conf<br>cluster-node-timeout 5000<br>appendonly yes<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>创建集群命令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">redis-cli --cluster create \<br>127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 \<br>127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 \<br>--cluster-replicas 1<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📌-Python-使用-redis-py-cluster："><a href="#📌-Python-使用-redis-py-cluster：" class="headerlink" title="📌 Python 使用 redis-py-cluster："></a>📌 Python 使用 <code>redis-py-cluster</code>：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install redis-py-cluster<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rediscluster <span class="hljs-keyword">import</span> RedisCluster<br><br>startup_nodes = [&#123;<span class="hljs-string">&quot;host&quot;</span>: <span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-string">&quot;port&quot;</span>: <span class="hljs-string">&quot;7000&quot;</span>&#125;]<br>rc = RedisCluster(startup_nodes=startup_nodes, decode_responses=<span class="hljs-literal">True</span>)<br><br>rc.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;user:200&quot;</span>, <span class="hljs-string">&quot;Tom&quot;</span>)<br><span class="hljs-built_in">print</span>(rc.get(<span class="hljs-string">&quot;user:200&quot;</span>))<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="📌-Redis-哈希槽（Hash-Slot）详解"><a href="#📌-Redis-哈希槽（Hash-Slot）详解" class="headerlink" title="📌 Redis 哈希槽（Hash Slot）详解"></a>📌 Redis 哈希槽（Hash Slot）详解</h3><h4 id="📌-什么是哈希槽？"><a href="#📌-什么是哈希槽？" class="headerlink" title="📌 什么是哈希槽？"></a>📌 什么是哈希槽？</h4><p>在 Redis 的 <strong>集群模式（Cluster）</strong> 中，为了实现数据的分布式存储，引入了一个核心概念 —— <strong>哈希槽（Hash Slot）</strong>。</p>
+<ul>
+<li>Redis 集群总共有 <strong>16384 个哈希槽</strong>（编号范围 0～16383）</li>
+<li>所有的 key 通过哈希算法映射到这 16384 个槽位中</li>
+<li>每个节点负责一定数量的哈希槽（例如：3 个节点，每个大约 5461 个槽）</li>
+</ul>
+<p>⚠️ <strong>注意</strong>：哈希槽不是键，而是键分布到节点的桥梁。</p>
+<hr>
+<h4 id="🧮-哈希槽是如何计算的？"><a href="#🧮-哈希槽是如何计算的？" class="headerlink" title="🧮 哈希槽是如何计算的？"></a>🧮 哈希槽是如何计算的？</h4><p>Redis 使用 CRC16 算法计算 key 的哈希值，并对 16384 取模：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">hash_slot = CRC16(key) % 16384<br></code></pre></td></tr></table></figure>
+
+<p>🔎 示例（使用 <code>redis-cli</code>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">127.0.0.1:7000&gt; CLUSTER KEYSLOT mykey<br>15495<br></code></pre></td></tr></table></figure>
+
+<p>表示：<code>mykey</code> 被映射到 <strong>哈希槽 15495</strong>。</p>
+<hr>
+<h4 id="🎯-为什么引入哈希槽？"><a href="#🎯-为什么引入哈希槽？" class="headerlink" title="🎯 为什么引入哈希槽？"></a>🎯 为什么引入哈希槽？</h4><p>传统的 Redis 无法分布式部署，单点数据量大容易瓶颈。</p>
+<p>哈希槽的引入可以解决：</p>
+<ol>
+<li><strong>均匀分布</strong>：数据根据哈希槽均匀地分布到不同节点</li>
+<li><strong>水平扩容</strong>：可以动态迁移槽位实现节点扩展</li>
+<li><strong>故障转移</strong>：某个节点宕机，槽位迁移至其他节点</li>
+</ol>
+<hr>
+<h4 id="🏗️-集群架构中的哈希槽分配"><a href="#🏗️-集群架构中的哈希槽分配" class="headerlink" title="🏗️ 集群架构中的哈希槽分配"></a>🏗️ 集群架构中的哈希槽分配</h4><p>一个标准 Redis 集群：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">Node</span> A:<span class="hljs-title"> 0</span> - <span class="hljs-number">5460</span><br><span class="hljs-keyword">Node</span> B:<span class="hljs-title"> 5461</span> - <span class="hljs-number">10922</span><br><span class="hljs-keyword">Node</span> C:<span class="hljs-title"> 10923</span> - <span class="hljs-number">16383</span><br></code></pre></td></tr></table></figure>
+
+<p>当插入一个 key 时：</p>
+<ul>
+<li>Redis 通过 CRC16 计算 key 映射的 slot</li>
+<li>将该键值对存入负责该槽的节点</li>
+</ul>
+<hr>
+<h4 id="🔁-集群重分片（重新分配槽）"><a href="#🔁-集群重分片（重新分配槽）" class="headerlink" title="🔁 集群重分片（重新分配槽）"></a>🔁 集群重分片（重新分配槽）</h4><p>当新增节点 D，Redis 支持将部分槽从 A&#x2F;B&#x2F;C 迁移至 D：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">redis-cli --cluster reshard 127.0.0.1:7000<br></code></pre></td></tr></table></figure>
+
+<p>系统会提示你：</p>
+<ul>
+<li>迁移多少个槽（如 2000）</li>
+<li>源节点</li>
+<li>目标节点</li>
+</ul>
+<p>迁移完成后，新节点开始接收请求。</p>
+<hr>
+<h4 id="🧠-哈希标签（Hash-Tags）"><a href="#🧠-哈希标签（Hash-Tags）" class="headerlink" title="🧠 哈希标签（Hash Tags）"></a>🧠 哈希标签（Hash Tags）</h4><p>为了确保多个 key 在同一个槽中（保证原子性操作），Redis 提供了 <strong>Hash Tag</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">&#123;user1000&#125;.name<br>&#123;user1000&#125;.email<br></code></pre></td></tr></table></figure>
+
+<p>以上两个 key 的槽是一样的，因为 Redis 只对 <strong>花括号中的内容</strong>进行 CRC16 计算。</p>
+<p>📌 常用于：</p>
+<ul>
+<li>Lua 脚本操作多个 key</li>
+<li>pipeline 或事务中 key 保证在一个节点上</li>
+</ul>
+<hr>
+<h4 id="🛠️-Python-示例"><a href="#🛠️-Python-示例" class="headerlink" title="🛠️ Python 示例"></a>🛠️ Python 示例</h4><p>我们使用 <code>crcmod</code> 模拟 Redis 的 CRC16 算法计算哈希槽。</p>
+<h5 id="✅-安装依赖"><a href="#✅-安装依赖" class="headerlink" title="✅ 安装依赖"></a>✅ 安装依赖</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install crcmod<br></code></pre></td></tr></table></figure>
+
+<h5 id="✅-Python-示例代码"><a href="#✅-Python-示例代码" class="headerlink" title="✅ Python 示例代码"></a>✅ Python 示例代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> crcmod<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_redis_slot</span>(<span class="hljs-params">key: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-comment"># 获取 &#123;&#125; 中内容作为计算字段</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;&#123;&quot;</span> <span class="hljs-keyword">in</span> key <span class="hljs-keyword">and</span> <span class="hljs-string">&quot;&#125;&quot;</span> <span class="hljs-keyword">in</span> key:<br>        key = key[key.find(<span class="hljs-string">&quot;&#123;&quot;</span>) + <span class="hljs-number">1</span>:key.find(<span class="hljs-string">&quot;&#125;&quot;</span>)]<br>    crc16 = crcmod.predefined.mkPredefinedCrcFun(<span class="hljs-string">&quot;crc-16&quot;</span>)<br>    <span class="hljs-keyword">return</span> crc16(key.encode()) % <span class="hljs-number">16384</span><br><br><span class="hljs-comment"># 示例</span><br>keys = [<span class="hljs-string">&quot;user:1001&quot;</span>, <span class="hljs-string">&quot;&#123;user1001&#125;.name&quot;</span>, <span class="hljs-string">&quot;&#123;user1001&#125;.email&quot;</span>]<br><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> keys:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Key: <span class="hljs-subst">&#123;k&#125;</span>, Slot: <span class="hljs-subst">&#123;get_redis_slot(k)&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="✅-输出结果示例"><a href="#✅-输出结果示例" class="headerlink" title="✅ 输出结果示例"></a>✅ 输出结果示例</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">Key:</span> <span class="hljs-string">user:1001,</span> <span class="hljs-attr">Slot:</span> <span class="hljs-number">5796</span><br><span class="hljs-attr">Key:</span> &#123;<span class="hljs-string">user1001</span>&#125;<span class="hljs-string">.name,</span> <span class="hljs-attr">Slot:</span> <span class="hljs-number">5796</span><br><span class="hljs-attr">Key:</span> &#123;<span class="hljs-string">user1001</span>&#125;<span class="hljs-string">.email,</span> <span class="hljs-attr">Slot:</span> <span class="hljs-number">5796</span><br></code></pre></td></tr></table></figure>
+
+<p>📌 你可以看到，<code>&#123;user1001&#125;.xxx</code> 的槽值相同，便于放在一个节点上。</p>
+<hr>
+<h4 id="❗-注意事项"><a href="#❗-注意事项" class="headerlink" title="❗ 注意事项"></a>❗ 注意事项</h4><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务（MULTI&#x2F;EXEC）</td>
+<td>所有 key 必须在一个槽内，否则执行失败</td>
+</tr>
+<tr>
+<td>Lua 脚本</td>
+<td>同样受限于槽</td>
+</tr>
+<tr>
+<td>pipeline 批量操作</td>
+<td>建议使用哈希标签确保 key 落入同一个槽</td>
+</tr>
+<tr>
+<td>拓展节点</td>
+<td>使用 <code>redis-cli --cluster reshard</code> 操作槽</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="✅-使用建议"><a href="#✅-使用建议" class="headerlink" title="✅ 使用建议"></a>✅ 使用建议</h4><ul>
+<li>在设计 key 时，合理使用哈希标签 <code>&#123;&#125;</code></li>
+<li>避免在一个操作中跨槽访问多个 key</li>
+<li>定期监控哈希槽的分布情况（可使用 RedisInsight 等工具）</li>
+<li>做好数据迁移&#x2F;节点扩容前的预案（备份、验证）</li>
+</ul>
+<hr>
+<h3 id="📦-企业实战建议："><a href="#📦-企业实战建议：" class="headerlink" title="📦 企业实战建议："></a>📦 企业实战建议：</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高性能缓存</td>
+<td>RDB + AOF 混合持久化</td>
+</tr>
+<tr>
+<td>弹性读写分离</td>
+<td>主从复制</td>
+</tr>
+<tr>
+<td>高可用部署</td>
+<td>Sentinel 哨兵模式</td>
+</tr>
+<tr>
+<td>海量分布式存储</td>
+<td>Cluster 集群模式</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧠-总结"><a href="#🧠-总结" class="headerlink" title="🧠 总结"></a>🧠 总结</h2><p>Redis 的进阶使用与企业级部署策略，包括：</p>
+<ul>
+<li>RDB、AOF 与混合持久化的取舍与配置</li>
+<li>主从架构实现读写分离</li>
+<li>哨兵模式保证高可用</li>
+<li>集群模式解决海量数据水平扩展</li>
+</ul>
+<p>✅ 建议配合 Prometheus + Grafana 进行监控部署<br>✅ 持久化策略可根据业务数据安全级别动态调整</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Redis/Redis-%E6%95%99%E7%A8%8B/" class="category-chain-item">Redis 教程</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis 进阶与持久化实战教程</div>
+      <div>https://dreamshao.github.io/2025/07/15/redis持久化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/11/redis%E5%AE%9E%E6%88%98%E6%95%99%E7%A8%8B/" title="Redis 实战教程">
+                        <span class="hidden-mobile">Redis 实战教程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
