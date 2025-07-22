@@ -1,0 +1,915 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis 项目实战分析 1.1 项目实战一：百万 PV 新闻网站缓存架构✅ 背景某新闻网站日均访问量达百万级，文章访问量极不均衡（80&#x2F;20 法则），对热点文章访问频繁，需设计高性能缓存方案。 📌 关键目标 缓存热点新闻，减轻 DB 压力 页面缓存 + 数据缓存结合 缓存过期与更新机制   📦 架构设计   缓存层 说明 技术选型    页面缓存 对静态页面直接缓存 Nginx +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 项目实战分析">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/22/redis%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="Redis 项目实战分析 1.1 项目实战一：百万 PV 新闻网站缓存架构✅ 背景某新闻网站日均访问量达百万级，文章访问量极不均衡（80&#x2F;20 法则），对热点文章访问频繁，需设计高性能缓存方案。 📌 关键目标 缓存热点新闻，减轻 DB 压力 页面缓存 + 数据缓存结合 缓存过期与更新机制   📦 架构设计   缓存层 说明 技术选型    页面缓存 对静态页面直接缓存 Nginx +">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-22T11:19:04.000Z">
+<meta property="article:modified_time" content="2025-07-22T11:21:02.455Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Redis 项目实战分析 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis 项目实战分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-22 19:19" pubdate>
+          2025年7月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis 项目实战分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Redis-项目实战分析"><a href="#Redis-项目实战分析" class="headerlink" title="Redis 项目实战分析"></a>Redis 项目实战分析</h1><hr>
+<h2 id="1-1-项目实战一：百万-PV-新闻网站缓存架构"><a href="#1-1-项目实战一：百万-PV-新闻网站缓存架构" class="headerlink" title="1.1 项目实战一：百万 PV 新闻网站缓存架构"></a>1.1 项目实战一：百万 PV 新闻网站缓存架构</h2><h3 id="✅-背景"><a href="#✅-背景" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>某新闻网站日均访问量达百万级，文章访问量极不均衡（80&#x2F;20 法则），对热点文章访问频繁，需设计高性能缓存方案。</p>
+<h3 id="📌-关键目标"><a href="#📌-关键目标" class="headerlink" title="📌 关键目标"></a>📌 关键目标</h3><ul>
+<li>缓存热点新闻，减轻 DB 压力</li>
+<li>页面缓存 + 数据缓存结合</li>
+<li>缓存过期与更新机制</li>
+</ul>
+<hr>
+<h3 id="📦-架构设计"><a href="#📦-架构设计" class="headerlink" title="📦 架构设计"></a>📦 架构设计</h3><table>
+<thead>
+<tr>
+<th>缓存层</th>
+<th>说明</th>
+<th>技术选型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>页面缓存</td>
+<td>对静态页面直接缓存</td>
+<td>Nginx + Redis</td>
+</tr>
+<tr>
+<td>数据缓存</td>
+<td>查询 DB 前先查 Redis</td>
+<td>Redis</td>
+</tr>
+<tr>
+<td>热点预热</td>
+<td>发布文章时提前缓存热点</td>
+<td>后台管理逻辑</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🧠-代码示例（Python，使用-Flask-框架）"><a href="#🧠-代码示例（Python，使用-Flask-框架）" class="headerlink" title="🧠 代码示例（Python，使用 Flask 框架）"></a>🧠 代码示例（Python，使用 Flask 框架）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, jsonify<br><span class="hljs-keyword">import</span> redis<br><span class="hljs-keyword">import</span> time<br><br>app = Flask(__name__)<br>r = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_article_from_db</span>(<span class="hljs-params">article_id</span>):<br>    <span class="hljs-comment"># 模拟数据库查询</span><br>    time.sleep(<span class="hljs-number">0.5</span>)<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;id&quot;</span>: article_id, <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">f&quot;文章<span class="hljs-subst">&#123;article_id&#125;</span>&quot;</span>, <span class="hljs-string">&quot;content&quot;</span>: <span class="hljs-string">&quot;这是一篇内容丰富的文章。&quot;</span>&#125;<br><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/article/&lt;int:article_id&gt;&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_article</span>(<span class="hljs-params">article_id</span>):<br>    key = <span class="hljs-string">f&quot;article:<span class="hljs-subst">&#123;article_id&#125;</span>&quot;</span><br>    article = r.get(key)<br>    <span class="hljs-keyword">if</span> article:<br>        <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&quot;source&quot;</span>: <span class="hljs-string">&quot;cache&quot;</span>, <span class="hljs-string">&quot;data&quot;</span>: <span class="hljs-built_in">eval</span>(article)&#125;)<br><br>    <span class="hljs-comment"># 缓存未命中，访问 DB</span><br>    article = get_article_from_db(article_id)<br>    r.setex(key, <span class="hljs-number">300</span>, <span class="hljs-built_in">str</span>(article))  <span class="hljs-comment"># 缓存 5 分钟</span><br>    <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&quot;source&quot;</span>: <span class="hljs-string">&quot;db&quot;</span>, <span class="hljs-string">&quot;data&quot;</span>: article&#125;)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    app.run(debug=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="💡-缓存更新策略"><a href="#💡-缓存更新策略" class="headerlink" title="💡 缓存更新策略"></a>💡 缓存更新策略</h3><ul>
+<li>发布&#x2F;修改文章后，后台自动刷新 Redis 中对应的 key。</li>
+<li>对热点文章列表定时进行预热（job 脚本自动执行）。</li>
+</ul>
+<hr>
+<h2 id="1-2-项目实战二：高并发电商抢购系统"><a href="#1-2-项目实战二：高并发电商抢购系统" class="headerlink" title="1.2 项目实战二：高并发电商抢购系统"></a>1.2 项目实战二：高并发电商抢购系统</h2><h3 id="✅-背景-1"><a href="#✅-背景-1" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>秒杀活动中，用户瞬间涌入，需要保障商品不被超卖、服务不被打垮。</p>
+<hr>
+<h3 id="📌-技术关键点"><a href="#📌-技术关键点" class="headerlink" title="📌 技术关键点"></a>📌 技术关键点</h3><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>库存扣减一致性</td>
+<td>Redis 原子操作</td>
+</tr>
+<tr>
+<td>接口幂等性</td>
+<td>防止重复请求</td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>限流 + 排队机制</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🧠-示例代码：Redis-原子扣库存（Python）"><a href="#🧠-示例代码：Redis-原子扣库存（Python）" class="headerlink" title="🧠 示例代码：Redis 原子扣库存（Python）"></a>🧠 示例代码：Redis 原子扣库存（Python）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request, jsonify<br><span class="hljs-keyword">import</span> redis<br><br>app = Flask(__name__)<br>r = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/buy&quot;</span>, methods=[<span class="hljs-string">&quot;POST&quot;</span>]</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">buy_item</span>():<br>    user_id = request.form[<span class="hljs-string">&quot;user_id&quot;</span>]<br>    product_id = request.form[<span class="hljs-string">&quot;product_id&quot;</span>]<br>    key = <span class="hljs-string">f&quot;stock:<span class="hljs-subst">&#123;product_id&#125;</span>&quot;</span><br>    user_key = <span class="hljs-string">f&quot;purchased:<span class="hljs-subst">&#123;product_id&#125;</span>:<span class="hljs-subst">&#123;user_id&#125;</span>&quot;</span><br><br>    <span class="hljs-comment"># 避免重复下单</span><br>    <span class="hljs-keyword">if</span> r.exists(user_key):<br>        <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;fail&quot;</span>, <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;重复下单&quot;</span>&#125;)<br><br>    <span class="hljs-comment"># 扣减库存</span><br>    <span class="hljs-keyword">with</span> r.pipeline() <span class="hljs-keyword">as</span> pipe:<br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            <span class="hljs-keyword">try</span>:<br>                pipe.watch(key)<br>                stock = <span class="hljs-built_in">int</span>(pipe.get(key) <span class="hljs-keyword">or</span> <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">if</span> stock &gt; <span class="hljs-number">0</span>:<br>                    pipe.multi()<br>                    pipe.decr(key)<br>                    pipe.<span class="hljs-built_in">set</span>(user_key, <span class="hljs-number">1</span>)<br>                    pipe.expire(user_key, <span class="hljs-number">3600</span>)<br>                    pipe.execute()<br>                    <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;购买成功&quot;</span>&#125;)<br>                <span class="hljs-keyword">else</span>:<br>                    pipe.unwatch()<br>                    <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;fail&quot;</span>, <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;已售罄&quot;</span>&#125;)<br>            <span class="hljs-keyword">except</span> redis.WatchError:<br>                <span class="hljs-keyword">continue</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    r.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;stock:1001&quot;</span>, <span class="hljs-number">100</span>)  <span class="hljs-comment"># 初始化库存</span><br>    app.run()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-3-项目实战三：消息中心与延时任务系统"><a href="#1-3-项目实战三：消息中心与延时任务系统" class="headerlink" title="1.3 项目实战三：消息中心与延时任务系统"></a>1.3 项目实战三：消息中心与延时任务系统</h2><h3 id="✅-背景-2"><a href="#✅-背景-2" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>电商平台需要给用户发送短信&#x2F;站内信&#x2F;推送等消息，同时支持延迟通知（如：1 小时后提醒付款）。</p>
+<hr>
+<h3 id="📌-技术设计"><a href="#📌-技术设计" class="headerlink" title="📌 技术设计"></a>📌 技术设计</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>延时消息调度</td>
+<td>Redis ZSET</td>
+</tr>
+<tr>
+<td>多级优先队列</td>
+<td>队列优先级划分</td>
+</tr>
+<tr>
+<td>失败重试机制</td>
+<td>失败任务重新入队</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🧠-延时队列实现（ZSET）"><a href="#🧠-延时队列实现（ZSET）" class="headerlink" title="🧠 延时队列实现（ZSET）"></a>🧠 延时队列实现（ZSET）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> redis<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> json<br><br>r = redis.Redis(host=<span class="hljs-string">&#x27;localhost&#x27;</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)<br>DELAY_QUEUE = <span class="hljs-string">&quot;delay:queue&quot;</span><br><br><span class="hljs-comment"># 推送延时任务</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">push_delay_task</span>(<span class="hljs-params">task_id, delay_seconds</span>):<br>    timestamp = <span class="hljs-built_in">int</span>(time.time() + delay_seconds)<br>    task_data = &#123;<span class="hljs-string">&quot;id&quot;</span>: task_id, <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;sms&quot;</span>, <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;请尽快完成支付&quot;</span>&#125;<br>    r.zadd(DELAY_QUEUE, &#123;json.dumps(task_data): timestamp&#125;)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;推送任务成功&quot;</span>)<br><br><span class="hljs-comment"># 消费任务</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">consume_delay_task</span>():<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        now = <span class="hljs-built_in">int</span>(time.time())<br>        items = r.zrangebyscore(DELAY_QUEUE, <span class="hljs-number">0</span>, now, start=<span class="hljs-number">0</span>, num=<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> items:<br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> items:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;处理任务：&quot;</span>, item)<br>            r.zrem(DELAY_QUEUE, item)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 示例：推送任务</span><br>    push_delay_task(<span class="hljs-string">&quot;task_001&quot;</span>, delay_seconds=<span class="hljs-number">10</span>)<br><br>    <span class="hljs-comment"># 消费任务</span><br>    consume_delay_task()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔚-附录"><a href="#🔚-附录" class="headerlink" title="🔚 附录"></a>🔚 附录</h2><h3 id="✅-Redis-命令速查表（部分）"><a href="#✅-Redis-命令速查表（部分）" class="headerlink" title="✅ Redis 命令速查表（部分）"></a>✅ Redis 命令速查表（部分）</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>命令</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>设置键值</td>
+<td><code>SET</code></td>
+<td><code>SET user:1 &quot;Tom&quot;</code></td>
+</tr>
+<tr>
+<td>获取键值</td>
+<td><code>GET</code></td>
+<td><code>GET user:1</code></td>
+</tr>
+<tr>
+<td>增加数值</td>
+<td><code>INCR</code></td>
+<td><code>INCR page:view</code></td>
+</tr>
+<tr>
+<td>有序集合加分</td>
+<td><code>ZINCRBY</code></td>
+<td><code>ZINCRBY rank 10 &quot;user1&quot;</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🔍-Redis-可视化工具推荐"><a href="#🔍-Redis-可视化工具推荐" class="headerlink" title="🔍 Redis 可视化工具推荐"></a>🔍 Redis 可视化工具推荐</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RedisInsight</td>
+<td>图形化分析、键空间管理</td>
+</tr>
+<tr>
+<td>RDM</td>
+<td>跨平台、支持 SSH 连接</td>
+</tr>
+<tr>
+<td>Medis</td>
+<td>macOS 优雅 Redis GUI</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="⚠-Redis-实战坑点与建议"><a href="#⚠-Redis-实战坑点与建议" class="headerlink" title="⚠ Redis 实战坑点与建议"></a>⚠ Redis 实战坑点与建议</h3><ul>
+<li><strong>热点 key 分布不均</strong>：引入本地缓存或按用户打散 key。</li>
+<li><strong>keys 命令造成阻塞</strong>：避免线上使用，替换为 <code>scan</code>。</li>
+<li><strong>AOF 日志膨胀</strong>：定期重写（rewrite）。</li>
+<li><strong>慢查询拖垮主线程</strong>：开启 <code>slowlog</code> 并监控。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Redis/Redis-%E6%95%99%E7%A8%8B/" class="category-chain-item">Redis 教程</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis 项目实战分析</div>
+      <div>https://dreamshao.github.io/2025/07/22/redis项目实战分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/17/redis%E7%BC%93%E5%AD%98%E5%BA%94%E7%94%A8%E4%B8%8E%E7%83%AD%E7%82%B9/" title="Redis 缓存应用与热点">
+                        <span class="hidden-mobile">Redis 缓存应用与热点</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
