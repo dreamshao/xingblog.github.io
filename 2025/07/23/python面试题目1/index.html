@@ -17,15 +17,15 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python 面试算法题目按照输入的数字分割字母 题目介绍：给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。 1234s &#x3D; &#x27;AAABCADDE&#x27;k &#x3D; 3那么我们打印出来的就是 u1 &#x3D; &#x27;A&#x27; u2&#x3D;&#x27;BCA&#x27;">
+    <meta name="description" content="Python 面试算法题目去重字典但是不能使用额外数组空间描述： 去重list，但是不能使用额外数组空间， 例如 nums &#x3D; [0,2,3,1,5,0,2,3] 输出 [1,5] 代码实现1234567891011121314151617nums &#x3D; [1, 2, 3, 2, 2, 2, 1, 1, 1]n &#x3D; len(nums)i &#x3D; 0while i &lt; n:    j &#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python 面试算法题目按照输入的数字分割字母">
-<meta property="og:url" content="https://dreamshao.github.io/2025/07/22/python%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE/index.html">
+<meta property="og:title" content="Python 面试算法题目去重字典但是不能使用额外数组空间">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/23/python%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE1/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python 面试算法题目按照输入的数字分割字母 题目介绍：给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。 1234s &#x3D; &#x27;AAABCADDE&#x27;k &#x3D; 3那么我们打印出来的就是 u1 &#x3D; &#x27;A&#x27; u2&#x3D;&#x27;BCA&#x27;">
+<meta property="og:description" content="Python 面试算法题目去重字典但是不能使用额外数组空间描述： 去重list，但是不能使用额外数组空间， 例如 nums &#x3D; [0,2,3,1,5,0,2,3] 输出 [1,5] 代码实现1234567891011121314151617nums &#x3D; [1, 2, 3, 2, 2, 2, 1, 1, 1]n &#x3D; len(nums)i &#x3D; 0while i &lt; n:    j &#x3D;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-22T11:24:41.000Z">
-<meta property="article:modified_time" content="2025-07-22T11:53:28.674Z">
+<meta property="article:published_time" content="2025-07-23T12:01:34.000Z">
+<meta property="article:modified_time" content="2025-07-23T12:07:23.332Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="算法">
@@ -33,7 +33,7 @@
   
   
   
-  <title>Python 面试算法题目按照输入的数字分割字母 - 韵少的个人技术博客</title>
+  <title>Python 面试算法题目去重字典但是不能使用额外数组空间 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -248,7 +248,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python 面试算法题目按照输入的数字分割字母"></span>
+            <span id="subtitle" data-typed-text="Python 面试算法题目去重字典但是不能使用额外数组空间"></span>
           
         </div>
 
@@ -259,8 +259,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-22 19:24" pubdate>
-          2025年7月22日 晚上
+        <time datetime="2025-07-23 20:01" pubdate>
+          2025年7月23日 晚上
         </time>
       </span>
     
@@ -271,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          448 字
+          251 字
         
       </span>
     
@@ -282,7 +282,7 @@
         
         
         
-          4 分钟
+          3 分钟
         
       </span>
     
@@ -327,29 +327,16 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python 面试算法题目按照输入的数字分割字母</h1>
+            <h1 id="seo-header">Python 面试算法题目去重字典但是不能使用额外数组空间</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python-面试算法题目按照输入的数字分割字母"><a href="#Python-面试算法题目按照输入的数字分割字母" class="headerlink" title="Python 面试算法题目按照输入的数字分割字母"></a>Python 面试算法题目按照输入的数字分割字母</h1><hr>
-<h2 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h2><p>给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">s = &#x27;AAABCADDE&#x27;<br>k = 3<br><br>那么我们打印出来的就是 u1 = &#x27;A&#x27; u2=&#x27;BCA&#x27; u3=&#x27;DE&#x27;<br></code></pre></td></tr></table></figure>
-<hr>
-<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge_the_tools</span>(<span class="hljs-params">string, k</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> string:<br>        <span class="hljs-keyword">return</span><br>    result = <span class="hljs-string">&#x27;&#x27;</span><br>    <br>    <span class="hljs-keyword">for</span> i, ch <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(string):<br>        <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % k == <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">if</span> result:<br>                <span class="hljs-built_in">print</span>(result)<br>            result = <span class="hljs-string">&#x27;&#x27;</span><br><br>        <span class="hljs-keyword">if</span> ch <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> result:<br>            result += ch<br>            <br>    <span class="hljs-keyword">if</span> result:<br>        <span class="hljs-built_in">print</span>(result)<br>            <br>            <br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    string, k = <span class="hljs-built_in">input</span>(), <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    merge_the_tools(string,k)<br></code></pre></td></tr></table></figure>
+                <h1 id="Python-面试算法题目去重字典但是不能使用额外数组空间"><a href="#Python-面试算法题目去重字典但是不能使用额外数组空间" class="headerlink" title="Python 面试算法题目去重字典但是不能使用额外数组空间"></a>Python 面试算法题目去重字典但是不能使用额外数组空间</h1><p>描述： 去重list，但是不能使用额外数组空间， 例如 nums &#x3D; [0,2,3,1,5,0,2,3] 输出 [1,5]</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">nums = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br><br>n = <span class="hljs-built_in">len</span>(nums)<br>i = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> i &lt; n:<br>    j = i + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> j &lt; n:<br>        <span class="hljs-keyword">if</span> nums[j] == nums[i]:<br>            <span class="hljs-comment"># 删除重复元素</span><br>            <span class="hljs-keyword">del</span> nums[j]<br>            n -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            j += <span class="hljs-number">1</span><br>    i += <span class="hljs-number">1</span><br><br><span class="hljs-built_in">print</span>(nums)  <span class="hljs-comment"># 输出：[1, 2, 3]</span><br><br></code></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="代码解释："><a href="#代码解释：" class="headerlink" title="代码解释："></a>代码解释：</h2><p>这里我们可以通过分析如果当前长度和输入的长度一致，那么我们对输入的数字和长度取余为0的时候表示我们已经取值够了，那么我们只需要在余数为0的时候输出信息即可，然后清空已经存储的信息，继续上面的逻辑</p>
-<p>在这里我使用了<code>enumerate</code> 函数可以将遍历出来的信息包含数字索引信息，这样我们就可以通过索引信息来进行取余的操作！</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i, ch <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(string):<br>       <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % k == <span class="hljs-number">0</span>:<br>           <span class="hljs-keyword">if</span> result:<br>               <span class="hljs-built_in">print</span>(result)<br>           result = <span class="hljs-string">&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<p>那么我们只需在余数不是0的情况下将我们的信息添加到<code>result</code>中，这时候你只需要判断之前是否存在相同的信息即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> ch <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> result:<br>           result += ch<br></code></pre></td></tr></table></figure>
-
-<p>那么如果存在极端情况，你只有3个数字，但是你输入了5此时上面的都不适用，那么你只需要判断当前result不是空，直接将输出的信息打印出来即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> result:<br>       <span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure>
-
-
+<h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><p>如果不能使用额外的数据结构和空间（例如集合、字典、列表等辅助空间），我们只能在原地修改列表 nums，常见方式是双指针法 + 原地遍历删除重复项，不过因为需要保留顺序同时去重，最朴素的方法是 双层循环 原地去重。</p>
+<p>采用从头开始和第二个进行对比，如果一致则删除，然后长度-1，头部加1 否则 我们就将就j+1, 当j &gt; n的时候就实现了遍历所有了。</p>
 
                 
               </div>
@@ -404,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python 面试算法题目按照输入的数字分割字母</div>
-      <div>https://dreamshao.github.io/2025/07/22/python面试算法题目/</div>
+      <div>Python 面试算法题目去重字典但是不能使用额外数组空间</div>
+      <div>https://dreamshao.github.io/2025/07/23/python面试题目1/</div>
     </div>
     <div class="license-meta">
       
@@ -417,7 +404,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月22日</div>
+          <div>2025年7月23日</div>
         </div>
       
       
@@ -449,9 +436,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/23/python%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE1/" title="Python 面试算法题目去重字典但是不能使用额外数组空间">
+                      <a href="/2025/07/23/python%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E4%B9%8Bcombinations/" title="Python combinations 函数">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python 面试算法题目去重字典但是不能使用额外数组空间</span>
+                        <span class="hidden-mobile">Python combinations 函数</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -459,8 +446,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/22/redis%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E5%88%86%E6%9E%90/" title="Redis 项目实战分析">
-                        <span class="hidden-mobile">Redis 项目实战分析</span>
+                      <a href="/2025/07/22/python%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE/" title="Python 面试算法题目按照输入的数字分割字母">
+                        <span class="hidden-mobile">Python 面试算法题目按照输入的数字分割字母</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -17,23 +17,25 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python 面试算法题目按照输入的数字分割字母 题目介绍：给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。 1234s &#x3D; &#x27;AAABCADDE&#x27;k &#x3D; 3那么我们打印出来的就是 u1 &#x3D; &#x27;A&#x27; u2&#x3D;&#x27;BCA&#x27;">
+    <meta name="description" content="Python 常见函数 combinations 详解✅ 一、概述Python 中的 combinations 是 itertools 模块下的一个函数，用于生成序列中所有不重复的 r 个元素的组合（不同于排列 permutation，不考虑顺序）。  模块位置：from itertools import combinations特点：无重复、无顺序   🧠 二、基本语法123from iter">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python 面试算法题目按照输入的数字分割字母">
-<meta property="og:url" content="https://dreamshao.github.io/2025/07/22/python%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE/index.html">
+<meta property="og:title" content="Python combinations 函数">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/23/python%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E4%B9%8Bcombinations/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="Python 面试算法题目按照输入的数字分割字母 题目介绍：给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。 1234s &#x3D; &#x27;AAABCADDE&#x27;k &#x3D; 3那么我们打印出来的就是 u1 &#x3D; &#x27;A&#x27; u2&#x3D;&#x27;BCA&#x27;">
+<meta property="og:description" content="Python 常见函数 combinations 详解✅ 一、概述Python 中的 combinations 是 itertools 模块下的一个函数，用于生成序列中所有不重复的 r 个元素的组合（不同于排列 permutation，不考虑顺序）。  模块位置：from itertools import combinations特点：无重复、无顺序   🧠 二、基本语法123from iter">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-22T11:24:41.000Z">
-<meta property="article:modified_time" content="2025-07-22T11:53:28.674Z">
+<meta property="og:image" content="https://dreamshao.github.io/2025/07/23/python%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E4%B9%8Bcombinations/1.png">
+<meta property="article:published_time" content="2025-07-23T12:08:25.000Z">
+<meta property="article:modified_time" content="2025-07-23T12:15:49.995Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="原创">
-<meta property="article:tag" content="算法">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/2025/07/23/python%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E4%B9%8Bcombinations/1.png">
   
   
   
-  <title>Python 面试算法题目按照输入的数字分割字母 - 韵少的个人技术博客</title>
+  <title>Python combinations 函数 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -248,7 +250,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python 面试算法题目按照输入的数字分割字母"></span>
+            <span id="subtitle" data-typed-text="Python combinations 函数"></span>
           
         </div>
 
@@ -259,8 +261,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-22 19:24" pubdate>
-          2025年7月22日 晚上
+        <time datetime="2025-07-23 20:08" pubdate>
+          2025年7月23日 晚上
         </time>
       </span>
     
@@ -271,7 +273,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          448 字
+          885 字
         
       </span>
     
@@ -282,7 +284,7 @@
         
         
         
-          4 分钟
+          8 分钟
         
       </span>
     
@@ -327,29 +329,121 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Python 面试算法题目按照输入的数字分割字母</h1>
+            <h1 id="seo-header">Python combinations 函数</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Python-面试算法题目按照输入的数字分割字母"><a href="#Python-面试算法题目按照输入的数字分割字母" class="headerlink" title="Python 面试算法题目按照输入的数字分割字母"></a>Python 面试算法题目按照输入的数字分割字母</h1><hr>
-<h2 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h2><p>给出一个字符串，然后输入一个数字长度，根据输入的数字长度对字符串进行分割，如果按照数字长度分割出的信息里面含有重复项则舍弃只保留其中一个即可，输出的时候需要保留原有的顺序。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">s = &#x27;AAABCADDE&#x27;<br>k = 3<br><br>那么我们打印出来的就是 u1 = &#x27;A&#x27; u2=&#x27;BCA&#x27; u3=&#x27;DE&#x27;<br></code></pre></td></tr></table></figure>
+                <h1 id="Python-常见函数-combinations-详解"><a href="#Python-常见函数-combinations-详解" class="headerlink" title="Python 常见函数 combinations 详解"></a>Python 常见函数 combinations 详解</h1><h2 id="✅-一、概述"><a href="#✅-一、概述" class="headerlink" title="✅ 一、概述"></a>✅ 一、概述</h2><p>Python 中的 <code>combinations</code> 是 <code>itertools</code> 模块下的一个函数，用于生成序列中所有<strong>不重复的 r 个元素的组合</strong>（不同于排列 permutation，不考虑顺序）。</p>
+<blockquote>
+<p>模块位置：<code>from itertools import combinations</code><br>特点：<strong>无重复、无顺序</strong></p>
+</blockquote>
 <hr>
-<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge_the_tools</span>(<span class="hljs-params">string, k</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> string:<br>        <span class="hljs-keyword">return</span><br>    result = <span class="hljs-string">&#x27;&#x27;</span><br>    <br>    <span class="hljs-keyword">for</span> i, ch <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(string):<br>        <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % k == <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">if</span> result:<br>                <span class="hljs-built_in">print</span>(result)<br>            result = <span class="hljs-string">&#x27;&#x27;</span><br><br>        <span class="hljs-keyword">if</span> ch <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> result:<br>            result += ch<br>            <br>    <span class="hljs-keyword">if</span> result:<br>        <span class="hljs-built_in">print</span>(result)<br>            <br>            <br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    string, k = <span class="hljs-built_in">input</span>(), <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    merge_the_tools(string,k)<br></code></pre></td></tr></table></figure>
+<h2 id="🧠-二、基本语法"><a href="#🧠-二、基本语法" class="headerlink" title="🧠 二、基本语法"></a>🧠 二、基本语法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>combinations(iterable, r)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>iterable</code>：可迭代对象，如字符串、列表、元组。</li>
+<li><code>r</code>：每组组合中元素的数量。</li>
+</ul>
+<p>返回一个迭代器对象（<code>itertools.combinations</code>），其中包含所有的 r 长度组合。</p>
+<hr>
+<h2 id="🧪-三、基础用法示例"><a href="#🧪-三、基础用法示例" class="headerlink" title="🧪 三、基础用法示例"></a>🧪 三、基础用法示例</h2><h3 id="🎯-示例-1：生成列表的所有-2-元组合"><a href="#🎯-示例-1：生成列表的所有-2-元组合" class="headerlink" title="🎯 示例 1：生成列表的所有 2 元组合"></a>🎯 示例 1：生成列表的所有 2 元组合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>data = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>]<br>result = <span class="hljs-built_in">list</span>(combinations(data, <span class="hljs-number">2</span>))<br><br><span class="hljs-built_in">print</span>(result)  <span class="hljs-comment"># [(&#x27;A&#x27;, &#x27;B&#x27;), (&#x27;A&#x27;, &#x27;C&#x27;), (&#x27;B&#x27;, &#x27;C&#x27;)]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="🔍-解释："><a href="#🔍-解释：" class="headerlink" title="🔍 解释："></a>🔍 解释：</h3><ul>
+<li>原始列表：<code>[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</code></li>
+<li>所有可能的 2 个元素组合（不考虑顺序）：3 种。</li>
+<li>输出的是元组组成的列表。</li>
+</ul>
+<hr>
+<h2 id="💼-四、企业实战案例"><a href="#💼-四、企业实战案例" class="headerlink" title="💼 四、企业实战案例"></a>💼 四、企业实战案例</h2><h3 id="📌-场景-1：多服务器组合测试（运维-测试场景）"><a href="#📌-场景-1：多服务器组合测试（运维-测试场景）" class="headerlink" title="📌 场景 1：多服务器组合测试（运维&#x2F;测试场景）"></a>📌 场景 1：多服务器组合测试（运维&#x2F;测试场景）</h3><p>企业中有多台服务器，为了测试高可用搭配，需遍历所有 2 台服务器的组合：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>servers = [<span class="hljs-string">&#x27;192.168.1.1&#x27;</span>, <span class="hljs-string">&#x27;192.168.1.2&#x27;</span>, <span class="hljs-string">&#x27;192.168.1.3&#x27;</span>]<br><br><span class="hljs-comment"># 选择任意两台服务器组合进行双机容灾测试</span><br>server_pairs = <span class="hljs-built_in">list</span>(combinations(servers, <span class="hljs-number">2</span>))<br><br><span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> server_pairs:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Testing redundancy for: <span class="hljs-subst">&#123;pair&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>✅ <strong>结果输出</strong>：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs subunit"><span class="hljs-keyword">Testing </span>redundancy for: (&#x27;192.168.1.1&#x27;, &#x27;192.168.1.2&#x27;)<br><span class="hljs-keyword">Testing </span>redundancy for: (&#x27;192.168.1.1&#x27;, &#x27;192.168.1.3&#x27;)<br><span class="hljs-keyword">Testing </span>redundancy for: (&#x27;192.168.1.2&#x27;, &#x27;192.168.1.3&#x27;)<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="代码解释："><a href="#代码解释：" class="headerlink" title="代码解释："></a>代码解释：</h2><p>这里我们可以通过分析如果当前长度和输入的长度一致，那么我们对输入的数字和长度取余为0的时候表示我们已经取值够了，那么我们只需要在余数为0的时候输出信息即可，然后清空已经存储的信息，继续上面的逻辑</p>
-<p>在这里我使用了<code>enumerate</code> 函数可以将遍历出来的信息包含数字索引信息，这样我们就可以通过索引信息来进行取余的操作！</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i, ch <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(string):<br>       <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % k == <span class="hljs-number">0</span>:<br>           <span class="hljs-keyword">if</span> result:<br>               <span class="hljs-built_in">print</span>(result)<br>           result = <span class="hljs-string">&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+<h3 id="📌-场景-2：商品搭配推荐系统（电商-算法场景）"><a href="#📌-场景-2：商品搭配推荐系统（电商-算法场景）" class="headerlink" title="📌 场景 2：商品搭配推荐系统（电商&#x2F;算法场景）"></a>📌 场景 2：商品搭配推荐系统（电商&#x2F;算法场景）</h3><p>在商品推荐中，经常需要生成组合搭配（如套餐）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>products = [<span class="hljs-string">&#x27;牛排&#x27;</span>, <span class="hljs-string">&#x27;红酒&#x27;</span>, <span class="hljs-string">&#x27;沙拉&#x27;</span>, <span class="hljs-string">&#x27;甜点&#x27;</span>]<br><br><span class="hljs-comment"># 生成三件套组合推荐</span><br>combos = <span class="hljs-built_in">list</span>(combinations(products, <span class="hljs-number">3</span>))<br><br><span class="hljs-keyword">for</span> combo <span class="hljs-keyword">in</span> combos:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;推荐套餐：<span class="hljs-subst">&#123;combo&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>那么我们只需在余数不是0的情况下将我们的信息添加到<code>result</code>中，这时候你只需要判断之前是否存在相同的信息即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> ch <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> result:<br>           result += ch<br></code></pre></td></tr></table></figure>
+<p>✅ 输出：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 1c">推荐套餐：(&#x27;牛排&#x27;, &#x27;红酒&#x27;, &#x27;沙拉&#x27;)<br>推荐套餐：(&#x27;牛排&#x27;, &#x27;红酒&#x27;, &#x27;甜点&#x27;)<br>推荐套餐：(&#x27;牛排&#x27;, &#x27;沙拉&#x27;, &#x27;甜点&#x27;)<br>推荐套餐：(&#x27;红酒&#x27;, &#x27;沙拉&#x27;, &#x27;甜点&#x27;)<br></code></pre></td></tr></table></figure>
 
-<p>那么如果存在极端情况，你只有3个数字，但是你输入了5此时上面的都不适用，那么你只需要判断当前result不是空，直接将输出的信息打印出来即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> result:<br>       <span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="🔁-五、与-permutations-的区别"><a href="#🔁-五、与-permutations-的区别" class="headerlink" title="🔁 五、与 permutations 的区别"></a>🔁 五、与 <code>permutations</code> 的区别</h2><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>是否有顺序</th>
+<th>是否允许重复元素</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>combinations</td>
+<td>❌ 无顺序</td>
+<td>❌ 不重复</td>
+<td>AB 与 BA 视为同一组</td>
+</tr>
+<tr>
+<td>permutations</td>
+<td>✅ 有顺序</td>
+<td>❌ 不重复</td>
+<td>AB 与 BA 为不同组合</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📎-六、组合数计算公式（C-n-r-）"><a href="#📎-六、组合数计算公式（C-n-r-）" class="headerlink" title="📎 六、组合数计算公式（C(n, r)）"></a>📎 六、组合数计算公式（C(n, r)）</h2><p>组合总数计算公式为：</p>
+<img src="/2025/07/23/python%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0%E4%B9%8Bcombinations/1.png" srcset="/img/loading.gif" lazyload class="">
 
+<hr>
+<h2 id="🛠-七、实际业务进阶技巧"><a href="#🛠-七、实际业务进阶技巧" class="headerlink" title="🛠 七、实际业务进阶技巧"></a>🛠 七、实际业务进阶技巧</h2><h3 id="✅-1-动态组合数据（生成所有组合）"><a href="#✅-1-动态组合数据（生成所有组合）" class="headerlink" title="✅ 1. 动态组合数据（生成所有组合）"></a>✅ 1. 动态组合数据（生成所有组合）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>data = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>]<br><br><span class="hljs-comment"># 生成所有可能的组合（1个到len(data)个）</span><br><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(data)+<span class="hljs-number">1</span>):<br>    <span class="hljs-keyword">for</span> combo <span class="hljs-keyword">in</span> combinations(data, r):<br>        <span class="hljs-built_in">print</span>(combo)<br></code></pre></td></tr></table></figure>
 
+<h3 id="✅-2-数据去重后组合（推荐前先去重）"><a href="#✅-2-数据去重后组合（推荐前先去重）" class="headerlink" title="✅ 2. 数据去重后组合（推荐前先去重）"></a>✅ 2. 数据去重后组合（推荐前先去重）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">data = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>]<br>unique_data = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>(data))<br><br>result = <span class="hljs-built_in">list</span>(combinations(unique_data, <span class="hljs-number">2</span>))<br><span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚠️-八、注意事项"><a href="#⚠️-八、注意事项" class="headerlink" title="⚠️ 八、注意事项"></a>⚠️ 八、注意事项</h2><ul>
+<li>返回的是一个迭代器，需要 <code>list()</code> 转换。</li>
+<li>数据中元素不可重复，否则影响结果。</li>
+<li>不同于 <code>permutations</code>，<code>combinations</code> <strong>顺序不影响组合</strong>。</li>
+<li>大量组合时建议使用生成器，避免内存消耗。</li>
+</ul>
+<hr>
+<h2 id="✅-九、小练习题"><a href="#✅-九、小练习题" class="headerlink" title="✅ 九、小练习题"></a>✅ 九、小练习题</h2><p><strong>题目</strong>：有 5 名员工，需从中任选 3 人组建小组，打印所有可能组合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> combinations<br><br>employees = [<span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-string">&#x27;李四&#x27;</span>, <span class="hljs-string">&#x27;王五&#x27;</span>, <span class="hljs-string">&#x27;赵六&#x27;</span>, <span class="hljs-string">&#x27;钱七&#x27;</span>]<br>teams = <span class="hljs-built_in">list</span>(combinations(employees, <span class="hljs-number">3</span>))<br><br><span class="hljs-keyword">for</span> team <span class="hljs-keyword">in</span> teams:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;组合小组：&quot;</span>, team)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📚-十、总结"><a href="#📚-十、总结" class="headerlink" title="📚 十、总结"></a>📚 十、总结</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td><code>itertools.combinations</code></td>
+</tr>
+<tr>
+<td>输入</td>
+<td>iterable，可迭代对象</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>所有长度为 r 的组合</td>
+</tr>
+<tr>
+<td>是否有顺序</td>
+<td>❌ 无顺序</td>
+</tr>
+<tr>
+<td>是否有重复组合</td>
+<td>❌ 无</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>商品推荐、测试组合、统计分析、AI特征组合</td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -368,13 +462,20 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%90%9C%E9%9B%86/" class="category-chain-item">面试题目搜集</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%90%9C%E9%9B%86/Python-%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE/" class="category-chain-item">Python 算法题目</a>
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/" class="category-chain-item">Python 常见函数</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Python-%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0/Python-combinations-%E5%87%BD%E6%95%B0/" class="category-chain-item">Python combinations 函数</a>
+  
+  
+
   
 
   
@@ -392,7 +493,7 @@
       
         <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
       
-        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+        <a href="/tags/python/" class="print-no-link">#python</a>
       
     </div>
   
@@ -404,8 +505,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python 面试算法题目按照输入的数字分割字母</div>
-      <div>https://dreamshao.github.io/2025/07/22/python面试算法题目/</div>
+      <div>Python combinations 函数</div>
+      <div>https://dreamshao.github.io/2025/07/23/python常见函数之combinations/</div>
     </div>
     <div class="license-meta">
       
@@ -417,7 +518,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月22日</div>
+          <div>2025年7月23日</div>
         </div>
       
       
@@ -449,18 +550,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/23/python%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE1/" title="Python 面试算法题目去重字典但是不能使用额外数组空间">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python 面试算法题目去重字典但是不能使用额外数组空间</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/22/redis%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E5%88%86%E6%9E%90/" title="Redis 项目实战分析">
-                        <span class="hidden-mobile">Redis 项目实战分析</span>
+                      <a href="/2025/07/23/python%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE1/" title="Python 面试算法题目去重字典但是不能使用额外数组空间">
+                        <span class="hidden-mobile">Python 面试算法题目去重字典但是不能使用额外数组空间</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
