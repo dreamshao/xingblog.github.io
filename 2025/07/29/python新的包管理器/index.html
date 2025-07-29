@@ -1,0 +1,1018 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="📦 Python 包管理器 UV 介绍✅ 1. 背景与简介在现代 Python 项目中，包管理与构建工具种类繁多，如 pip, poetry, pipenv，但这些工具存在：  安装慢 🚶‍♂️ 解析依赖慢 🐢 难以部署到 CI&#x2F;CD 中 ⛓️  为此，Astral 公司推出了新一代超快包管理器 —— **UV**。 🌟 UV 是什么？ UV 是一个使用 Rust 编写的 Pyt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 新的包管理器uv介绍">
+<meta property="og:url" content="https://dreamshao.github.io/2025/07/29/python%E6%96%B0%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="📦 Python 包管理器 UV 介绍✅ 1. 背景与简介在现代 Python 项目中，包管理与构建工具种类繁多，如 pip, poetry, pipenv，但这些工具存在：  安装慢 🚶‍♂️ 解析依赖慢 🐢 难以部署到 CI&#x2F;CD 中 ⛓️  为此，Astral 公司推出了新一代超快包管理器 —— **UV**。 🌟 UV 是什么？ UV 是一个使用 Rust 编写的 Pyt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-29T11:48:11.000Z">
+<meta property="article:modified_time" content="2025-07-29T11:54:36.603Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 新的包管理器uv介绍 - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 新的包管理器uv介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-29 19:48" pubdate>
+          2025年7月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 新的包管理器uv介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="📦-Python-包管理器-UV-介绍"><a href="#📦-Python-包管理器-UV-介绍" class="headerlink" title="📦 Python 包管理器 UV 介绍"></a>📦 Python 包管理器 UV 介绍</h1><h2 id="✅-1-背景与简介"><a href="#✅-1-背景与简介" class="headerlink" title="✅ 1. 背景与简介"></a>✅ 1. 背景与简介</h2><p>在现代 Python 项目中，包管理与构建工具种类繁多，如 <code>pip</code>, <code>poetry</code>, <code>pipenv</code>，但这些工具存在：</p>
+<ul>
+<li>安装慢 🚶‍♂️</li>
+<li>解析依赖慢 🐢</li>
+<li>难以部署到 CI&#x2F;CD 中 ⛓️</li>
+</ul>
+<p>为此，<strong>Astral</strong> 公司推出了新一代超快包管理器 —— **<a target="_blank" rel="noopener" href="https://github.com/astral-sh/uv">UV</a>**。</p>
+<h3 id="🌟-UV-是什么？"><a href="#🌟-UV-是什么？" class="headerlink" title="🌟 UV 是什么？"></a>🌟 UV 是什么？</h3><blockquote>
+<p>UV 是一个使用 <strong>Rust 编写的 Python 包管理器</strong>，兼容 <code>pip</code>&#x2F;<code>virtualenv</code>，但性能极高。它支持解析、下载、构建和安装 Python 包，是 <code>pip</code> 的 drop-in 替代。</p>
+</blockquote>
+<ul>
+<li>构建于 Rust：极致性能</li>
+<li>支持 <code>pyproject.toml</code></li>
+<li>完整的虚拟环境管理器</li>
+<li>安装速度是 pip 的 8 倍+</li>
+</ul>
+<hr>
+<h2 id="🧪-2-安装与基本用法"><a href="#🧪-2-安装与基本用法" class="headerlink" title="🧪 2. 安装与基本用法"></a>🧪 2. 安装与基本用法</h2><h3 id="✅-安装-UV"><a href="#✅-安装-UV" class="headerlink" title="✅ 安装 UV"></a>✅ 安装 UV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 推荐方式（跨平台）</span><br>curl -Ls https://astral.sh/uv/install.sh | bash<br></code></pre></td></tr></table></figure>
+
+<p>或使用 Homebrew：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew install astral-sh/uv/uv<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv --version<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="🔁-如何使用-pip-安装-UV？"><a href="#🔁-如何使用-pip-安装-UV？" class="headerlink" title="🔁 如何使用 pip 安装 UV？"></a>🔁 如何使用 pip 安装 UV？</h3><p>虽然 UV 推荐使用官方提供的安装脚本或 Homebrew（在 macOS 上），但也可以通过 pip 安装（适合有网络限制的企业场景或需要私有源的 CI&#x2F;CD 环境）。</p>
+<h4 id="✅-方法一：使用-pip-安装-uv（通过-PyPI）"><a href="#✅-方法一：使用-pip-安装-uv（通过-PyPI）" class="headerlink" title="✅ 方法一：使用 pip 安装 uv（通过 PyPI）"></a>✅ 方法一：使用 pip 安装 uv（通过 PyPI）</h4><blockquote>
+<p>注意：​<strong>UV 是用 Rust 编写的</strong>​，通过 PyPI 安装实际上是安装其 Python 接口（不是官方推荐方式，但某些企业项目允许）</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install uv-py<br></code></pre></td></tr></table></figure>
+
+<p>⚠️ 安装后并非完整 <code>uv</code> 功能，仅用于尝鲜或集成某些 Python 工具。</p>
+<hr>
+<h3 id="✅-初始化项目（推荐用-pyproject-toml）"><a href="#✅-初始化项目（推荐用-pyproject-toml）" class="headerlink" title="✅ 初始化项目（推荐用 pyproject.toml）"></a>✅ 初始化项目（推荐用 <code>pyproject.toml</code>）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv init<br></code></pre></td></tr></table></figure>
+
+<p>将生成项目结构：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">.<br>├── pyproject<span class="hljs-selector-class">.toml</span><br>└── <span class="hljs-attribute">src</span>/<br>    └── your_module/<br>        └── __init__.py<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📄-3-了解-pyproject-toml"><a href="#📄-3-了解-pyproject-toml" class="headerlink" title="📄 3. 了解 pyproject.toml"></a>📄 3. 了解 pyproject.toml</h2><h3 id="❓-pyproject-toml-是什么？"><a href="#❓-pyproject-toml-是什么？" class="headerlink" title="❓ pyproject.toml 是什么？"></a>❓ <code>pyproject.toml</code> 是什么？</h3><p>PEP 518&#x2F;621 定义了 <code>pyproject.toml</code> 为 <strong>Python 项目元数据的标准格式</strong>。</p>
+<p>它可取代：</p>
+<ul>
+<li><code>setup.py</code></li>
+<li><code>requirements.txt</code></li>
+<li><code>setup.cfg</code></li>
+</ul>
+<p>用于声明：</p>
+<ul>
+<li>项目信息（名称、版本、作者）</li>
+<li>构建系统（如 setuptools&#x2F;poetry）</li>
+<li>依赖项</li>
+<li>工具配置（如 black, mypy, flake8）</li>
+</ul>
+<blockquote>
+<p>目标：<strong>统一并标准化</strong> Python 项目的构建、打包与依赖管理。</p>
+</blockquote>
+<p>它用来替代传统的：</p>
+<table>
+<thead>
+<tr>
+<th>老工具</th>
+<th>对应功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>setup.py</code></td>
+<td>包描述 &amp; 安装入口</td>
+</tr>
+<tr>
+<td><code>setup.cfg</code></td>
+<td>配置参数</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>依赖包管理</td>
+</tr>
+<tr>
+<td><code>MANIFEST.in</code></td>
+<td>文件清单</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-示例：典型的-pyproject-toml"><a href="#✅-示例：典型的-pyproject-toml" class="headerlink" title="✅ 示例：典型的 pyproject.toml"></a>✅ 示例：典型的 <code>pyproject.toml</code></h3><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[project]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;my-enterprise-tool&quot;</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.1.0&quot;</span><br><span class="hljs-attr">description</span> = <span class="hljs-string">&quot;A fast backend tool for enterprise batch tasks&quot;</span><br><span class="hljs-attr">authors</span> = [&#123; name=<span class="hljs-string">&quot;Your Name&quot;</span>, email=<span class="hljs-string">&quot;you@company.com&quot;</span> &#125;]<br><span class="hljs-attr">dependencies</span> = [<br>    <span class="hljs-string">&quot;requests&gt;=2.26.0&quot;</span>,<br>    <span class="hljs-string">&quot;pydantic&gt;=2.0&quot;</span>,<br>    <span class="hljs-string">&quot;redis&quot;</span>,<br>]<br><br><span class="hljs-section">[tool.uv]</span><br><span class="hljs-attr">virtualenvs.in-project</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-为什么企业推荐使用-pyproject-toml？"><a href="#✅-为什么企业推荐使用-pyproject-toml？" class="headerlink" title="✅ 为什么企业推荐使用 pyproject.toml？"></a>✅ 为什么企业推荐使用 <code>pyproject.toml</code>？</h3><table>
+<thead>
+<tr>
+<th>优势点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🧩<strong>统一依赖管理</strong></td>
+<td>不再需要分散的<code>setup.py</code>、<code>requirements.txt</code></td>
+</tr>
+<tr>
+<td>📦​<strong>支持多构建工具</strong>​（如<code>poetry</code>,<code>uv</code>,<code>setuptools</code>）</td>
+<td>可兼容多种构建方式</td>
+</tr>
+<tr>
+<td>🚀<strong>便于自动化与 CI&#x2F;CD 管理</strong></td>
+<td>易于脚本解析和工具链接入</td>
+</tr>
+<tr>
+<td>🔍<strong>结构清晰</strong></td>
+<td>TOML 格式适合结构化编辑和机器解析</td>
+</tr>
+<tr>
+<td>🎯<strong>可声明可选依赖、开发依赖等环境区分</strong></td>
+<td>方便 dev&#x2F;prod 环境切换</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="❌-pyproject-toml-的局限与注意事项"><a href="#❌-pyproject-toml-的局限与注意事项" class="headerlink" title="❌ pyproject.toml 的局限与注意事项"></a>❌ <code>pyproject.toml</code> 的局限与注意事项</h2><table>
+<thead>
+<tr>
+<th>局限&#x2F;问题</th>
+<th>企业建议或解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>❗ 不支持 shell 脚本逻辑</td>
+<td>替代<code>setup.py</code>后，逻辑需写入构建钩子插件</td>
+</tr>
+<tr>
+<td>📦 安装过程中不解析注释</td>
+<td>需通过文档记录复杂依赖说明</td>
+</tr>
+<tr>
+<td>🚧 某些旧项目工具不兼容</td>
+<td>建议升级构建工具或混合使用<code>requirements.txt</code></td>
+</tr>
+<tr>
+<td>💼 CI&#x2F;CD 中初次上手成本略高</td>
+<td>建议团队编写统一模板与校验工具</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="⚙️-4-安装依赖与开发工具集成"><a href="#⚙️-4-安装依赖与开发工具集成" class="headerlink" title="⚙️ 4. 安装依赖与开发工具集成"></a>⚙️ 4. 安装依赖与开发工具集成</h2><h3 id="✅-安装依赖"><a href="#✅-安装依赖" class="headerlink" title="✅ 安装依赖"></a>✅ 安装依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv pip install -r requirements.txt<br></code></pre></td></tr></table></figure>
+
+<p>或使用 <code>pyproject.toml</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv pip install .<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-添加开发依赖"><a href="#✅-添加开发依赖" class="headerlink" title="✅ 添加开发依赖"></a>✅ 添加开发依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv pip install --dev black mypy pytest<br></code></pre></td></tr></table></figure>
+
+<p>这些会被记录在 <code>[tool.uv.dev-dependencies]</code> 中。</p>
+<hr>
+<h2 id="🧑‍💻-5-企业实战场景"><a href="#🧑‍💻-5-企业实战场景" class="headerlink" title="🧑‍💻 5. 企业实战场景"></a>🧑‍💻 5. 企业实战场景</h2><h3 id="✅-示例-1：项目初始化-安装依赖"><a href="#✅-示例-1：项目初始化-安装依赖" class="headerlink" title="✅ 示例 1：项目初始化 + 安装依赖"></a>✅ 示例 1：项目初始化 + 安装依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv init<br>uv pip install fastapi uvicorn<br></code></pre></td></tr></table></figure>
+
+<h3 id="✅-示例-2：创建虚拟环境并激活"><a href="#✅-示例-2：创建虚拟环境并激活" class="headerlink" title="✅ 示例 2：创建虚拟环境并激活"></a>✅ 示例 2：创建虚拟环境并激活</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv venv<br><span class="hljs-built_in">source</span> .venv/bin/activate<br></code></pre></td></tr></table></figure>
+
+<h3 id="✅-示例-3：自动格式化与类型检查"><a href="#✅-示例-3：自动格式化与类型检查" class="headerlink" title="✅ 示例 3：自动格式化与类型检查"></a>✅ 示例 3：自动格式化与类型检查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv pip install --dev black mypy<br>black src/<br>mypy src/<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🛠-6-与其他工具对比（pip-poetry）"><a href="#🛠-6-与其他工具对比（pip-poetry）" class="headerlink" title="🛠 6. 与其他工具对比（pip&#x2F;poetry）"></a>🛠 6. 与其他工具对比（pip&#x2F;poetry）</h2><table>
+<thead>
+<tr>
+<th>功能&#x2F;工具</th>
+<th>pip</th>
+<th>poetry</th>
+<th>UV</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>安装速度</td>
+<td>慢</td>
+<td>中</td>
+<td>🚀 快</td>
+</tr>
+<tr>
+<td>支持 pyproject</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>虚拟环境管理</td>
+<td>手动</td>
+<td>自动</td>
+<td>✅ 自动</td>
+</tr>
+<tr>
+<td>构建打包</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>多平台兼容性</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>CI&#x2F;CD 适配性</td>
+<td>中</td>
+<td>中</td>
+<td>✅ 高</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📘-7-高级用法"><a href="#📘-7-高级用法" class="headerlink" title="📘 7. 高级用法"></a>📘 7. 高级用法</h2><h3 id="🔐-私有源配置"><a href="#🔐-私有源配置" class="headerlink" title="🔐 私有源配置"></a>🔐 私有源配置</h3><p>支持使用私有 PyPI：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv pip install --index-url https://your.private.repo/simple internal-lib<br></code></pre></td></tr></table></figure>
+
+<p>或在 <code>.uv/config.toml</code> 添加：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[tool.uv]</span><br><span class="hljs-attr">index-url</span> = <span class="hljs-string">&quot;https://your.private.repo/simple&quot;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📦-构建-wheel-包"><a href="#📦-构建-wheel-包" class="headerlink" title="📦 构建 wheel 包"></a>📦 构建 wheel 包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv build<br></code></pre></td></tr></table></figure>
+
+<p>生成：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">dist/<br>├── my_enterprise_tool<span class="hljs-number">-0.1</span><span class="hljs-number">.0</span>-py3-<span class="hljs-built_in">none</span>-<span class="hljs-built_in">any</span>.whl<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🧪-8-示例代码：一个完整项目"><a href="#🧪-8-示例代码：一个完整项目" class="headerlink" title="🧪 8. 示例代码：一个完整项目"></a>🧪 8. 示例代码：一个完整项目</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># src/main.py</span><br><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fetch_data</span>():<br>    resp = requests.get(<span class="hljs-string">&quot;https://httpbin.org/json&quot;</span>)<br>    <span class="hljs-keyword">return</span> resp.json()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-built_in">print</span>(fetch_data())<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv run src/main.py<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📦-9-总结"><a href="#📦-9-总结" class="headerlink" title="📦 9. 总结"></a>📦 9. 总结</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>UV 价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>极致性能</td>
+<td>✅ 安装快、解析快</td>
+</tr>
+<tr>
+<td>企业适配性强</td>
+<td>✅ CI&#x2F;CD 支持好</td>
+</tr>
+<tr>
+<td>标准化配置</td>
+<td>✅ 使用 <code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>替代 pip&#x2F;poetry</td>
+<td>✅ 一站式解决方案</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🔚-附录：命令速查表"><a href="#🔚-附录：命令速查表" class="headerlink" title="🔚 附录：命令速查表"></a>🔚 附录：命令速查表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv init                  <span class="hljs-comment"># 初始化项目</span><br>uv pip install pkg       <span class="hljs-comment"># 安装依赖</span><br>uv pip install --dev     <span class="hljs-comment"># 安装开发依赖</span><br>uv venv                  <span class="hljs-comment"># 创建虚拟环境</span><br>uv build                 <span class="hljs-comment"># 构建项目</span><br>uv run main.py           <span class="hljs-comment"># 执行脚本</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%E5%8F%8A%E7%AE%A1%E7%90%86/" class="category-chain-item">Python 内部原理及管理</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%E5%8F%8A%E7%AE%A1%E7%90%86/Python-%E7%AE%A1%E7%90%86/" class="category-chain-item">Python 管理</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 新的包管理器uv介绍</div>
+      <div>https://dreamshao.github.io/2025/07/29/python新的包管理器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/29/uv%E7%AE%A1%E7%90%86%E5%99%A8%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Python uv管理器常用命令介绍">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python uv管理器常用命令介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/24/python%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE2/" title="Python 面试算法题目查找和是目标值的下标">
+                        <span class="hidden-mobile">Python 面试算法题目查找和是目标值的下标</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
