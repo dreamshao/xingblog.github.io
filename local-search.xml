@@ -13,9 +13,11 @@
     
     <categories>
       
+      <category>Python</category>
+      
       <category>Python 内部原理及管理</category>
       
-      <category>Python 管理</category>
+      <category>Python uv管理器常用命令介绍</category>
       
     </categories>
     
@@ -42,9 +44,11 @@
     
     <categories>
       
+      <category>Python</category>
+      
       <category>Python 内部原理及管理</category>
       
-      <category>Python 管理</category>
+      <category>Python 新的包管理器uv介绍</category>
       
     </categories>
     
@@ -1269,7 +1273,7 @@
       
       <category>Python</category>
       
-      <category>Python 内部原理</category>
+      <category>Python 内部原理及管理</category>
       
       <category>Python 垃圾回收机制</category>
       
