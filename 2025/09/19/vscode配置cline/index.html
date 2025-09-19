@@ -1,0 +1,869 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="f7VQ57x1CMJ2oBDeRD912cCNnRxrxcAwaVJ-KiKzSOI" />
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yun Shao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="VS Code Cline 插件使用教程📌 1. 什么是 Cline？Cline 是 VS Code 的一个 AI 插件，可以让你在编辑器里和大模型（如 OpenAI、Claude 等）交互，进行代码补全、重构、解释、生成文档等。它支持 Chat 窗口 + 内联编辑，结合 Cursor、Copilot 的体验，适合需要高效编程的开发者。  📥 2. 安装 Cline 插件 打开 VS Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VsCode配置AI插件Cline">
+<meta property="og:url" content="https://dreamshao.github.io/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/index.html">
+<meta property="og:site_name" content="韵少的个人技术博客">
+<meta property="og:description" content="VS Code Cline 插件使用教程📌 1. 什么是 Cline？Cline 是 VS Code 的一个 AI 插件，可以让你在编辑器里和大模型（如 OpenAI、Claude 等）交互，进行代码补全、重构、解释、生成文档等。它支持 Chat 窗口 + 内联编辑，结合 Cursor、Copilot 的体验，适合需要高效编程的开发者。  📥 2. 安装 Cline 插件 打开 VS Code">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dreamshao.github.io/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/1.png">
+<meta property="og:image" content="https://dreamshao.github.io/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/2.png">
+<meta property="article:published_time" content="2025-09-19T07:59:53.000Z">
+<meta property="article:modified_time" content="2025-09-19T08:09:26.443Z">
+<meta property="article:author" content="Yun Shao">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dreamshao.github.io/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/1.png">
+  
+  
+  
+  <title>VsCode配置AI插件Cline - 韵少的个人技术博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dreamshao.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Exqwq3rcAWbfnmdGwQUdkQjN-MdYXbMMI","app_key":"bMSErwPWhaqWouubEXHKjzey","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q6jm0t9rqg");
+</script>
+
+
+<script>
+  (function(){
+  var el = document.createElement("script");
+  el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?322eb23a51deb5cfd46a212e0f9bb4e70fbac7661d05e8193da5880b90f3b4d119d1c501ebd3301f5e2290626f5b53d078c8250527fa0dfd9783a026ff3cf719";
+  el.id = "ttzz";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(el, s);
+  })(window)
+  </script>
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>韵少的技术博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="VsCode配置AI插件Cline"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-19 15:59" pubdate>
+          2025年9月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          834 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次数
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">VsCode配置AI插件Cline</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="VS-Code-Cline-插件使用教程"><a href="#VS-Code-Cline-插件使用教程" class="headerlink" title="VS Code Cline 插件使用教程"></a>VS Code Cline 插件使用教程</h1><h2 id="📌-1-什么是-Cline？"><a href="#📌-1-什么是-Cline？" class="headerlink" title="📌 1. 什么是 Cline？"></a>📌 1. 什么是 Cline？</h2><p>Cline 是 VS Code 的一个 AI 插件，可以让你在编辑器里和大模型（如 OpenAI、Claude 等）交互，进行代码补全、重构、解释、生成文档等。<br>它支持 <strong>Chat 窗口</strong> + <strong>内联编辑</strong>，结合 Cursor、Copilot 的体验，适合需要高效编程的开发者。</p>
+<hr>
+<h2 id="📥-2-安装-Cline-插件"><a href="#📥-2-安装-Cline-插件" class="headerlink" title="📥 2. 安装 Cline 插件"></a>📥 2. 安装 Cline 插件</h2><ol>
+<li>打开 VS Code，点击左侧的 <strong>扩展（Extensions）</strong> 图标。</li>
+<li>在搜索框输入：<code>Cline</code>。</li>
+</ol>
+<img src="/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/1.png" srcset="/img/loading.gif" lazyload class="">
+
+
+<ol start="3">
+<li>找到 <strong>Cline - AI Assistant for VSCode</strong> 插件，点击 <strong>安装</strong>。</li>
+</ol>
+<p>安装完成后，你会在左侧工具栏看到一个 <strong>Cline 图标</strong>。</p>
+<img src="/2025/09/19/vscode%E9%85%8D%E7%BD%AEcline/2.png" srcset="/img/loading.gif" lazyload class="">
+
+<hr>
+<h2 id="🔑-3-配置-Cline-插件"><a href="#🔑-3-配置-Cline-插件" class="headerlink" title="🔑 3. 配置 Cline 插件"></a>🔑 3. 配置 Cline 插件</h2><p>Cline 需要一个 <strong>大模型 API</strong> 来驱动，比如 <strong>OpenAI API</strong>、<strong>Anthropic Claude API</strong>、<strong>本地模型（Ollama）</strong> 等。</p>
+<h3 id="3-1-配置-API-Key"><a href="#3-1-配置-API-Key" class="headerlink" title="3.1 配置 API Key"></a>3.1 配置 API Key</h3><ol>
+<li>打开 <strong>命令面板</strong> (Ctrl+Shift+P &#x2F; Cmd+Shift+P)。</li>
+<li>搜索 <code>Cline: Set API Key</code>。</li>
+<li>输入你从平台申请到的 API Key。</li>
+</ol>
+<p>例如：</p>
+<ul>
+<li>OpenAI: <code>sk-xxxxx</code></li>
+<li>Anthropic Claude: <code>sk-ant-xxxxx</code></li>
+<li>Ollama: 本地无需 Key</li>
+</ul>
+<hr>
+<h3 id="3-2-修改配置文件"><a href="#3-2-修改配置文件" class="headerlink" title="3.2 修改配置文件"></a>3.2 修改配置文件</h3><p>Cline 的配置可以在 <code>settings.json</code> 中进行。<br>打开 VS Code 设置 → 搜索 <code>cline</code> → 编辑。</p>
+<p>示例配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs jsonc">&#123;<br>  &quot;cline.defaultModel&quot;: &quot;gpt-4o-mini&quot;,  // 默认模型<br>  &quot;cline.providers&quot;: &#123;<br>    &quot;openai&quot;: &#123;<br>      &quot;apiKey&quot;: &quot;sk-xxxxxx&quot;,<br>      &quot;baseUrl&quot;: &quot;https://api.openai.com/v1&quot;,<br>      &quot;models&quot;: [&quot;gpt-4o-mini&quot;, &quot;gpt-4-turbo&quot;]<br>    &#125;,<br>    &quot;anthropic&quot;: &#123;<br>      &quot;apiKey&quot;: &quot;sk-ant-xxxxxx&quot;,<br>      &quot;models&quot;: [&quot;claude-3-5-sonnet-20240620&quot;, &quot;claude-3-opus&quot;]<br>    &#125;,<br>    &quot;ollama&quot;: &#123;<br>      &quot;baseUrl&quot;: &quot;http://localhost:11434&quot;,<br>      &quot;models&quot;: [&quot;llama3&quot;, &quot;mistral&quot;]<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ 建议至少配置一个云端模型（如 OpenAI&#x2F;Claude），一个本地模型（如 Ollama），方便切换。</p>
+</blockquote>
+<hr>
+<h2 id="🛠-4-使用方法"><a href="#🛠-4-使用方法" class="headerlink" title="🛠 4. 使用方法"></a>🛠 4. 使用方法</h2><h3 id="4-1-Chat-模式"><a href="#4-1-Chat-模式" class="headerlink" title="4.1 Chat 模式"></a>4.1 Chat 模式</h3><ul>
+<li><p>点击左侧的 <strong>Cline 图标</strong>，打开聊天窗口。</p>
+</li>
+<li><p>输入问题，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">帮我写一个 Python 的 Redis 封装类<br></code></pre></td></tr></table></figure></li>
+<li><p>Cline 会在侧边栏输出答案。</p>
+</li>
+</ul>
+<hr>
+<h3 id="4-2-内联编辑"><a href="#4-2-内联编辑" class="headerlink" title="4.2 内联编辑"></a>4.2 内联编辑</h3><ol>
+<li><p>选中一段代码。</p>
+</li>
+<li><p>右键 → 选择 <strong>Cline: Edit with AI</strong>。</p>
+</li>
+<li><p>输入修改要求，例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">优化性能，加上缓存<br></code></pre></td></tr></table></figure></li>
+<li><p>Cline 会自动修改并展示差异（Diff），你可以选择 <strong>应用</strong> 或 <strong>拒绝</strong>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="4-3-代码生成"><a href="#4-3-代码生成" class="headerlink" title="4.3 代码生成"></a>4.3 代码生成</h3><ul>
+<li><p>在空文件里，输入注释：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写一个 FastAPI 的用户注册登录接口，带 JWT 认证</span><br></code></pre></td></tr></table></figure></li>
+<li><p>选中文本 → 右键 → <strong>Cline: Generate Code</strong></p>
+</li>
+<li><p>自动生成完整代码。</p>
+</li>
+</ul>
+<hr>
+<h3 id="4-4-代码解释"><a href="#4-4-代码解释" class="headerlink" title="4.4 代码解释"></a>4.4 代码解释</h3><ul>
+<li>选中一段复杂的函数。</li>
+<li>右键 → <strong>Cline: Explain Code</strong>。</li>
+<li>插件会在侧边栏给你详细解释逻辑，并提供改进建议。</li>
+</ul>
+<hr>
+<h3 id="4-5-多模型切换"><a href="#4-5-多模型切换" class="headerlink" title="4.5 多模型切换"></a>4.5 多模型切换</h3><p>在 Cline 面板顶部，可以切换不同模型：</p>
+<ul>
+<li><code>gpt-4o-mini</code>（速度快）</li>
+<li><code>claude-3-5-sonnet</code>（长上下文强）</li>
+<li><code>ollama/llama3</code>（离线可用）</li>
+</ul>
+<hr>
+<h2 id="⚡️-5-实战案例：测试开发自动化"><a href="#⚡️-5-实战案例：测试开发自动化" class="headerlink" title="⚡️ 5. 实战案例：测试开发自动化"></a>⚡️ 5. 实战案例：测试开发自动化</h2><p>假设你要写一个 <strong>pytest + Appium 自动化测试</strong>，可以这样用：</p>
+<ol>
+<li><p>在 <code>test_login.py</code> 文件里写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 帮我写一个 pytest 脚本，连接 Android 模拟器，用 Appium 打开微信，并截图</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>选中这段注释 → 右键 → <strong>Cline: Generate Code</strong>。</p>
+</li>
+<li><p>得到自动生成的脚本，直接运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pytest test_login.py<br></code></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="🛡-6-常见问题"><a href="#🛡-6-常见问题" class="headerlink" title="🛡 6. 常见问题"></a>🛡 6. 常见问题</h2><h3 id="Q1-API-Key-过期-失效？"><a href="#Q1-API-Key-过期-失效？" class="headerlink" title="Q1. API Key 过期 &#x2F; 失效？"></a>Q1. API Key 过期 &#x2F; 失效？</h3><p>重新执行 <code>Cline: Set API Key</code>，或者在 <code>settings.json</code> 里修改。</p>
+<h3 id="Q2-iOS-Android-本地模型太慢？"><a href="#Q2-iOS-Android-本地模型太慢？" class="headerlink" title="Q2. iOS&#x2F;Android 本地模型太慢？"></a>Q2. iOS&#x2F;Android 本地模型太慢？</h3><p>建议在本地用 <strong>Ollama</strong> 加速，日常写代码时切换成 <code>llama3</code>。</p>
+<h3 id="Q3-如何避免模型输出太口水？"><a href="#Q3-如何避免模型输出太口水？" class="headerlink" title="Q3. 如何避免模型输出太口水？"></a>Q3. 如何避免模型输出太口水？</h3><p>可以在提示词里加：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">要求代码简洁，增加注释，不要生成多余解释。<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><ul>
+<li><strong>Cline &#x3D; Chat + 内联编辑 + 多模型切换</strong></li>
+<li>配置简单，支持 <strong>OpenAI&#x2F;Claude&#x2F;Ollama</strong></li>
+<li>特别适合 <strong>自动化测试 &#x2F; 全栈开发 &#x2F; 学习源码</strong></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/AI/" class="category-chain-item">AI</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/AI/VsCode%E9%85%8D%E7%BD%AECline%E6%8F%92%E4%BB%B6/" class="category-chain-item">VsCode配置Cline插件</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/" class="print-no-link">#原创</a>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>VsCode配置AI插件Cline</div>
+      <div>https://dreamshao.github.io/2025/09/19/vscode配置cline/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Yun Shao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/29/uv%E7%AE%A1%E7%90%86%E5%99%A8%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Python uv管理器常用命令介绍">
+                        <span class="hidden-mobile">Python uv管理器常用命令介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"atoG4OoY13gFOrRhyz5bMV3a-gzGzoHsz","appKey":"2338NgHqKfurzFGH2KOTDtV8","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>YunShao</span> <i class="iconfont icon-love"></i> <a href="https://github.com/dreamshao" target="_blank" rel="nofollow noopener"><span>My GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
