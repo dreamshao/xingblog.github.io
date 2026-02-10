@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>自动化下载最新ChromeDriver驱动</title>
+    <link href="/2026/02/10/%E5%8F%91%E5%B8%83%E5%88%B0pypi%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%85/"/>
+    <url>/2026/02/10/%E5%8F%91%E5%B8%83%E5%88%B0pypi%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%85/</url>
+    
+    <content type="html"><![CDATA[<h1 id="自动化下载最新ChromeDriver驱动"><a href="#自动化下载最新ChromeDriver驱动" class="headerlink" title="自动化下载最新ChromeDriver驱动!"></a>自动化下载最新ChromeDriver驱动!</h1><p>在做自动化测试的使用，有时候经常会遇到自己的chrome在不知道的情况下更新了，但是自己又需要手动去匹配，那么我自己开发了一个工具已经发布到了PyPI了，通过这个工具就可以自动化的去对比本地的电脑系统以及chrome版本来实现自动化的下载匹配的版本！</p><h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install chromedriver-sync<br></code></pre></td></tr></table></figure><p>目前运行要求是 <code>Python &gt;=3.6</code>即可，然后执行上面的安装命令。</p><p>安装完毕后在你的命令行输入：<code>chromedriver-sync</code>即可实现下载。</p><img src="/2026/02/10/%E5%8F%91%E5%B8%83%E5%88%B0pypi%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%85/1.png" class=""><p>然后就下载了匹配版本的chromedriver！ 对就是这么简单！</p><h2 id="如何实现的呢？"><a href="#如何实现的呢？" class="headerlink" title="如何实现的呢？"></a>如何实现的呢？</h2><ol><li><strong>自动匹配</strong>：程序会输出 <code>检测到系统平台: mac-arm64</code> 和 <code>检测到 Chrome 版本: 121</code>。</li><li><strong>自动下载</strong>：匹配成功后自动下载压缩包。</li><li><strong>解压就绪</strong>：驱动会解压到当前执行命令的目录下，你可以直接在代码中引用。</li></ol><p>主要的原理就是：它会自动检测你电脑上安装的 Chrome 版本和系统架构（Windows&#x2F;Mac&#x2F;Linux），并从 <a href="https://github.com/dreamshao/chromedriver">dreamshao&#x2F;chromedriver</a> 镜像仓库中精准下载对应的驱动文件。</p><h2 id="🐍-在-Python-代码中调用"><a href="#🐍-在-Python-代码中调用" class="headerlink" title="🐍 在 Python 代码中调用"></a>🐍 在 Python 代码中调用</h2><p>如果你想在代码运行初期自动更新驱动，可以这样集成：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> chromedriver_sync.main <span class="hljs-keyword">import</span> sync<br><br><span class="hljs-comment"># 运行同步逻辑，确保驱动是最新的</span><br>sync()<br><br><span class="hljs-comment"># 接下来启动你的 Selenium</span><br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br>driver = webdriver.Chrome()<br></code></pre></td></tr></table></figure><h2 id="❓-常见问题-FAQ"><a href="#❓-常见问题-FAQ" class="headerlink" title="❓ 常见问题 (FAQ)"></a>❓ 常见问题 (FAQ)</h2><p><strong>Q: 为什么我运行后提示“未找到匹配版本”？</strong><br>A: 这通常是因为你的 Chrome 刚刚更新，而官方驱动尚未发布。此时输入 <code>y</code> 下载仓库中最新的版本，通常是可以向下兼容的。</p><p><strong>Q: 如何将驱动安装到系统路径？</strong><br>A: 建议将下载后的 <code>chromedriver</code> 移动到 <code>/usr/local/bin</code> (Mac&#x2F;Linux) 或将其所在文件夹添加到 Windows 的 <code>PATH</code> 环境变量中。</p><hr><h2 id="🌟-贡献与支持"><a href="#🌟-贡献与支持" class="headerlink" title="🌟 贡献与支持"></a>🌟 贡献与支持</h2><p>PyPI地址：<a href="https://pypi.org/project/chromedriver-sync/">https://pypi.org/project/chromedriver-sync/</a></p><p>如果你觉得这个工具有帮到你，请给 <a href="https://github.com/dreamshao/chromedriver">dreamshao&#x2F;chromedriver</a> 点一个 <strong>Star</strong> ⭐！这也是我持续更新驱动版本的动力。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>测试开发工具/框架</category>
+      
+      <category>Chromedriver 自动化下载</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+      <tag>自动化下载ChromeDriver驱动</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>HitFM 88.7离开了</title>
     <link href="/2025/12/29/HitFm%E7%A6%BB%E5%BC%80%E4%BA%86/"/>
     <url>/2025/12/29/HitFm%E7%A6%BB%E5%BC%80%E4%BA%86/</url>
