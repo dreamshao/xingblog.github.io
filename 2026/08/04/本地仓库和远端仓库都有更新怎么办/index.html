@@ -17,22 +17,22 @@
   <meta name="author" content="Yun Shao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="职场生存必备：Git 如何安全撤回上一次提交？在软件开发日常中，手滑提交了错误的代码（比如把测试配置带进生产、漏写了核心逻辑、或者写错了一行代码）是每位程序员都会遇到的“惊魂时刻”。 别慌！Git 提供了非常强大的“后悔药”机制。本文将用最通俗易懂的大白话，结合真实的互联网企业级开发场景，带你彻底搞懂如何安全地撤回上一次提交（Commit）。  一、 核心概念辨析：撤回分三种，你在哪一层？在执行撤">
+    <meta name="description" content="Git 本地和云端仓库双向同步与冲突解决完整教程核心原则：安全第一在进行任何版本回溯或强制合并操作前，永远先建立本地安全备份分支，这是企业级开发规避灾难的第一习惯。 第一步：创建安全备份（黄金习惯）1234# 【安全防护】基于当前本地未提交或刚提交的乱序状态，拉出一个临时备份分支# 这样即使后续操作失误，也可以随时通过 git reset 找回git branch backup-local-wor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 如何安全撤回上一次提交？">
-<meta property="og:url" content="https://dreamshao.github.io/2026/08/03/%E6%92%A4%E5%9B%9E%E4%B8%8A%E4%B8%80%E6%AC%A1%E7%9A%84%E6%8F%90%E4%BA%A4%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F/index.html">
+<meta property="og:title" content="Git 本地和云端仓库双向同步与冲突解决完整教程">
+<meta property="og:url" content="https://dreamshao.github.io/2026/08/04/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%92%8C%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93%E9%83%BD%E6%9C%89%E6%9B%B4%E6%96%B0%E6%80%8E%E4%B9%88%E5%8A%9E/index.html">
 <meta property="og:site_name" content="韵少的个人技术博客">
-<meta property="og:description" content="职场生存必备：Git 如何安全撤回上一次提交？在软件开发日常中，手滑提交了错误的代码（比如把测试配置带进生产、漏写了核心逻辑、或者写错了一行代码）是每位程序员都会遇到的“惊魂时刻”。 别慌！Git 提供了非常强大的“后悔药”机制。本文将用最通俗易懂的大白话，结合真实的互联网企业级开发场景，带你彻底搞懂如何安全地撤回上一次提交（Commit）。  一、 核心概念辨析：撤回分三种，你在哪一层？在执行撤">
+<meta property="og:description" content="Git 本地和云端仓库双向同步与冲突解决完整教程核心原则：安全第一在进行任何版本回溯或强制合并操作前，永远先建立本地安全备份分支，这是企业级开发规避灾难的第一习惯。 第一步：创建安全备份（黄金习惯）1234# 【安全防护】基于当前本地未提交或刚提交的乱序状态，拉出一个临时备份分支# 这样即使后续操作失误，也可以随时通过 git reset 找回git branch backup-local-wor">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-03T02:25:34.000Z">
-<meta property="article:modified_time" content="2026-08-03T02:28:05.798Z">
+<meta property="article:published_time" content="2026-08-04T11:58:02.000Z">
+<meta property="article:modified_time" content="2026-08-04T12:03:22.057Z">
 <meta property="article:author" content="Yun Shao">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Git 如何安全撤回上一次提交？ - 韵少的个人技术博客</title>
+  <title>Git 本地和云端仓库双向同步与冲突解决完整教程 - 韵少的个人技术博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -247,7 +247,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Git 如何安全撤回上一次提交？"></span>
+            <span id="subtitle" data-typed-text="Git 本地和云端仓库双向同步与冲突解决完整教程"></span>
           
         </div>
 
@@ -258,8 +258,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-08-03 10:25" pubdate>
-          2026年8月3日 上午
+        <time datetime="2026-08-04 19:58" pubdate>
+          2026年8月4日 晚上
         </time>
       </span>
     
@@ -270,7 +270,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.3k 字
         
       </span>
     
@@ -281,7 +281,7 @@
         
         
         
-          12 分钟
+          11 分钟
         
       </span>
     
@@ -326,93 +326,84 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Git 如何安全撤回上一次提交？</h1>
+            <h1 id="seo-header">Git 本地和云端仓库双向同步与冲突解决完整教程</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="职场生存必备：Git-如何安全撤回上一次提交？"><a href="#职场生存必备：Git-如何安全撤回上一次提交？" class="headerlink" title="职场生存必备：Git 如何安全撤回上一次提交？"></a>职场生存必备：Git 如何安全撤回上一次提交？</h1><p>在软件开发日常中，手滑提交了错误的代码（比如把测试配置带进生产、漏写了核心逻辑、或者写错了一行代码）是每位程序员都会遇到的“惊魂时刻”。</p>
-<p>别慌！Git 提供了非常强大的“后悔药”机制。本文将用最通俗易懂的大白话，结合真实的互联网企业级开发场景，带你彻底搞懂如何安全地撤回上一次提交（Commit）。</p>
-<hr>
-<h2 id="一、-核心概念辨析：撤回分三种，你在哪一层？"><a href="#一、-核心概念辨析：撤回分三种，你在哪一层？" class="headerlink" title="一、 核心概念辨析：撤回分三种，你在哪一层？"></a>一、 核心概念辨析：撤回分三种，你在哪一层？</h2><p>在执行撤回操作前，我们必须先明白：<strong>你所谓的“撤回”，到底想对代码做什么？</strong></p>
-<p>这就好比你在电脑上写文档，发现刚才保存的一段话不对，你面临三个选择：</p>
-<ol>
-<li><strong>我只是想重新修改刚才那段话</strong>（代码还在，只是想改掉重交）：用 <code>git reset --soft</code>。</li>
-<li><strong>我不但要重新改，还要把刚才的代码从暂存区退回工作区</strong>（默认常用）：用 <code>git reset --mixed</code>。</li>
-<li><strong>我不要了！刚才的提交当没发生过，代码全部抹掉回到上一个稳定版</strong>：用 <code>git reset --hard</code>（<strong>危险，慎用！</strong>）。</li>
-</ol>
-<hr>
-<h2 id="二、-真实企业实例：带你走一遍排错现场"><a href="#二、-真实企业实例：带你走一遍排错现场" class="headerlink" title="二、 真实企业实例：带你走一遍排错现场"></a>二、 真实企业实例：带你走一遍排错现场</h2><h3 id="🏢-真实业务背景"><a href="#🏢-真实业务背景" class="headerlink" title="🏢 真实业务背景"></a>🏢 真实业务背景</h3><p>假设你是一名后端开发工程师，正在参与公司核心的电商系统重构。</p>
-<ul>
-<li><strong>分支状态</strong>：你在本地 <code>feature/order-v2</code> 分支上开发。</li>
-<li><strong>事故发生</strong>：你刚才急匆匆地执行了 <code>git commit -m &quot;修复订单支付bug&quot;</code>，并把代码提交到了本地仓库。</li>
-<li><strong>突然发现</strong>：<strong>完蛋！</strong> 调试用的打印日志 <code>print(db_password_debug)</code> 竟然忘记删掉了！如果这个版本推送到远程公共分支上，就会引发严重的安全事故。</li>
-</ul>
-<p>此时，距离你敲下回车键刚过去两分钟，代码还没执行 <code>git push</code>。我们该怎么优雅地撤回这次提交？</p>
-<hr>
-<h2 id="三、-企业级解决方案与代码实操"><a href="#三、-企业级解决方案与代码实操" class="headerlink" title="三、 企业级解决方案与代码实操"></a>三、 企业级解决方案与代码实操</h2><h3 id="方案-1：保留代码修改，仅撤回-Commit（最常用、最安全）"><a href="#方案-1：保留代码修改，仅撤回-Commit（最常用、最安全）" class="headerlink" title="方案 1：保留代码修改，仅撤回 Commit（最常用、最安全）"></a>方案 1：保留代码修改，仅撤回 Commit（最常用、最安全）</h3><p>如果你希望<strong>撤回提交记录，但保留刚才辛辛苦苦写的代码</strong>（只是把代码退回到还没 commit 的工作区，方便你删掉那行调试日志再重新提交），使用 <code>--mixed</code>（默认参数）或 <code>--soft</code>。</p>
-<h4 id="🛠️-实操演练："><a href="#🛠️-实操演练：" class="headerlink" title="🛠️ 实操演练："></a>🛠️ 实操演练：</h4><ol>
-<li><strong>查看当前的提交历史，确认刚才的错误提交</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --oneline<br><br></code></pre></td></tr></table></figure></li>
-</ol>
-<p><em>输出示例：</em></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">a1b2c3d (HEAD -&gt; feature/order-v2) 修复订单支付bug   &lt;-- 错误提交，想撤回它<br>e4f5g6h 优化订单查询接口性能<br><br></code></pre></td></tr></table></figure>
+                <h1 id="Git-本地和云端仓库双向同步与冲突解决完整教程"><a href="#Git-本地和云端仓库双向同步与冲突解决完整教程" class="headerlink" title="Git 本地和云端仓库双向同步与冲突解决完整教程"></a>Git 本地和云端仓库双向同步与冲突解决完整教程</h1><h2 id="核心原则：安全第一"><a href="#核心原则：安全第一" class="headerlink" title="核心原则：安全第一"></a>核心原则：安全第一</h2><p>在进行任何版本回溯或强制合并操作前，<strong>永远先建立本地安全备份分支</strong>，这是企业级开发规避灾难的第一习惯。</p>
+<h3 id="第一步：创建安全备份（黄金习惯）"><a href="#第一步：创建安全备份（黄金习惯）" class="headerlink" title="第一步：创建安全备份（黄金习惯）"></a>第一步：创建安全备份（黄金习惯）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 【安全防护】基于当前本地未提交或刚提交的乱序状态，拉出一个临时备份分支</span><br><span class="hljs-comment"># 这样即使后续操作失误，也可以随时通过 git reset 找回</span><br>git branch backup-local-work-2026<br><br></code></pre></td></tr></table></figure>
 
-
-<ol start="2">
-<li><strong>执行撤回命令</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># --mixed 是默认选项，可以省略不写，效果等同于 git reset HEAD~1</span><br>git reset --mixed HEAD~1<br><br></code></pre></td></tr></table></figure></li>
-</ol>
-<blockquote>
-<p><strong>代码注释</strong>：</p>
-<ul>
-<li><code>HEAD~1</code>：表示当前最新的一次提交往回数一个版本（即你要撤回的那次提交）。</li>
-<li>运行后，你的代码修改完好无损地留在了本地工作区（Working Directory），但那个“错误提交”的记录被抹掉了。</li>
-</ul>
-</blockquote>
-<ol start="3">
-<li><strong>修复问题并重新提交</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 打开代码文件，删掉忘记删的 debug 日志</span><br><span class="hljs-comment"># 2. 重新将修改加入暂存区</span><br>git add src/payment.py<br><br><span class="hljs-comment"># 3. 重新规范提交</span><br>git commit -m <span class="hljs-string">&quot;fix(order): 修复订单支付bug并清理调试代码&quot;</span><br><br></code></pre></td></tr></table></figure></li>
-</ol>
 <hr>
-<h3 id="方案-2：已经-git-push-到远程仓库了怎么办？（团队协作大忌）"><a href="#方案-2：已经-git-push-到远程仓库了怎么办？（团队协作大忌）" class="headerlink" title="方案 2：已经 git push 到远程仓库了怎么办？（团队协作大忌）"></a>方案 2：已经 <code>git push</code> 到远程仓库了怎么办？（团队协作大忌）</h3><p>如果在发现错误之前，你已经手快执行了 <code>git push origin feature/order-v2</code>，把带有 Bug 的代码推到了远程服务器，情况就会变得有点复杂。</p>
+<h3 id="第二步：选择同步策略（二选一）"><a href="#第二步：选择同步策略（二选一）" class="headerlink" title="第二步：选择同步策略（二选一）"></a>第二步：选择同步策略（二选一）</h3><p>根据企业的代码管理规范，通常有两种方案来融合本地与远端更新：</p>
 <ul>
-<li><strong>错误做法</strong>：直接在本地用 <code>git reset --hard</code> 然后强推 (<code>git push -f</code>)。这在正规企业里是<strong>极其危险</strong>的（尤其是在 <code>main</code> 或 <code>release</code> 主干分支上），因为会直接覆盖掉别人可能已经合并的代码，导致团队灾难。</li>
-<li><strong>企业级正确做法</strong>：使用 <strong><code>git revert</code>（反做&#x2F;撤销提交）</strong>。<br><code>revert</code> 的原理是：<strong>新增一次与你错误提交完全相反的修改，来抵消掉错误的影响</strong>，它会保留完整的历史记录，对团队其他人最安全。</li>
+<li><p><strong>方案 A：Merge 策略（推荐，适合多人共享主干&#x2F;重要分支）</strong></p>
+</li>
+<li><p><em>特点</em>：保留完整的平行历史轨迹，生成一个“合并提交（Merge Commit）”，时间线绝对真实、安全、可追溯。</p>
+</li>
+<li><p><strong>方案 B：Rebase 策略（适合个人开发分支 Feature Branch）</strong></p>
+</li>
+<li><p><em>特点</em>：抹平分支分叉，让提交历史呈现完美的一条直线，没有冗余的 Merge Commit。</p>
+</li>
 </ul>
-<h4 id="🛠️-实操演练：-1"><a href="#🛠️-实操演练：-1" class="headerlink" title="🛠️ 实操演练："></a>🛠️ 实操演练：</h4><ol>
-<li><strong>查看远程提交的历史哈希值 (Commit Hash)</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --oneline<br><br></code></pre></td></tr></table></figure></li>
-</ol>
-<p>*假设你那次错误提交的哈希值是 <code>a1b2c3d*</code>。<br>2. <strong>执行 Revert 撤销命令</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git revert a1b2c3d<br><br></code></pre></td></tr></table></figure>
-
-
-<blockquote>
-<p><strong>代码注释</strong>：</p>
-<ul>
-<li>运行该命令后，Git 会自动弹出一个文本编辑器让你填写提交信息（通常默认 <code>Revert &quot;修复订单支付bug&quot;</code> 即可）。</li>
-<li>保存并退出后，Git 会在你的分支上生成一个<strong>新的提交</strong>，这个提交的内容正好和那个错误提交相反（相当于把错误代码自动删掉了）。</li>
-</ul>
-</blockquote>
-<ol start="3">
-<li><strong>安全推送到远程</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git push origin feature/order-v2<br><br></code></pre></td></tr></table></figure></li>
-</ol>
-<blockquote>
-<p>团队其他成员拉取代码后，Bug 完美消除，且大家的提交历史清清白白，没有任何暴力覆盖的痕迹。</p>
-</blockquote>
 <hr>
-<h2 id="四、-总结与安全锦囊"><a href="#四、-总结与安全锦囊" class="headerlink" title="四、 总结与安全锦囊"></a>四、 总结与安全锦囊</h2><p>在企业级研发流程中，面对“撤回提交”的需求，请遵循以下黄金法则：</p>
-<ol>
-<li><strong>代码还在本地，没推送到远端</strong>：</li>
-</ol>
+<h4 id="方案-A-实战：使用-Merge-方式保留双方更新"><a href="#方案-A-实战：使用-Merge-方式保留双方更新" class="headerlink" title="方案 A 实战：使用 Merge 方式保留双方更新"></a>方案 A 实战：使用 Merge 方式保留双方更新</h4><p>如果你在主干分支（如 <code>main</code> &#x2F; <code>master</code>）或者团队公共分支上开发，推荐使用此方案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 抓取远端仓库的最新动态到本地（但不自动合并，安全可控）</span><br>git fetch origin<br><br><span class="hljs-comment"># 2. 将远端对应分支的更新合并到本地</span><br><span class="hljs-comment"># 参数 --no-ff (no fast-forward) 极其重要：</span><br><span class="hljs-comment"># 强制 Git 即使能够快进，也必须生成一个明确的 Merge Commit，用于记录“此处进行了本地与远端的融合”</span><br>git merge origin/main --no-ff -m <span class="hljs-string">&quot;chore(merge): merge remote changes into local workspace&quot;</span><br><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>想保留代码继续改：<code>git reset --soft HEAD~1</code> 或 <code>git reset HEAD~1</code></li>
-<li>连修改都不要了，彻底回到解放前：<code>git reset --hard HEAD~1</code>（⚠️ <strong>注意：未提交的本地修改会全部丢失，谨慎使用！</strong>）</li>
+<li><strong>可能出现的情况</strong>：</li>
+<li>如果没有代码冲突：Git 会自动完成合并，此时本地仓库既包含你本地的修改，又包含了远端的修改。</li>
+<li>如果产生代码冲突：进入<strong>第三步：解决冲突</strong>。</li>
 </ul>
-<ol start="2">
-<li><strong>代码已经推送到远端公共分支</strong>：</li>
-</ol>
+<hr>
+<h4 id="方案-B-实战：使用-Rebase-方式保留双方更新"><a href="#方案-B-实战：使用-Rebase-方式保留双方更新" class="headerlink" title="方案 B 实战：使用 Rebase 方式保留双方更新"></a>方案 B 实战：使用 Rebase 方式保留双方更新</h4><p>如果你在自己的功能分支（如 <code>feature/login</code>）上开发，且希望提交历史整洁。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 拉取并变基：将远端的更新拉下来，并把你的本地提交“无缝贴”在远端最新提交的上方</span><br>git pull origin feature/login --rebase<br><br><span class="hljs-comment"># 注释：</span><br><span class="hljs-comment"># 原理是：Git 先把你本地的独有提交暂存 -&gt; 拉取远端更新 -&gt; 逐个把你的提交重新应用（Replay）到远端代码之上。</span><br><span class="hljs-comment"># 这样远端和本地的内容都会被完美保留。</span><br><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>绝对不要轻易使用 <code>git reset --hard</code> + <code>git push -f</code>。</li>
-<li>优先使用 <code>git revert &lt;commit-id&gt;</code> 生成反向抵消提交，安全合规，团队协作零事故。</li>
+<li><strong>可能出现的情况</strong>：</li>
+<li>如果在逐个应用提交的过程中某一步代码冲突：Git 会暂停 Rebase，提示你在对应文件中解决冲突。</li>
 </ul>
+<hr>
+<h3 id="第三步：企业级代码冲突解决规范（核心难点）"><a href="#第三步：企业级代码冲突解决规范（核心难点）" class="headerlink" title="第三步：企业级代码冲突解决规范（核心难点）"></a>第三步：企业级代码冲突解决规范（核心难点）</h3><p>当本地和远端修改了<strong>同一行代码</strong>时，Git 无法自动裁决，会进入冲突状态。此时按照以下步骤处理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 查看具体是哪几个文件发生了冲突</span><br>git status<br><br><span class="hljs-comment"># 2. 打开冲突文件，你会看到类似下面带有冲突标记的代码块：</span><br><span class="hljs-comment"># &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (当前本地的代码)</span><br><span class="hljs-comment"># const timeout = 5000;</span><br><span class="hljs-comment"># =======</span><br><span class="hljs-comment"># const timeout = 10000; // 远端仓库的代码</span><br><span class="hljs-comment"># &gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/main</span><br><br><span class="hljs-comment"># 3. 【人工介入】与相关同事沟通或根据业务需求，手动修改代码，决定保留本地、远端、或者将两者逻辑融合</span><br><span class="hljs-comment"># 修改完毕后，务必删掉 Git 自动生成的冲突标记符号（&lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt;）</span><br><br><span class="hljs-comment"># 4. 将解决后的文件标记为“已解决（Resolved）”</span><br>git add &lt;conflict-file-path&gt;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="冲突解决后的收尾动作："><a href="#冲突解决后的收尾动作：" class="headerlink" title="冲突解决后的收尾动作："></a>冲突解决后的收尾动作：</h4><ul>
+<li><p><strong>如果你使用的是 方案 A（Merge）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 既然是通过 merge 进来的，解决完所有冲突并 git add 后，继续完成合并提交</span><br>git commit -m <span class="hljs-string">&quot;fix(conflict): resolve merge conflict between local and remote updates&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+</li>
+<li><p><strong>如果你使用的是 方案 B（Rebase）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 既然是通过 rebase 进来的，解决完当前冲突后，让 Git 继续应用剩下的本地提交</span><br>git rebase --<span class="hljs-built_in">continue</span><br><br><span class="hljs-comment"># 注释：如果在 rebase 过程中还有其他冲突，重复“改文件 -&gt; git add -&gt; git rebase --continue”流程，直到提示 successfully rebased。</span><br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="第四步：最终验证与安全推送到远端"><a href="#第四步：最终验证与安全推送到远端" class="headerlink" title="第四步：最终验证与安全推送到远端"></a>第四步：最终验证与安全推送到远端</h3><p>当本地与远端的代码成功融合后，执行最后一步。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 查看当前仓库状态和完整的提交图（验证本地和远端历史是否都已包含）</span><br>git <span class="hljs-built_in">log</span> --graph --oneline -n 10<br><br><span class="hljs-comment"># 2. 运行本地测试 / 编译脚本，确保代码逻辑正确、无语法错误</span><br><span class="hljs-comment"># npm run test / mvn clean package 等（根据项目实际情况定）</span><br><br><span class="hljs-comment"># 3. 将双向融合后的成果正式推送到远端仓库</span><br>git push origin &lt;your-branch-name&gt;<br><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="💡-运维防错小结"><a href="#💡-运维防错小结" class="headerlink" title="💡 运维防错小结"></a>💡 运维防错小结</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐操作指令</th>
+<th>优点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>多人协作公共分支</strong></td>
+<td><code>git fetch</code> -&gt; <code>git merge origin/&lt;branch&gt; --no-ff</code></td>
+<td>历史轨迹百分百真实，绝不会丢失任何人的代码。</td>
+</tr>
+<tr>
+<td><strong>个人独占功能分支</strong></td>
+<td><code>git pull origin &lt;branch&gt; --rebase</code></td>
+<td>提交历史呈线性，Code Review 时非常清爽。</td>
+</tr>
+<tr>
+<td><strong>突发灾难、改砸了</strong></td>
+<td><code>git reset --hard backup-local-work-2026</code></td>
+<td>瞬间回到第一步创建的安全备份点，重新来过。</td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -436,7 +427,7 @@
   
     <span>></span>
     
-  <a href="/categories/Git/Git-%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E6%92%A4%E5%9B%9E%E4%B8%8A%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%EF%BC%9F/" class="category-chain-item">Git 如何安全撤回上一次提交？</a>
+  <a href="/categories/Git/Git-%E6%9C%AC%E5%9C%B0%E5%92%8C%E4%BA%91%E7%AB%AF%E4%BB%93%E5%BA%93%E5%8F%8C%E5%90%91%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/" class="category-chain-item">Git 本地和云端仓库双向同步与冲突解决完整教程</a>
   
   
 
@@ -465,8 +456,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Git 如何安全撤回上一次提交？</div>
-      <div>https://dreamshao.github.io/2026/08/03/撤回上一次的提交怎么做？/</div>
+      <div>Git 本地和云端仓库双向同步与冲突解决完整教程</div>
+      <div>https://dreamshao.github.io/2026/08/04/本地仓库和远端仓库都有更新怎么办/</div>
     </div>
     <div class="license-meta">
       
@@ -478,7 +469,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年8月3日</div>
+          <div>2026年8月4日</div>
         </div>
       
       
@@ -510,18 +501,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/08/04/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%92%8C%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93%E9%83%BD%E6%9C%89%E6%9B%B4%E6%96%B0%E6%80%8E%E4%B9%88%E5%8A%9E/" title="Git 本地和云端仓库双向同步与冲突解决完整教程">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Git 本地和云端仓库双向同步与冲突解决完整教程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/08/03/%E5%BC%80%E5%8F%91%E7%BB%8F%E5%B8%B8%E8%AF%B4%E7%9A%84PR%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" title="开发经常说的PR是什么？">
-                        <span class="hidden-mobile">开发经常说的PR是什么？</span>
+                      <a href="/2026/08/03/%E6%92%A4%E5%9B%9E%E4%B8%8A%E4%B8%80%E6%AC%A1%E7%9A%84%E6%8F%90%E4%BA%A4%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F/" title="Git 如何安全撤回上一次提交？">
+                        <span class="hidden-mobile">Git 如何安全撤回上一次提交？</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
